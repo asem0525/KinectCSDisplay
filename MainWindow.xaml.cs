@@ -12,12 +12,20 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using Microsoft.Kinect;
     using Microsoft.Kinect.Wpf.Controls;
     using Microsoft.Samples.Kinect.ControlsBasics.DataModel;
+    using System.Timers;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using System.Windows.Media.Animation;
+
+
 
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
     public partial class MainWindow
     {
+        private static Timer aTimer;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class. 
         /// </summary>
@@ -36,6 +44,30 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             //// Add in display content
             var sampleDataSource = SampleDataSource.GetGroup("Group-1");
             this.itemsControl.ItemsSource = sampleDataSource;
+
+            SetTimer();
+
+            startBottomBar();
+
+        }
+
+        private void SetTimer()
+        {
+            // Create a timer with a two second interval.
+            aTimer = new Timer(1000);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
+
+        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                dateText.Text = DateTime.Now.Date.ToString("MMMM d, yyyy");
+                clockText.Text = DateTime.Now.ToString("h:mm:ss tt");
+            });
         }
 
         /// <summary>
@@ -81,6 +113,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             backButton.Visibility = System.Windows.Visibility.Hidden;
             navigationRegion.Content = this.kinectRegionGrid;
+        }
+
+        private void startBottomBar()
+        {
+            Storyboard s = (Storyboard) bottomBar.TryFindResource("sb");
+            s.Begin();	// Start animation
         }
     }
 }

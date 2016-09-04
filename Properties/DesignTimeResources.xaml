@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Microsoft.Samples.Kinect.ControlsBasics.Properties">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/KinectBoard;component/Common/StandardStyles.xaml"/>
+        <ResourceDictionary Source="/KinectBoard;component/HandPointers/HandPointerStyles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
