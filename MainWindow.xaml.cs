@@ -17,6 +17,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Threading.Tasks;
     using System.Windows.Media.Animation;
 
+    using System.Net;
+    using System.IO;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
 
 
     /// <summary>
@@ -24,7 +28,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     /// </summary>
     public partial class MainWindow
     {
-        private static Timer aTimer;
+        private static Timer clockTimer;
+        private static Timer bongoSwapTimer;
+        private static Timer bongoGetTimer;
+        private static BongoData bongoData;
+        private static int bongoIndex;
+        private static List<VisibleBongoData> fullBongoData = new List<VisibleBongoData>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class. 
@@ -43,30 +52,175 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
             //// Add in display content
             var sampleDataSource = SampleDataSource.GetGroup("Group-1");
-            this.itemsControl.ItemsSource = sampleDataSource;
+            itemsControl.ItemsSource = sampleDataSource;
 
-            SetTimer();
+            //Starts timer for clock
+            SetClockTimer();
 
-            startBottomBar();
+            
+            SetBongoGetTimer();
+            SetBongoData();
+            SetBongoSwapTimer();
+
+            //Sets the scrolling bottom bar text event
+            StartBottomBar();
+
+            
+
 
         }
 
-        private void SetTimer()
+        /// <summary>
+        /// Event on a timer for getting the bus data for stop 00001, outside of MacLean Hall.
+        /// This method reads in JSON data using async methods.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void GetBusData(object source, ElapsedEventArgs e)
+        {
+            //Prediction URI from Bongo API for stop 0001 Downtown Interchange
+            Uri feedUri = new Uri("http://api.ebongo.org/prediction?format=json&stopid=0001&api_key=XXXX");
+            using (WebClient downloader = new WebClient())
+            {
+                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompleted);
+                downloader.DownloadStringAsync(feedUri);
+            }
+        }
+
+        /// <summary>
+        /// Gets the Bongo data (Json form) and creates BongoData objects
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void downloader_DownloadStringCompleted(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                string responseStream = e.Result;
+                //Debug.WriteLine(e.Result);
+                bongoData = JsonConvert.DeserializeObject<BongoData>(responseStream);
+            }
+            SetBongoData();
+        }
+
+
+        /// <summary>
+        /// Creates a time that runs the clock and date for the UI.
+        /// </summary>
+        private void SetClockTimer()
         {
             // Create a timer with a two second interval.
-            aTimer = new Timer(1000);
+            clockTimer = new Timer(1000);
             // Hook up the Elapsed event for the timer. 
-            aTimer.Elapsed += OnTimedEvent;
-            aTimer.AutoReset = true;
-            aTimer.Enabled = true;
+            clockTimer.Elapsed += setClockTimeEvent;
+            clockTimer.AutoReset = true;
+            clockTimer.Enabled = true;
         }
 
-        private void OnTimedEvent(Object source, ElapsedEventArgs e)
+        /// <summary>
+        /// Sets the digital clock and date.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void setClockTimeEvent(Object source, ElapsedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
                 dateText.Text = DateTime.Now.Date.ToString("MMMM d, yyyy");
                 clockText.Text = DateTime.Now.ToString("h:mm:ss tt");
+            });
+        }
+
+        /// <summary>
+        /// Timer for swaping out the Bongo info cards.
+        /// </summary>
+        private void SetBongoSwapTimer()
+        {
+            // Create a timer with a two second interval.
+            bongoSwapTimer = new Timer(5000);
+            // Hook up the Elapsed event for the timer. 
+            bongoSwapTimer.Elapsed += SetBongoSwapEvent;
+            bongoSwapTimer.AutoReset = true;
+            bongoSwapTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Timer for downloading Bongo Data
+        /// </summary>
+        private void SetBongoGetTimer()
+        {
+            // Create a timer with a two second interval.
+            bongoGetTimer = new Timer(60000);
+            // Hook up the Elapsed event for the timer. 
+            bongoGetTimer.Elapsed += GetBusData;
+            bongoGetTimer.AutoReset = true;
+            bongoGetTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Sets the full list of Bongo data for ListView Data Binding
+        /// </summary>
+        private void SetBongoData()
+        {
+            if (bongoData != null)
+            {
+                fullBongoData.Clear();           
+                foreach (var bd in bongoData.predictions)
+                {
+                    string minString = bd.minutes.ToString() + "min.";
+                    if(bd.minutes == 0)
+                    {
+                        minString = "Arriving";
+                    }
+
+                    string colorString = "#FFFFFF";
+                    if (bd.agency.Equals("cambus"))
+                    {
+                        colorString = "yellow";
+                    }
+                    else if(bd.agency.Equals("iowa-city"))
+                    {
+                        colorString = "red";
+                    }
+                    else if (bd.agency.Equals("coralville"))
+                    {
+                        colorString = "blue";
+                    }
+                    fullBongoData.Add(new VisibleBongoData() { stopname = bd.stopname, minutes = minString, routename = bd.title, color = colorString });
+                }
+            }
+            else
+            {
+                fullBongoData.Add(new VisibleBongoData() { stopname = "No buses running" });
+            }
+        }
+
+        /// <summary>
+        /// Swaps out cards with Bongo data on MainWindow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SetBongoSwapEvent(object sender, ElapsedEventArgs e)
+        {
+            List<VisibleBongoData> groupedBongoData = new List<VisibleBongoData>();
+            if(bongoIndex < fullBongoData.Count)
+            {
+                int i = 0;
+                while (i + bongoIndex < fullBongoData.Count && i < 3)
+                {
+                    groupedBongoData.Add(fullBongoData[i + bongoIndex]);
+                    i++;
+                }
+                bongoIndex += 3;
+            }
+            else
+            {
+                bongoIndex = 0;
+            }
+            
+            Dispatcher.Invoke(() =>
+            {
+                bongoList.ItemsSource = groupedBongoData;
             });
         }
 
@@ -115,7 +269,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             navigationRegion.Content = this.kinectRegionGrid;
         }
 
-        private void startBottomBar()
+        /// <summary>
+        /// Starts infinite scrolling bottom bar that contains quick help instructions.
+        /// </summary>
+        private void StartBottomBar()
         {
             Storyboard s = (Storyboard) bottomBar.TryFindResource("sb");
             s.Begin();	// Start animation

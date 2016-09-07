@@ -81,3 +81,5 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Kin
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Microsoft.Samples.Kinect.ControlsBasics.Properties.Resources.resources
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\KinectBoard.csproj.GenerateResource.Cache
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Properties\DesignTimeResources.baml
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Newtonsoft.Json.dll
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Newtonsoft.Json.xml

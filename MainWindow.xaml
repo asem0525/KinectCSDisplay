@@ -85,7 +85,7 @@
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Disabled" 
                                   k:KinectRegion.IsScrollInertiaEnabled="true" >
-                        <ItemsControl Grid.Row="0" x:Name="itemsControl" ItemTemplate="{StaticResource Kinect250x250ItemTemplate}" ButtonBase.Click="ButtonClick">
+                        <ItemsControl Grid.Row="0" x:Name="itemsControl" ItemTemplate="{StaticResource Kinect250x250ItemTemplate}" ButtonBase.Click="ButtonClick" >
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel VerticalAlignment="Center" Orientation="Vertical" Margin="75,0,75,0" />
@@ -95,11 +95,47 @@
 
                         </ItemsControl>
                     </ScrollViewer>
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="1" Text="fsadjkfl;sadjfklsdafsjklf;ads"/>
+                    <Grid x:Name="RightGridPanel"
+                          Grid.Column="1"
+                          Grid.Row="0"
+                          Margin="10,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="6*"/>
+                            <RowDefinition Height="4*"/>
+                        </Grid.RowDefinitions>
+                        <Separator Grid.Row="1" VerticalAlignment="Top"></Separator>
+                        
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Stretch">
+                            <TextBlock x:Name="busScheduleTitle" Grid.Row="1">Upcoming Buses</TextBlock>
+                            <ListView x:Name="bongoList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Card x:Name="bongoCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch">
+                                            <StackPanel HorizontalAlignment="Stretch">
+                                                <TextBlock x:Name="bongoStopName" Text="{Binding stopname}" FontSize="14" TextDecorations="Underline" ></TextBlock>
+                                                <TextBlock x:Name="bongoRouteName" Text="{Binding routename}" FontSize="14" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>
+                                                <TextBlock x:Name="bongoTime" Text="{Binding minutes}" FontSize="14" Foreground="White" FontWeight="Bold"></TextBlock>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            
+                            
+
+
+                        </StackPanel>
+
+                    </Grid>
                     <Path Grid.Column="1" Data="M932.37021,166.06302" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Margin="149.037,166.063,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1"/>
                     <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top" Grid.Column="1" Margin="0,0,128.646,0" d:LayoutOverrides="Width"/>
+                    <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Stretch"/>
                 
                 </Grid>
             </ContentControl>
