@@ -31,7 +31,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="0,0,0,21">
+            <Grid Grid.Row="0" Margin="0,0,0,10">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF3F3F3F" Offset="0"/>
@@ -65,21 +65,53 @@
                     <TextBlock Grid.Row="0" Grid.Column="2" x:Name="dateText" VerticalAlignment="Bottom" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">January 31, 2016</TextBlock>
                     <TextBlock Grid.Row="1" Grid.Column="2" x:Name="clockText" VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">00:00 pm</TextBlock>
                 </Grid>
-
-
-
-
                 <k:KinectUserViewer Grid.Column="1" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
             </Grid>
 
-            <ContentControl Grid.Row="1" x:Name="navigationRegion">
 
-                <Grid x:Name="kinectRegionGrid" Margin="10,20,10,20" Background="Gainsboro">
+            <ContentControl Grid.Row="1" Grid.RowSpan="2" x:Name="navigationRegion">
+
+                <Grid x:Name="kinectRegionGrid" Margin="10,10,10,20" Background="Gainsboro">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="6*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    <ScrollViewer Grid.Row="0"
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="100*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0"
+                                Grid.Column="0"
+                                x:Name="weatherPanel"
+                                Orientation="Horizontal">
+                        <materialDesign:Card x:Name="weatherCard1" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
+                            <StackPanel x:Name="weather1"  Margin="5,0,5,0">
+                                <TextBlock x:Name="day1" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
+                                <Image x:Name="weatherIcon1" Width="40px" Height="40px"/>
+                                <TextBlock x:Name="Temp1" FontSize="20"></TextBlock>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card x:Name="weatherCard2" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
+                            <StackPanel x:Name="weather2"  Margin="5,0,5,0">
+                                <TextBlock x:Name="day2" FontSize="20" TextDecorations="Underline" TextAlignment="Center"></TextBlock>
+                                <Image x:Name="weatherIcon2" Width="40px" Height="40px"/>
+                                <TextBlock x:Name="Temp2" FontSize="20"></TextBlock>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card x:Name="weatherCard3" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0"> 
+                            <StackPanel x:Name="weather3">
+                                <TextBlock x:Name="day3" FontSize="20" TextDecorations="Underline" TextAlignment="Center"></TextBlock>
+                                <Image x:Name="weatherIcon3" Width="40px" Height="40px"/>
+                                <TextBlock x:Name="Temp3" FontSize="20">00</TextBlock>
+                            </StackPanel>
+                        </materialDesign:Card>
+
+
+                       
+                    </StackPanel>
+                    
+                    <ScrollViewer Grid.Row="1"
                                   Grid.Column="0"
                                   x:Name="scrollViewer" 
                                   HorizontalScrollBarVisibility="Auto"
@@ -91,13 +123,12 @@
                                     <WrapPanel VerticalAlignment="Center" Orientation="Vertical" Margin="75,0,75,0" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
-
-
                         </ItemsControl>
                     </ScrollViewer>
                     <Grid x:Name="RightGridPanel"
                           Grid.Column="1"
                           Grid.Row="0"
+                          Grid.RowSpan="2"
                           Margin="10,0,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="6*"/>
@@ -118,18 +149,14 @@
                                     <DataTemplate>
                                         <materialDesign:Card x:Name="bongoCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch">
                                             <StackPanel HorizontalAlignment="Stretch">
-                                                <TextBlock x:Name="bongoStopName" Text="{Binding stopname}" FontSize="14" TextDecorations="Underline" ></TextBlock>
-                                                <TextBlock x:Name="bongoRouteName" Text="{Binding routename}" FontSize="14" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>
-                                                <TextBlock x:Name="bongoTime" Text="{Binding minutes}" FontSize="14" Foreground="White" FontWeight="Bold"></TextBlock>
+                                                <TextBlock x:Name="bongoStopName" Text="{Binding stopname}" FontSize="15" TextDecorations="Underline" ></TextBlock>
+                                                <TextBlock x:Name="bongoRouteName" Text="{Binding routename}" FontSize="15" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>
+                                                <TextBlock x:Name="bongoTime" Text="{Binding minutes}" FontSize="15" Foreground="White" FontWeight="Bold"></TextBlock>
                                             </StackPanel>
                                         </materialDesign:Card>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
-                            
-                            
-
-
                         </StackPanel>
 
                     </Grid>

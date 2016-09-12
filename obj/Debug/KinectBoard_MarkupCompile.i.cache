@@ -12,9 +12,9 @@ DEBUG;TRACE
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\App.xaml
 121583010858
 
-222138562800
+24609325171
 17-1767142090
 Common\StandardStyles.xaml;HandPointers\HandPointerStyles.xaml;MainWindow.xaml;Pages\ButtonSample.xaml;Pages\CheckBoxRadioButtonSample.xaml;Pages\EngagementSettings.xaml;Pages\ItemsControlsSample.xaml;Pages\KinectPointerPointSample.xaml;Pages\ScrollViewerSample.xaml;Pages\SliderSample.xaml;Properties\DesignTimeResources.xaml;SelectionDisplay.xaml;
 
-True
+False
 

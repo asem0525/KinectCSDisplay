@@ -77,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="BongoData.cs" />
     <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="CSEvents.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="HandPointers\HandInScreenEngagementModel.cs" />
     <Compile Include="Pages\ButtonSample.xaml.cs">
@@ -104,6 +105,7 @@
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WeatherData.cs" />
     <Page Include="Common\StandardStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
