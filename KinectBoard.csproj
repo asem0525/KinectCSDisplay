@@ -78,7 +78,7 @@
     <Compile Include="BongoData.cs" />
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="CSEvents.cs" />
-    <Compile Include="DataModel\SampleDataSource.cs" />
+    <Compile Include="DataModel\DataSource.cs" />
     <Compile Include="HandPointers\HandInScreenEngagementModel.cs" />
     <Compile Include="Pages\ButtonSample.xaml.cs">
       <DependentUpon>ButtonSample.xaml</DependentUpon>

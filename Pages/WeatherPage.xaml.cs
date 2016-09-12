@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
+namespace Microsoft.Samples.Kinect.ControlsBasics
 {
     /// <summary>
     /// Interaction logic for WeatherPage.xaml
     /// </summary>
-    public partial class WeatherPage : Page
+    public partial class WeatherPage : UserControl
     {
         public WeatherPage()
         {

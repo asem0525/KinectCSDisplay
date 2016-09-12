@@ -87,7 +87,7 @@
     </Style>
 
     <DataTemplate x:Key="Kinect250x250ItemTemplate">
-        <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="3">
+        <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="3" >
             <Button Style="{StaticResource KinectTileButton}">
                 <Grid HorizontalAlignment="Left" Width="250" Height="250">
                     <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}">
@@ -1168,7 +1168,7 @@
                         <Border Padding="{TemplateBinding Padding}" Background="Transparent">
                             <Grid Margin="-1,-16,0,0">
                                 <TextBlock x:Name="BackgroundGlyph" Text="&#xE0A8;" Foreground="Black" Opacity="0" FontFamily="Segoe UI Symbol" FontSize="56" />
-                                <TextBlock x:Name="NormalGlyph" Text="&#xE071;" Foreground="Black" FontFamily="Segoe UI Symbol" FontSize="56" />
+                                <TextBlock x:Name="NormalGlyph" Text="&#xE071;" Foreground="White" FontFamily="Segoe UI Symbol" FontSize="56" />
                                 <TextBlock x:Name="ArrowGlyph" Text="&#xE0A6;" Foreground="White" Opacity="0" FontFamily="Segoe UI Symbol" FontSize="56"/>
                             </Grid>
                         </Border>

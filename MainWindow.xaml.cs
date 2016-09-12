@@ -55,7 +55,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.kinectRegion.KinectSensor = KinectSensor.GetDefault();
 
             //// Add in display content
-            var sampleDataSource = SampleDataSource.GetGroup("Group-1");
+            var sampleDataSource = DataSource.GetGroup("Group-1");
             itemsControl.ItemsSource = sampleDataSource;
 
             //Starts timer for clock
@@ -449,7 +449,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void OpenPage(object sender, RoutedEventArgs e)
         {            
             var button = (Button)e.OriginalSource;
-            SampleDataItem sampleDataItem = button.DataContext as SampleDataItem;
+            DataItem sampleDataItem = button.DataContext as DataItem;
 
             if (sampleDataItem != null && sampleDataItem.NavigationPage != null)
             {

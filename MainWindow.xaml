@@ -145,18 +145,26 @@
 
 
                         <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
-                            <TextBlock x:Name="NewandAnnouncment" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
+                            <TextBlock x:Name="NewsAndAnnouncment" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
                             
                             <ListView x:Name="csEventsList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                                    </Style>
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                    <ContentPresenter />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>                                    
                                 </ListView.ItemContainerStyle>
 
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <materialDesign:Card x:Name="csCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch">
+                                        <materialDesign:Card x:Name="csCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch" Margin="5">
                                             <StackPanel HorizontalAlignment="Stretch">
                                                 <TextBlock x:Name="csEventTitle" Text="{Binding csEventTitle}" FontSize="20"></TextBlock>
                                                 <TextBlock x:Name="csEventTime" Text="{Binding csEventTime}" FontSize="18" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>
@@ -177,12 +185,20 @@
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                                    <ContentPresenter />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
                                     </Style>
                                 </ListView.ItemContainerStyle>
 
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <materialDesign:Card x:Name="bongoCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch">
+                                        <materialDesign:Card x:Name="bongoCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch" Margin="1">
                                             <StackPanel HorizontalAlignment="Stretch">
                                                 <TextBlock x:Name="bongoStopName" Text="{Binding stopname}" FontSize="15" TextDecorations="Underline" ></TextBlock>
                                                 <TextBlock x:Name="bongoRouteName" Text="{Binding routename}" FontSize="15" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>

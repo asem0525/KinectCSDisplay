@@ -112,37 +112,49 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
     public class Qpf_Allday
     {
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
         public float _in { get; set; }
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
         public int mm { get; set; }
     }
 
     public class Qpf_Day
     {
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
         public float? _in { get; set; }
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
         public int? mm { get; set; }
     }
 
     public class Qpf_Night
     {
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
         public float _in { get; set; }
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
         public int mm { get; set; }
     }
 
     public class Snow_Allday
     {
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
         public float _in { get; set; }
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
         public float cm { get; set; }
     }
 
     public class Snow_Day
     {
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
         public float? _in { get; set; }
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
         public float? cm { get; set; }
     }
 
     public class Snow_Night
     {
+#pragma warning disable CS3008 // Identifier is not CLS-compliant
         public float _in { get; set; }
+#pragma warning restore CS3008 // Identifier is not CLS-compliant
         public float cm { get; set; }
     }
 

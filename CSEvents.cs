@@ -67,8 +67,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
         }
 
-        /// <remarks/>
+#pragma warning disable CS3003 // Type is not CLS-compliant
+                              /// <remarks/>
         public ushort guid
+#pragma warning restore CS3003 // Type is not CLS-compliant
         {
             get
             {

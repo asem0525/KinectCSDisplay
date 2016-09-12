@@ -1,9 +1,4 @@
-﻿//------------------------------------------------------------------------------
-// <copyright file="SampleDataSource.cs" company="Microsoft">
-//     Copyright (c) Microsoft Corporation.  All rights reserved.
-// </copyright>
-//------------------------------------------------------------------------------
-
+﻿
 namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
 {
     using System;
@@ -17,6 +12,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
     using System.Windows.Media.Imaging;
     using Microsoft.Samples.Kinect.ControlsBasics.Common;
     using System.Globalization;
+    
 
     // The data model defined by this file serves as a representative example of a strongly-typed
     // model that supports notification when members are added, removed, or modified.  The property
@@ -30,1242 +26,1242 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
     /// data so that sample data is provided at both design-time and run-time.
     /// </summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "File is from Windows Store template")]
-    public sealed class SampleDataSource
+    public sealed class DataSource
     {
-        private static SampleDataSource sampleDataSource = new SampleDataSource();
+        private static DataSource sampleDataSource = new DataSource();
 
-        private ObservableCollection<SampleDataCollection> allGroups = new ObservableCollection<SampleDataCollection>();
+        private ObservableCollection<DataCollection> allGroups = new ObservableCollection<DataCollection>();
 
         private static Uri darkGrayImage = new Uri("Assets/DarkGray.png", UriKind.Relative);
         private static Uri mediumGrayImage = new Uri("assets/mediumGray.png", UriKind.Relative);
         private static Uri lightGrayImage = new Uri("assets/lightGray.png", UriKind.Relative);
 
-        public SampleDataSource()
+        public DataSource()
         {
             string itemContent = string.Format(
                                     CultureInfo.CurrentCulture,
                                     "Item Content: {0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}",
                                     "Curabitur class aliquam vestibulum nam curae maecenas sed integer cras phasellus suspendisse quisque donec dis praesent accumsan bibendum pellentesque condimentum adipiscing etiam consequat vivamus dictumst aliquam duis convallis scelerisque est parturient ullamcorper aliquet fusce suspendisse nunc hac eleifend amet blandit facilisi condimentum commodo scelerisque faucibus aenean ullamcorper ante mauris dignissim consectetuer nullam lorem vestibulum habitant conubia elementum pellentesque morbi facilisis arcu sollicitudin diam cubilia aptent vestibulum auctor eget dapibus pellentesque inceptos leo egestas interdum nulla consectetuer suspendisse adipiscing pellentesque proin lobortis sollicitudin augue elit mus congue fermentum parturient fringilla euismod feugiat");
 
-            var group1 = new SampleDataCollection(
+            var mainWindowPages = new DataCollection(
                     "Group-1",
                     "Group Title: 3",
                     "Group Subtitle: 3",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Group Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor scelerisque lorem in vehicula. Aliquam tincidunt, lacus ut sagittis tristique, turpis massa volutpat augue, eu rutrum ligula ante a ante");
-            group1.Items.Add(
-                    new SampleDataItem(
-                        "Group-1-Item-1",
-                        "Buttons",
-                        string.Empty,
-                        SampleDataSource.darkGrayImage,
-                        "Several types of buttons with custom styles",
+            mainWindowPages.Items.Add(
+                    new DataItem(
+                        "MainPage-1-Item-Weather",
+                        "Weather",
+                        "More Details",
+                        DataSource.darkGrayImage,
+                        "Expanded weather information",
                         itemContent,
-                        group1,
-                        typeof(ButtonSample)));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages,
+                        typeof(WeatherPage)));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-2",
                         "CheckBoxes and RadioButtons",
                         string.Empty,
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "CheckBox and RadioButton controls",
                         itemContent,
-                        group1,
+                        mainWindowPages,
                         typeof(CheckBoxRadioButtonSample)));
-            group1.Items.Add(
-                    new SampleDataItem(
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-5",
                         "Zoomable Photo",
                         string.Empty,
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "ScrollViewer control hosting a photo, enabling scrolling and zooming.",
                         itemContent,
-                        group1,
+                        mainWindowPages,
                         typeof(ScrollViewerSample)));
-            group1.Items.Add(
-                    new SampleDataItem(
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-6",
                         "Kinect Pointer Events",
                         string.Empty,
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "Example of how to get KinectPointerPoints.",
                         itemContent,
-                        group1,
+                        mainWindowPages,
                         typeof(KinectPointerPointSample)));
-            group1.Items.Add(
-                    new SampleDataItem(
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-7",
                         "Engagement and Cursor Settings",
                         "",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Enables user to switch between engagement models and cursor visuals.",
                         itemContent,
-                        group1,
+                        mainWindowPages,
                         typeof(EngagementSettings)));
-            group1.Items.Add(
-                    new SampleDataItem(
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-6",
                         "Item Title: 6",
                         "Item Subtitle: 6",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-7",
                         "Item Title: 7",
                         "Item Subtitle: 7",
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-1",
                          "Item Title: 1",
                          "Item Subtitle: 1",
-                         SampleDataSource.mediumGrayImage,
+                         DataSource.mediumGrayImage,
                          "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                          itemContent,
-                         group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                         mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-2",
                         "Item Title: 2",
                         "Item Subtitle: 2",
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-3",
                         "Item Title: 3",
                         "Item Subtitle: 3",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-4",
                         "Item Title: 4",
                         "Item Subtitle: 4",
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-5",
                         "Item Title: 5",
                         "Item Subtitle: 5",
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-6",
                         "Item Title: 6",
                         "Item Subtitle: 6",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-7",
                         "Item Title: 7",
                         "Item Subtitle: 7",
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-1",
                          "Item Title: 1",
                          "Item Subtitle: 1",
-                         SampleDataSource.mediumGrayImage,
+                         DataSource.mediumGrayImage,
                          "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                          itemContent,
-                         group1));
-            group1.Items.Add(
-                    new SampleDataItem(
+                         mainWindowPages));
+            mainWindowPages.Items.Add(
+                    new DataItem(
                         "Group-1-Item-2",
                         "Item Title: 2",
                         "Item Subtitle: 2",
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                         "Group-1-Item-3",
                         "Item Title: 3",
                         "Item Subtitle: 3",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                new DataItem(
                         "Group-1-Item-4",
                         "Item Title: 4",
                         "Item Subtitle: 4",
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                new DataItem(
                     "Group-1-Item-5",
                         "Item Title: 5",
                         "Item Subtitle: 5",
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                new DataItem(
                     "Group-1-Item-6",
                         "Item Title: 6",
                         "Item Subtitle: 6",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                new DataItem(
                     "Group-1-Item-7",
                         "Item Title: 7",
                         "Item Subtitle: 7",
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                new DataItem(
                     "Group-1-Item-1",
                          "Item Title: 1",
                          "Item Subtitle: 1",
-                         SampleDataSource.mediumGrayImage,
+                         DataSource.mediumGrayImage,
                          "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                          itemContent,
-                         group1));
-            group1.Items.Add(
-                new SampleDataItem(
+                         mainWindowPages));
+            mainWindowPages.Items.Add(
+                new DataItem(
                     "Group-1-Item-2",
                         "Item Title: 2",
                         "Item Subtitle: 2",
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(
-                new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(
+                new DataItem(
                     "Group-1-Item-3",
                         "Item Title: 3",
                         "Item Subtitle: 3",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                         "Item Title: 4",
                         "Item Subtitle: 4",
-                        SampleDataSource.lightGrayImage,
+                        DataSource.lightGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                         "Group-1-Item-5",
                         "Item Title: 5",
                         "Item Subtitle: 5",
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                         "Group-1-Item-6",
                         "Item Title: 6",
                         "Item Subtitle: 6",
-                        SampleDataSource.darkGrayImage,
+                        DataSource.darkGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                         "Group-1-Item-7",
                         "Item Title: 7",
                         "Item Subtitle: 7",
-                        SampleDataSource.mediumGrayImage,
+                        DataSource.mediumGrayImage,
                         "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                         itemContent,
-                        group1));
-            group1.Items.Add(new SampleDataItem(
+                        mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                          "Group-1-Item-1",
                          "Item Title: 1",
                          "Item Subtitle: 1",
-                         SampleDataSource.mediumGrayImage,
+                         DataSource.mediumGrayImage,
                          "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                          itemContent,
-                         group1));
-            group1.Items.Add(new SampleDataItem(
+                         mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                      "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                      "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                     "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                     "Item Title: 1",
                     "Item Subtitle: 1",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                     "Item Title: 1",
                     "Item Subtitle: 1",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                  "Item Title: 1",
                  "Item Subtitle: 1",
-                 SampleDataSource.mediumGrayImage,
+                 DataSource.mediumGrayImage,
                  "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                  itemContent,
-                 group1));
-            group1.Items.Add(new SampleDataItem(
+                 mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-1",
                      "Item Title: 1",
                      "Item Subtitle: 1",
-                     SampleDataSource.mediumGrayImage,
+                     DataSource.mediumGrayImage,
                      "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                      itemContent,
-                     group1));
-            group1.Items.Add(new SampleDataItem(
+                     mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-2",
                     "Item Title: 2",
                     "Item Subtitle: 2",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-3",
                     "Item Title: 3",
                     "Item Subtitle: 3",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-4",
                     "Item Title: 4",
                     "Item Subtitle: 4",
-                    SampleDataSource.lightGrayImage,
+                    DataSource.lightGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-5",
                     "Item Title: 5",
                     "Item Subtitle: 5",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-6",
                     "Item Title: 6",
                     "Item Subtitle: 6",
-                    SampleDataSource.darkGrayImage,
+                    DataSource.darkGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            group1.Items.Add(new SampleDataItem(
+                    mainWindowPages));
+            mainWindowPages.Items.Add(new DataItem(
                 "Group-1-Item-7",
                     "Item Title: 7",
                     "Item Subtitle: 7",
-                    SampleDataSource.mediumGrayImage,
+                    DataSource.mediumGrayImage,
                     "Item Description: Pellentesque porta, mauris quis interdum vehicula, urna sapien ultrices velit, nec venenatis dui odio in augue. Cras posuere, enim a cursus convallis, neque turpis malesuada erat, ut adipiscing neque tortor ac erat.",
                     itemContent,
-                    group1));
-            this.AllGroups.Add(group1);
+                    mainWindowPages));
+            this.AllGroups.Add(mainWindowPages);
         }
 
-        public ObservableCollection<SampleDataCollection> AllGroups
+        public ObservableCollection<DataCollection> AllGroups
         {
             get { return this.allGroups; }
         }
 
-        public static SampleDataCollection GetGroup(string uniqueId)
+        public static DataCollection GetGroup(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
             var matches = sampleDataSource.AllGroups.Where((group) => group.UniqueId.Equals(uniqueId));
@@ -1277,7 +1273,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
             return null;
         }
 
-        public static SampleDataItem GetItem(string uniqueId)
+        public static DataItem GetItem(string uniqueId)
         {
             // Simple linear search is acceptable for small data sets
             var matches = sampleDataSource.AllGroups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
@@ -1291,7 +1287,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
     }
 
     /// <summary>
-    /// Base class for <see cref="SampleDataItem"/> and <see cref="SampleDataCollection"/> that
+    /// Base class for <see cref="DataItem"/> and <see cref="DataCollection"/> that
     /// defines properties common to both.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1649:FileHeaderFileNameDocumentationMustMatchTypeName", Justification = "Reviewed.")]
@@ -1414,13 +1410,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed.")]
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented", Justification = "File is from Windows Store template")]
-    public class SampleDataItem : SampleDataCommon
+    public class DataItem : SampleDataCommon
     {
         private string content = string.Empty;
-        private SampleDataCollection group;
+        private DataCollection group;
         private Type navigationPage;
 
-        public SampleDataItem(string uniqueId, string title, string subtitle, Uri imagePath, string description, string content, SampleDataCollection group)
+        public DataItem(string uniqueId, string title, string subtitle, Uri imagePath, string description, string content, DataCollection group)
             : base(uniqueId, title, subtitle, imagePath, description)
         {
             this.content = content;
@@ -1429,7 +1425,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SampleDataItem" /> class.
+        /// Initializes a new instance of the <see cref="DataItem" /> class.
         /// </summary>
         /// <param name="uniqueId">The unique id of this item.</param>
         /// <param name="title">The title of this item.</param>
@@ -1439,7 +1435,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
         /// <param name="content">The content of this item.</param>
         /// <param name="group">The group of this item.</param>
         /// <param name="navigationPage">What page should launch when clicking this item.</param>
-        public SampleDataItem(string uniqueId, string title, string subtitle, Uri imagePath, string description, string content, SampleDataCollection group, Type navigationPage)
+        public DataItem(string uniqueId, string title, string subtitle, Uri imagePath, string description, string content, DataCollection group, Type navigationPage)
             : base(uniqueId, title, subtitle, imagePath, description)
         {
             this.content = content;
@@ -1453,7 +1449,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
             set { this.SetProperty(ref this.content, value); }
         }
 
-        public SampleDataCollection Group
+        public DataCollection Group
         {
             get { return this.group; }
             set { this.SetProperty(ref this.group, value); }
@@ -1469,23 +1465,23 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
     /// <summary>
     /// Generic group data model.
     /// </summary>
-    public class SampleDataCollection : SampleDataCommon, IEnumerable
+    public class DataCollection : SampleDataCommon, IEnumerable
     {
-        private ObservableCollection<SampleDataItem> items = new ObservableCollection<SampleDataItem>();
-        private ObservableCollection<SampleDataItem> topItem = new ObservableCollection<SampleDataItem>();
+        private ObservableCollection<DataItem> items = new ObservableCollection<DataItem>();
+        private ObservableCollection<DataItem> topItem = new ObservableCollection<DataItem>();
 
-        public SampleDataCollection(string uniqueId, string title, string subtitle, Uri imagePath, string description)
+        public DataCollection(string uniqueId, string title, string subtitle, Uri imagePath, string description)
             : base(uniqueId, title, subtitle, imagePath, description)
         {
             this.Items.CollectionChanged += this.ItemsCollectionChanged;
         }
 
-        public ObservableCollection<SampleDataItem> Items
+        public ObservableCollection<DataItem> Items
         {
             get { return this.items; }
         }
 
-        public ObservableCollection<SampleDataItem> TopItems
+        public ObservableCollection<DataItem> TopItems
         {
             get { return this.topItem; }
         }
