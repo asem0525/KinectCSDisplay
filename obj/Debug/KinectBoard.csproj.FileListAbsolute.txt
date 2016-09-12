@@ -83,3 +83,5 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Kin
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Properties\DesignTimeResources.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Newtonsoft.Json.dll
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Newtonsoft.Json.xml
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\WeatherPage.g.cs
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\WeatherPage.baml

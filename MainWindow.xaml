@@ -6,9 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Microsoft.Samples.Kinect.ControlsBasics"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Microsoft.Samples.Kinect.ControlsBasics.MainWindow"
-        x:Name="ControlsBasicsWindow"
-        Title="Controls Basics"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" 
+        x:Class="Microsoft.Samples.Kinect.ControlsBasics.MainWindow"
+        x:Name="KinectBoardWindow"
+        Title="Kinect Display Board"
         mc:Ignorable="d"
         d:DesignWidth="1200"
         d:DesignHeight="700"
@@ -31,7 +32,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Margin="0,0,0,10">
+            <Grid x:Name="topBar" Grid.Row="0" Margin="0,0,0,10">
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FF3F3F3F" Offset="0"/>
@@ -45,6 +46,7 @@
 
                 <Button x:Name="backButton" Visibility="Hidden" Grid.Column="0" Style="{StaticResource BackButtonStyle}" Click="GoBack" />
                 <Grid Grid.Row="0" Grid.Column="1">
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="2*"/>
@@ -54,7 +56,7 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-
+                    
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="Welcome"  HorizontalAlignment="Left" Style="{DynamicResource TitleTextStyle}" Text="{DynamicResource Welcome}" Cursor="None" AutomationProperties.IsRowHeader="True" VerticalAlignment="Bottom" FontSize="36" RenderTransformOrigin="0.5,0.5" Foreground="#FFFFFCFC" Margin="0,38,605.5,0.5" Width="451">
                         <TextBlock.Resources>
                             <System:String x:Key="Welcome">Welcome to MacLean Hall</System:String>
@@ -65,7 +67,6 @@
                     <TextBlock Grid.Row="0" Grid.Column="2" x:Name="dateText" VerticalAlignment="Bottom" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">January 31, 2016</TextBlock>
                     <TextBlock Grid.Row="1" Grid.Column="2" x:Name="clockText" VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">00:00 pm</TextBlock>
                 </Grid>
-                <k:KinectUserViewer Grid.Column="1" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
             </Grid>
 
 
@@ -85,30 +86,37 @@
                                 Grid.Column="0"
                                 x:Name="weatherPanel"
                                 Orientation="Horizontal">
-                        <materialDesign:Card x:Name="weatherCard1" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
+                        <TextBlock x:Name="foreCastTitle" Margin="5,0,5,0">Forecast</TextBlock>
+                        <materialDesign:Card x:Name="weatherCard1" Width="125"  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
                             <StackPanel x:Name="weather1"  Margin="5,0,5,0">
                                 <TextBlock x:Name="day1" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
                                 <Image x:Name="weatherIcon1" Width="40px" Height="40px"/>
-                                <TextBlock x:Name="Temp1" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="Temp1" FontSize="20" TextAlignment="Center"></TextBlock>
                             </StackPanel>
                         </materialDesign:Card>
-                        <materialDesign:Card x:Name="weatherCard2" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
+                        <materialDesign:Card x:Name="weatherCard2" Width="125" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
                             <StackPanel x:Name="weather2"  Margin="5,0,5,0">
                                 <TextBlock x:Name="day2" FontSize="20" TextDecorations="Underline" TextAlignment="Center"></TextBlock>
                                 <Image x:Name="weatherIcon2" Width="40px" Height="40px"/>
-                                <TextBlock x:Name="Temp2" FontSize="20"></TextBlock>
+                                <TextBlock x:Name="Temp2" FontSize="20" TextAlignment="Center"></TextBlock>
                             </StackPanel>
                         </materialDesign:Card>
-                        <materialDesign:Card x:Name="weatherCard3" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0"> 
+                        <materialDesign:Card x:Name="weatherCard3" Width="125" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0"> 
                             <StackPanel x:Name="weather3">
                                 <TextBlock x:Name="day3" FontSize="20" TextDecorations="Underline" TextAlignment="Center"></TextBlock>
                                 <Image x:Name="weatherIcon3" Width="40px" Height="40px"/>
-                                <TextBlock x:Name="Temp3" FontSize="20">00</TextBlock>
+                                <TextBlock x:Name="Temp3" FontSize="20" TextAlignment="Center"></TextBlock>
+                            </StackPanel>
+                        </materialDesign:Card>
+                        <materialDesign:Card x:Name="weatherCard4"  Width="125" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
+                            <StackPanel x:Name="weather4">
+                                <TextBlock x:Name="day4" FontSize="20" TextDecorations="Underline" TextAlignment="Center"></TextBlock>
+                                <Image x:Name="weatherIcon4" Width="40px" Height="40px"/>
+                                <TextBlock x:Name="Temp4" FontSize="20" TextAlignment="Center"></TextBlock>
                             </StackPanel>
                         </materialDesign:Card>
 
 
-                       
                     </StackPanel>
                     
                     <ScrollViewer Grid.Row="1"
@@ -117,7 +125,7 @@
                                   HorizontalScrollBarVisibility="Auto"
                                   VerticalScrollBarVisibility="Disabled" 
                                   k:KinectRegion.IsScrollInertiaEnabled="true" >
-                        <ItemsControl Grid.Row="0" x:Name="itemsControl" ItemTemplate="{StaticResource Kinect250x250ItemTemplate}" ButtonBase.Click="ButtonClick" >
+                        <ItemsControl Grid.Row="0" x:Name="itemsControl" ItemTemplate="{StaticResource Kinect250x250ItemTemplate}" ButtonBase.Click="OpenPage" >
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel VerticalAlignment="Center" Orientation="Vertical" Margin="75,0,75,0" />
@@ -134,6 +142,33 @@
                             <RowDefinition Height="6*"/>
                             <RowDefinition Height="4*"/>
                         </Grid.RowDefinitions>
+
+
+                        <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
+                            <TextBlock x:Name="NewandAnnouncment" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
+                            
+                            <ListView x:Name="csEventsList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <materialDesign:Card x:Name="csCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch">
+                                            <StackPanel HorizontalAlignment="Stretch">
+                                                <TextBlock x:Name="csEventTitle" Text="{Binding csEventTitle}" FontSize="20"></TextBlock>
+                                                <TextBlock x:Name="csEventTime" Text="{Binding csEventTime}" FontSize="18" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>
+                                                <TextBlock x:Name="csEventLocation" Text="{Binding csEventLocation}" FontSize="18" Foreground="White"></TextBlock>
+                                            </StackPanel>
+                                        </materialDesign:Card>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                        
+                        
                         <Separator Grid.Row="1" VerticalAlignment="Top"></Separator>
                         
                         <StackPanel Grid.Row="1" HorizontalAlignment="Stretch">
@@ -160,10 +195,7 @@
                         </StackPanel>
 
                     </Grid>
-                    <Path Grid.Column="1" Data="M932.37021,166.06302" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1" Margin="149.037,166.063,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1"/>
-                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Stretch"/>
-                
+                   
                 </Grid>
             </ContentControl>
 
@@ -183,15 +215,17 @@
                         <TranslateTransform x:Name="translate" />
                     </TextBlock.RenderTransform>
                     Welcome to Maclean Hall! ~~~~~
-                    欢迎光临麦克莱恩馆！~~~~~
-                    ¡Bienvenido a Maclean Pasillo! ~~~~~
+                    欢迎来到 Maclean Hall~~~~~
+                    ¡Bienvenido a Maclean Hall! ~~~~~
+                    आपका स्वागत है Maclean Hall ~~~~~
                     To use this board, place your hand in the air and find the hand cursor. ~~~~~
                     To click on a menu, line the cursor on the button and press it in the air. ~~~~~  
                     The back button is in the top left corner.
                 </TextBlock>
 
             </StackPanel>
+            <k:KinectUserViewer Grid.Row="1" VerticalAlignment="Bottom" Height="150" Width="150" HorizontalAlignment="Left"/>
         </Grid>
-
+        
     </k:KinectRegion>
 </Window>

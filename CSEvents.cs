@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Samples.Kinect.ControlsBasics
 {
-
+    class VisibleCSEvent
+    {
+        public string csEventTitle { get; set; }
+        public string csEventTime { get; set; }
+        public string csEventLocation { get; set; }
+    }
     /// <remarks/>
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]

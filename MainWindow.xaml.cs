@@ -8,7 +8,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using Microsoft.Kinect.Wpf.Controls;
     using Microsoft.Samples.Kinect.ControlsBasics.DataModel;
     using System.Timers;
-    
+
     using System.Diagnostics;
     using System.Threading.Tasks;
     using System.Windows.Media.Animation;
@@ -19,6 +19,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
     using System.Windows.Media.Imaging;
+    using System.Xml;
+    using System.Xml.Serialization;
 
 
     /// <summary>
@@ -34,8 +36,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private static int bongoIndex;
         private static Simpleforecast weatherData;
         private static List<VisibleBongoData> fullBongoData = new List<VisibleBongoData>();
+        private static Timer csEventsTimer;
 
-        
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class. 
         /// </summary>
@@ -70,6 +73,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             GetWeatherData();
             SetWeatherTimer();
 
+            GetCSEvents();
+            SetCSEventsTimer();
         }
 
         /// <summary>
@@ -84,6 +89,50 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             weatherTimer.AutoReset = true;
             weatherTimer.Enabled = true;
         }
+
+        /// <summary>
+        /// Timer used to call an API update for CS Events
+        /// </summary>
+        private void SetCSEventsTimer()
+        {
+            // Create a timer with a 13 min interval.
+            csEventsTimer = new Timer(800000);
+            // Hook up the Elapsed event for the timer. 
+            csEventsTimer.Elapsed += GetCSEvents;
+            csEventsTimer.AutoReset = true;
+            csEventsTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Call CS website for events in XML format
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
+        private void GetCSEvents(object obj, ElapsedEventArgs e)
+        {
+            //CS Events found on Iowa CS Website
+            Uri feedUri = new Uri("https://www.cs.uiowa.edu/events/rss.xml");
+            using (WebClient downloader = new WebClient())
+            {
+                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSEvents);
+                downloader.DownloadStringAsync(feedUri);
+            }
+        }
+
+        /// <summary>
+        /// Used upon Initalize only
+        /// </summary>
+        private void GetCSEvents()
+        {
+            //CS Events found on Iowa CS Website
+            Uri feedUri = new Uri("https://www.cs.uiowa.edu/events/rss.xml");
+            using (WebClient downloader = new WebClient())
+            {
+                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSEvents);
+                downloader.DownloadStringAsync(feedUri);
+            }
+        }
+
 
         /// <summary>
         /// Event on a timer for getting the bus data for stop 00001, outside of MacLean Hall.
@@ -142,8 +191,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 downloader.DownloadStringAsync(feedUri);
             }
         }
+     
         /// <summary>
-        /// Gets the Bongo data (Json form) and creates BongoData objects
+        /// Gets the Weather forcast data (Json form) and creates WeatherData objects
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -152,11 +202,44 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-                Rootobject root = JsonConvert.DeserializeObject<Rootobject>(responseStream);
-                weatherData = root.forecast.simpleforecast;
-                SetWeatherData();
+                try
+                {
+                    Rootobject root = JsonConvert.DeserializeObject<Rootobject>(responseStream);
+                    weatherData = root.forecast.simpleforecast;
+                    SetWeatherData();
+                }
+                catch { }
+                
             }
         }
+
+        
+        private void downloader_DownloadStringCompletedCSEvents(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                string responseStream = e.Result;
+                Debug.WriteLine(e.Result);
+                XmlSerializer serializer = new XmlSerializer(typeof(nodes));
+                List<VisibleCSEvent> csEvents = new List<VisibleCSEvent>();
+                using (TextReader reader = new StringReader(e.Result))
+                {
+                    nodes result = (nodes)serializer.Deserialize(reader);
+                    foreach(var nd in result.node)
+                    {
+                        DateTime startDate = DateTime.Parse(nd.startdate);                        
+                        csEvents.Add(new VisibleCSEvent() { csEventLocation = nd.location, csEventTime = startDate.Date.ToString("MMMM d, yyyy"), csEventTitle = nd.title });
+                    }
+                }
+
+                //Sets the CS Events List
+                Dispatcher.Invoke(() =>
+                {
+                   csEventsList.ItemsSource = csEvents;
+                });                
+            }
+        }
+        //TODO integrate CS news along with events
 
         /// <summary>
         /// Sets the weather data with the icons on the mainwindow
@@ -190,6 +273,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                         day3.Text = weatherData.forecastday[2].date.weekday;
                         Temp3.Text = weatherData.forecastday[2].high.fahrenheit + "°/" + weatherData.forecastday[2].low.fahrenheit + "°";
                         weatherIcon3.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[2].icon + ".gif"));
+                    }
+                    else if (i == 3)
+                    {
+                        day4.Text = weatherData.forecastday[3].date.weekday;
+                        Temp4.Text = weatherData.forecastday[3].high.fahrenheit + "°/" + weatherData.forecastday[3].low.fahrenheit + "°";
+                        weatherIcon4.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[3].icon + ".gif"));
                     }
                     i++;
                 }
@@ -349,8 +438,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
             }
             catch { };
-
-
         }
 
 
@@ -359,7 +446,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void OpenPage(object sender, RoutedEventArgs e)
         {            
             var button = (Button)e.OriginalSource;
             SampleDataItem sampleDataItem = button.DataContext as SampleDataItem;
@@ -372,7 +459,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             else
             {
                 var selectionDisplay = new SelectionDisplay(button.Content as string);
-                this.kinectRegionGrid.Children.Add(selectionDisplay);
+                kinectRegionGrid.Children.Add(selectionDisplay);
 
                 // Selection dialog covers the entire interact-able area, so the current press interaction
                 // should be completed. Otherwise hover capture will allow the button to be clicked again within

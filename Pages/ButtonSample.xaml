@@ -25,7 +25,7 @@
             <!-- Single Button -->
             <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10 0 0 0">
                 <TextBlock Style="{StaticResource HeaderStyle}">Single Button</TextBlock>
-                <Button Content="Single Button" Style="{StaticResource SingleButtonStyle}" />
+                <Button Content="Single Button" Style="{StaticResource SingleButtonStyle}" Foreground="Black" />
             </StackPanel>
 
             <!-- Stacked Buttons -->
