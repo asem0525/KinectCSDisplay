@@ -37,6 +37,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private static Simpleforecast weatherData;
         private static List<VisibleBongoData> fullBongoData = new List<VisibleBongoData>();
         private static Timer csEventsTimer;
+        public static Rootobject fullWeatherData;
 
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             //}
 
             //Weather Forcast from Weather Underground.com
-            Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast/q/IA/Iowa_City.json");
+            Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast10day/q/IA/Iowa_City.json");
             using (WebClient downloader = new WebClient())
             {
                 downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedWeather);
@@ -184,7 +185,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void GetWeatherData()
         {
             //Weather Forcast from Weather Underground.com
-            Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast/q/IA/Iowa_City.json");
+            Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast10day/q/IA/Iowa_City.json");
             using (WebClient downloader = new WebClient())
             {
                 downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedWeather);
@@ -205,11 +206,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 try
                 {
                     Rootobject root = JsonConvert.DeserializeObject<Rootobject>(responseStream);
+                    fullWeatherData = root;
                     weatherData = root.forecast.simpleforecast;
                     SetWeatherData();
                 }
-                catch { }
-                
+                catch { }                
             }
         }
 

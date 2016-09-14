@@ -69,6 +69,10 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=1.4.14.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\WpfAnimatedGif.1.4.14\lib\net\WpfAnimatedGif.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -80,9 +84,6 @@
     <Compile Include="CSEvents.cs" />
     <Compile Include="DataModel\DataSource.cs" />
     <Compile Include="HandPointers\HandInScreenEngagementModel.cs" />
-    <Compile Include="Pages\ButtonSample.xaml.cs">
-      <DependentUpon>ButtonSample.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\CheckBoxRadioButtonSample.xaml.cs">
       <DependentUpon>CheckBoxRadioButtonSample.xaml</DependentUpon>
     </Compile>
@@ -129,10 +130,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\ButtonSample.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\CheckBoxRadioButtonSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -220,6 +217,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\CursorSpriteSheet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\wundergroundLogo_4c_horz.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

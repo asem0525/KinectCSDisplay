@@ -222,7 +222,7 @@
                         <DoubleAnimation Storyboard.TargetName="translate"
                                          Storyboard.TargetProperty="X"
                                          From="{Binding Source={x:Static SystemParameters.FullPrimaryScreenWidth}}"
-                                         To="-3100"
+                                         To="-3500"
                                          Duration="0:0:30"/>
                     </Storyboard>
                 </StackPanel.Resources>
@@ -230,10 +230,10 @@
                     <TextBlock.RenderTransform>
                         <TranslateTransform x:Name="translate" />
                     </TextBlock.RenderTransform>
-                    Welcome to Maclean Hall! ~~~~~
-                    欢迎来到 Maclean Hall~~~~~
-                    ¡Bienvenido a Maclean Hall! ~~~~~
-                    आपका स्वागत है Maclean Hall ~~~~~
+                    Welcome to MacLean Hall! ~~~~~
+                    欢迎来到 MacLean Hall ~~~~~
+                    ¡Bienvenido a MacLean Hall! ~~~~~
+                    आपका स्वागत है MacLean Hall ~~~~~
                     To use this board, place your hand in the air and find the hand cursor. ~~~~~
                     To click on a menu, line the cursor on the button and press it in the air. ~~~~~  
                     The back button is in the top left corner.

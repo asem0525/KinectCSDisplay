@@ -55,7 +55,6 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\De
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\KinectBoard.csprojResolveAssemblyReference.cache
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Common\StandardStyles.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\HandPointers\HandPointerStyles.baml
-C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\ButtonSample.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\CheckBoxRadioButtonSample.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\EngagementSettings.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\ItemsControlsSample.baml
@@ -65,7 +64,6 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pag
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\SelectionDisplay.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\App.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\MainWindow.g.cs
-C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\ButtonSample.g.cs
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\CheckBoxRadioButtonSample.g.cs
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\EngagementSettings.g.cs
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\ItemsControlsSample.g.cs
@@ -85,3 +83,5 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\De
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Newtonsoft.Json.xml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\WeatherPage.g.cs
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\WeatherPage.baml
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\WpfAnimatedGif.dll
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\WpfAnimatedGif.xml
