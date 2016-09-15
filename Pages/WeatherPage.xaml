@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <!-- Page title -->
-        <TextBlock Grid.Row="0" x:Name="pageTitle" Margin="0 10 0 10" Text="Weather" FontSize="36"/>
+        <TextBlock Grid.Row="0" Style="{StaticResource HeaderStyle}" x:Name="weatherPageTitle" Margin="0 10 0 10" Text="Weather" FontSize="36" FontWeight="UltraBold" />
         <Image x:Name="WULogo" Grid.Row="0" Source="/Images/wundergroundLogo_4c_horz.jpg" Width="90px" VerticalAlignment="Center"  HorizontalAlignment="Right"/>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -32,7 +32,7 @@
                     <RowDefinition Height="0.7*"/>
                     <RowDefinition Height="0.3*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row=" 0" x:Name="Forecast" Text="Forecast" Margin="0 10 0 10"/>
+                <TextBlock Grid.Row="0" Style="{StaticResource HeaderStyle}" x:Name="Forecast" Text="Forecast" Margin="0 10 0 10"/>
                 <Grid Grid.Row="1" x:Name="WeatherCards">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.5*"/>
@@ -56,7 +56,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb0">
+                            x:Name="wb0"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather1" >
                                 <TextBlock x:Name="day1" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -75,7 +76,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb1">
+                            x:Name="wb1"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather2">
                                 <TextBlock x:Name="day2" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -94,7 +96,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb2">
+                            x:Name="wb2"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather3">
                                 <TextBlock x:Name="day3" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -113,7 +116,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb3">
+                            x:Name="wb3"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather4">
                                 <TextBlock x:Name="day4" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -132,7 +136,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb4">
+                            x:Name="wb4"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather5">
                                 <TextBlock x:Name="day5" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -151,7 +156,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb5">
+                            x:Name="wb5"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather6" >
                                 <TextBlock x:Name="day6" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -170,7 +176,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb6">
+                            x:Name="wb6"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather7"  >
                                 <TextBlock x:Name="day7" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -189,7 +196,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb7">
+                            x:Name="wb7"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather8" >
                                 <TextBlock x:Name="day8" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -208,7 +216,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb8">
+                            x:Name="wb8"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather9">
                                 <TextBlock x:Name="day9" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -227,7 +236,8 @@
                             HorizontalContentAlignment="Stretch"
                             VerticalContentAlignment="Center"
                             Margin="5"
-                            x:Name="wb9">
+                            x:Name="wb9"
+                            Style="{StaticResource KinectTileButton}">
                         <materialDesign:Card  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}">
                             <StackPanel x:Name="weather10">
                                 <TextBlock x:Name="day10" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -253,7 +263,7 @@
             </Grid>
 
             <StackPanel Grid.Column="1">
-                <TextBlock x:Name="RadarTitle" Text="Radar" Margin="0 10 0 10"/>
+                <TextBlock x:Name="RadarTitle"  Style="{StaticResource HeaderStyle}" Text="Radar" Margin="0 10 0 10"/>
                 <Image x:Name="RadarImage" Margin="0" Height="550" Width="550" />
             </StackPanel>
         </Grid>

@@ -12,7 +12,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
     using System.Windows.Media.Imaging;
     using Microsoft.Samples.Kinect.ControlsBasics.Common;
     using System.Globalization;
-    
+    using Pages;
+
 
     // The data model defined by this file serves as a representative example of a strongly-typed
     // model that supports notification when members are added, removed, or modified.  The property
@@ -45,40 +46,40 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
 
             var mainWindowPages = new DataCollection(
                     "Group-1",
-                    "Group Title: 3",
-                    "Group Subtitle: 3",
+                    "Group Title: MainPage Items",
+                    "Group Subtitle: ",
                     DataSource.mediumGrayImage,
-                    "Group Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor scelerisque lorem in vehicula. Aliquam tincidunt, lacus ut sagittis tristique, turpis massa volutpat augue, eu rutrum ligula ante a ante");
+                    "Series of applets that users can interact with");
             mainWindowPages.Items.Add(
                     new DataItem(
-                        "MainPage-1-Item-Weather",
+                        "Group-1-Item-Weather",
                         "Weather",
                         "More Details",
-                        DataSource.darkGrayImage,
+                        new Uri("C:/Users/rwedoff/Desktop/Artboard 1.png"), //TODO Change to regular path!
                         "Expanded weather information",
                         itemContent,
                         mainWindowPages,
                         typeof(WeatherPage)));
             mainWindowPages.Items.Add(
                     new DataItem(
-                        "Group-1-Item-2",
-                        "CheckBoxes and RadioButtons",
-                        string.Empty,
+                        "Group-1-Bongo-Info",
+                        "Bus Schedule",
+                        "Complete Schedule",
                         DataSource.mediumGrayImage,
-                        "CheckBox and RadioButton controls",
+                        "Expanded Bongo data",
                         itemContent,
                         mainWindowPages,
-                        typeof(CheckBoxRadioButtonSample)));
+                        typeof(BongoPage)));
             mainWindowPages.Items.Add(
                     new DataItem(
                         "Group-1-Item-5",
-                        "Zoomable Photo",
+                        "Checkboxes",
                         string.Empty,
                         DataSource.lightGrayImage,
                         "ScrollViewer control hosting a photo, enabling scrolling and zooming.",
                         itemContent,
                         mainWindowPages,
-                        typeof(ScrollViewerSample)));
+                        typeof(CheckBoxRadioButtonSample)));
             mainWindowPages.Items.Add(
                     new DataItem(
                         "Group-1-Item-6",

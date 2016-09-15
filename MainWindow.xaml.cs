@@ -21,6 +21,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Windows.Media.Imaging;
     using System.Xml;
     using System.Xml.Serialization;
+    using System.Windows.Automation.Peers;
+    using System.Linq;
 
 
     /// <summary>
@@ -32,12 +34,28 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private static Timer bongoSwapTimer;
         private static Timer bongoGetTimer;
         private static Timer weatherTimer;
-        private static BongoData bongoData;
-        private static int bongoIndex;
+        private BongoData bongoData;
+        private int bongoIndex = 0;
         private static Simpleforecast weatherData;
         private static List<VisibleBongoData> fullBongoData = new List<VisibleBongoData>();
         private static Timer csEventsTimer;
         public static Rootobject fullWeatherData;
+        private static List<VisibleCSItem> fullCsEventsList = new List<VisibleCSItem>();
+        private int csEventIndex = 0;
+        private static List<VisibleCSItem> fullCsNewsList = new List<VisibleCSItem>();
+
+        internal static List<VisibleBongoData> FullBongoData
+        {
+            get
+            {
+                return fullBongoData;
+            }
+
+            set
+            {
+                fullBongoData = value;
+            }
+        }
 
 
         /// <summary>
@@ -64,18 +82,18 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
             //Set bongo timers
             SetBongoGetTimer();
-            SetBongoData();
-            SetBongoSwapTimer();
+            
+
+            SetSwapTimer();
 
             //Sets the scrolling bottom bar text event
             StartBottomBar();
 
-            //Sets timers and weather data
-            GetWeatherData();
+            //Sets timers and weather data            
             SetWeatherTimer();
-
-            GetCSEvents();
             SetCSEventsTimer();
+
+            GetInitalApiData();
         }
 
         /// <summary>
@@ -118,22 +136,18 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSEvents);
                 downloader.DownloadStringAsync(feedUri);
             }
-        }
 
-        /// <summary>
-        /// Used upon Initalize only
-        /// </summary>
-        private void GetCSEvents()
-        {
-            //CS Events found on Iowa CS Website
-            Uri feedUri = new Uri("https://www.cs.uiowa.edu/events/rss.xml");
+            Uri newsURI = new Uri("https://www.cs.uiowa.edu/news/rss.xml");
             using (WebClient downloader = new WebClient())
             {
-                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSEvents);
-                downloader.DownloadStringAsync(feedUri);
+                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSNews);
+                downloader.DownloadStringAsync(newsURI);
             }
-        }
 
+            //Sort events by start date
+            fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
+
+        }
 
         /// <summary>
         /// Event on a timer for getting the bus data for stop 00001, outside of MacLean Hall.
@@ -182,7 +196,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// Calls convsersion to WeatherData objects.
         /// Only used on initalize
         /// </summary>
-        private void GetWeatherData()
+        private void GetInitalApiData()
         {
             //Weather Forcast from Weather Underground.com
             Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast10day/q/IA/Iowa_City.json");
@@ -190,6 +204,29 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             {
                 downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedWeather);
                 downloader.DownloadStringAsync(feedUri);
+            }
+
+            Uri newsURI = new Uri("https://www.cs.uiowa.edu/news/rss.xml");
+            using (WebClient downloader = new WebClient())
+            {
+                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSNews);
+                downloader.DownloadStringAsync(newsURI);
+            }
+
+            //CS Events found on Iowa CS Website
+            Uri eventsURI = new Uri("https://www.cs.uiowa.edu/events/rss.xml");
+            using (WebClient downloader = new WebClient())
+            {
+                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSEvents);
+                downloader.DownloadStringAsync(eventsURI);
+            }         
+
+            //Prediction URI from Bongo API for stop 0001 Downtown Interchange
+            Uri bongoUri = new Uri("http://api.ebongo.org/prediction?format=json&stopid=0001&api_key=XXXX");
+            using (WebClient downloader = new WebClient())
+            {
+                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedBongo);
+                downloader.DownloadStringAsync(bongoUri);
             }
         }
      
@@ -220,27 +257,43 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-                Debug.WriteLine(e.Result);
+                
                 XmlSerializer serializer = new XmlSerializer(typeof(nodes));
-                List<VisibleCSEvent> csEvents = new List<VisibleCSEvent>();
+                fullCsEventsList.Clear();
                 using (TextReader reader = new StringReader(e.Result))
                 {
                     nodes result = (nodes)serializer.Deserialize(reader);
+                    
                     foreach(var nd in result.node)
                     {
                         DateTime startDate = DateTime.Parse(nd.startdate);                        
-                        csEvents.Add(new VisibleCSEvent() { csEventLocation = nd.location, csEventTime = startDate.Date.ToString("MMMM d, yyyy"), csEventTitle = nd.title });
+                        fullCsEventsList.Add(new VisibleCSItem() { csEventLocation = nd.location, csEventTime = startDate.Date.ToString("MMMM d, yyyy"), csEventTitle = nd.title, startDate = startDate, isEvent = true });
                     }
                 }
-
-                //Sets the CS Events List
-                Dispatcher.Invoke(() =>
-                {
-                   csEventsList.ItemsSource = csEvents;
-                });                
             }
         }
-        //TODO integrate CS news along with events
+
+        private void downloader_DownloadStringCompletedCSNews(object sender, DownloadStringCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                string responseStream = e.Result;
+                XmlSerializer serializer = new XmlSerializer(typeof(nodes));
+                
+                using (TextReader reader = new StringReader(e.Result))
+                {
+                    nodes result = (nodes)serializer.Deserialize(reader);
+
+                    foreach (var nd in result.node)
+                    {
+                        DateTime startDate = DateTime.Parse(nd.startdate);
+                        fullCsNewsList.Add(new VisibleCSItem() { csEventLocation = nd.location, csEventTime = startDate.Date.ToString("MMMM d, yyyy"), csEventTitle = nd.title, startDate = startDate, isEvent = false });
+                    }
+                }
+            }
+        }
+        //TODO set page timer
+        //TODO set Loading bars
 
         /// <summary>
         /// Sets the weather data with the icons on the mainwindow
@@ -336,13 +389,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <summary>
         /// Timer for swaping out the Bongo info cards.
         /// </summary>
-        private void SetBongoSwapTimer()
+        private void SetSwapTimer()
         {
             // Create a timer with a two second interval.
             bongoSwapTimer = new Timer(5000);
             // Hook up the Elapsed event for the timer. 
             bongoSwapTimer.Elapsed += SetBongoSwapEvent;
-            //bongoSwapTimer.Elapsed += SetSwapEvent2;
+            bongoSwapTimer.Elapsed += SetCSEventsSwapEvent;
             bongoSwapTimer.AutoReset = true;
             bongoSwapTimer.Enabled = true;
         }
@@ -367,7 +420,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             if (bongoData != null)
             {
-                fullBongoData.Clear();           
+                FullBongoData.Clear();           
                 foreach (var bd in bongoData.predictions)
                 {
                     string minString = bd.minutes.ToString() + "min.";
@@ -376,11 +429,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     {
                         minString = "Arriving";
                     }
-
+                    
                     string colorString = "#FFFFFF";
                     if (bd.agency.Equals("cambus"))
                     {
-                        colorString = "yellow";
+                        colorString = "#FFEB3B";
                     }
                     else if(bd.agency.Equals("iowa-city"))
                     {
@@ -393,15 +446,56 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
                     if(bd.minutes <= 15 || bongoData.predictions.Count <= 8)
                     {
-                        fullBongoData.Add(new VisibleBongoData() { stopname = bd.stopname, minutes = minString, routename = bd.title, color = colorString });
+                        FullBongoData.Add(new VisibleBongoData() { stopname = bd.stopname, minutes = minString, routename = bd.title, color = colorString });
                     }
                 }
             }
             else
             {
-                fullBongoData.Add(new VisibleBongoData() { stopname = "No buses running", color="#FFFFFF"});
+                FullBongoData.Add(new VisibleBongoData() { stopname = "No buses running", color="#FFFFFF"});
             }
         }
+
+        /// <summary>
+        /// Swaps out cards with cs event data on MainWindow
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SetCSEventsSwapEvent(object sender, ElapsedEventArgs e)
+        {
+            
+            fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
+            List<VisibleCSItem> comboList = fullCsEventsList.Concat(fullCsNewsList).ToList();
+            List <VisibleCSItem> groupedCSEventData = new List<VisibleCSItem>();
+            if (csEventIndex <  comboList.Count)
+            {
+                int i = 0;
+                while(i + csEventIndex < comboList.Count && i < 4)
+                {
+                    groupedCSEventData.Add(comboList[i + csEventIndex]);
+                    i++;
+                }
+                csEventIndex += 4;
+            }
+            else
+            {
+                csEventIndex = 0;
+            }
+            try
+            {
+                //Udpdate UI thread with new event group of 4
+                Dispatcher.Invoke(() =>
+                {
+                    if (groupedCSEventData.Count >= 1)
+                    {
+                        csEventsList.ItemsSource = groupedCSEventData;
+                    }
+                });
+            }
+            catch { }
+        }
+
+
 
         /// <summary>
         /// Swaps out cards with Bongo data on MainWindow
@@ -411,12 +505,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void SetBongoSwapEvent(object sender, ElapsedEventArgs e)
         {
             List<VisibleBongoData> groupedBongoData = new List<VisibleBongoData>();
-            if(bongoIndex < fullBongoData.Count)
+            if(bongoIndex < FullBongoData.Count)
             {
                 int i = 0;
-                while (i + bongoIndex < fullBongoData.Count && i < 4)
+                while (i + bongoIndex < FullBongoData.Count && i < 3)
                 {
-                    groupedBongoData.Add(fullBongoData[i + bongoIndex]);
+                    groupedBongoData.Add(FullBongoData[i + bongoIndex]);
                     i++;
                 }
                 bongoIndex += 3;
@@ -427,16 +521,14 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
             try
             {
-                //Udpdate UI thread with new bus group of 4
+                //Udpdate UI thread with new bus group of 3
                 Dispatcher.Invoke(() =>
                 {
                     if (groupedBongoData.Count >= 1)
                     {
                         bongoList.ItemsSource = groupedBongoData;
                     }
-
                 });
-
             }
             catch { };
         }

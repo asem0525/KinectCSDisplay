@@ -46,7 +46,7 @@
 
                 <Button x:Name="backButton" Visibility="Hidden" Grid.Column="0" Style="{StaticResource BackButtonStyle}" Click="GoBack" />
                 <Grid Grid.Row="0" Grid.Column="1">
-                    
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="2*"/>
@@ -56,13 +56,13 @@
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="Welcome"  HorizontalAlignment="Left" Style="{DynamicResource TitleTextStyle}" Text="{DynamicResource Welcome}" Cursor="None" AutomationProperties.IsRowHeader="True" VerticalAlignment="Bottom" FontSize="36" RenderTransformOrigin="0.5,0.5" Foreground="#FFFFFCFC" Margin="0,38,605.5,0.5" Width="451">
                         <TextBlock.Resources>
                             <System:String x:Key="Welcome">Welcome to MacLean Hall</System:String>
                         </TextBlock.Resources>
                     </TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="0" x:Name="Comp"  VerticalAlignment="Top"  Text="Computer" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Right" Foreground="#FFF2BE3B" Margin="0 0 2.5 0"></TextBlock>
+                    <TextBlock Grid.Column="0" x:Name="Comp"  VerticalAlignment="Bottom"  Text="Computer" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Right" Foreground="#FFEB3B" Margin="0,0,2,22.5" Grid.RowSpan="2"/>
                     <TextBlock Grid.Row="1" Grid.Column="1" x:Name="Sci" VerticalAlignment="Top"  Text="Science" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Left" Foreground="#DDFFFFFF" Margin="2.5 0 0 0"></TextBlock>
                     <TextBlock Grid.Row="0" Grid.Column="2" x:Name="dateText" VerticalAlignment="Bottom" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">January 31, 2016</TextBlock>
                     <TextBlock Grid.Row="1" Grid.Column="2" x:Name="clockText" VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">00:00 pm</TextBlock>
@@ -86,7 +86,7 @@
                                 Grid.Column="0"
                                 x:Name="weatherPanel"
                                 Orientation="Horizontal">
-                        <TextBlock x:Name="foreCastTitle" Margin="5,0,5,0">Forecast</TextBlock>
+                        <TextBlock x:Name="foreCastTitle" Margin="5,0,5,0" VerticalAlignment="Top" Style="{StaticResource HeaderStyle}">Forecast</TextBlock>
                         <materialDesign:Card x:Name="weatherCard1" Width="125"  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
                             <StackPanel x:Name="weather1"  Margin="5,0,5,0">
                                 <TextBlock x:Name="day1" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -101,7 +101,7 @@
                                 <TextBlock x:Name="Temp2" FontSize="20" TextAlignment="Center"></TextBlock>
                             </StackPanel>
                         </materialDesign:Card>
-                        <materialDesign:Card x:Name="weatherCard3" Width="125" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0"> 
+                        <materialDesign:Card x:Name="weatherCard3" Width="125" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
                             <StackPanel x:Name="weather3">
                                 <TextBlock x:Name="day3" FontSize="20" TextDecorations="Underline" TextAlignment="Center"></TextBlock>
                                 <Image x:Name="weatherIcon3" Width="40px" Height="40px"/>
@@ -118,7 +118,7 @@
 
 
                     </StackPanel>
-                    
+
                     <ScrollViewer Grid.Row="1"
                                   Grid.Column="0"
                                   x:Name="scrollViewer" 
@@ -145,8 +145,8 @@
 
 
                         <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
-                            <TextBlock x:Name="NewsAndAnnouncment" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
-                            
+                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="NewsAndAnnouncment" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
+
                             <ListView x:Name="csEventsList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -159,7 +159,7 @@
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
-                                    </Style>                                    
+                                    </Style>
                                 </ListView.ItemContainerStyle>
 
                                 <ListView.ItemTemplate>
@@ -167,7 +167,7 @@
                                         <materialDesign:Card x:Name="csCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch" Margin="5">
                                             <StackPanel HorizontalAlignment="Stretch">
                                                 <TextBlock x:Name="csEventTitle" Text="{Binding csEventTitle}" FontSize="20"></TextBlock>
-                                                <TextBlock x:Name="csEventTime" Text="{Binding csEventTime}" FontSize="18" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>
+                                                <TextBlock x:Name="csEventTime" Text="{Binding csEventTime}" FontSize="18" FontStyle="Italic"></TextBlock>
                                                 <TextBlock x:Name="csEventLocation" Text="{Binding csEventLocation}" FontSize="18" Foreground="White"></TextBlock>
                                             </StackPanel>
                                         </materialDesign:Card>
@@ -175,12 +175,12 @@
                                 </ListView.ItemTemplate>
                             </ListView>
                         </StackPanel>
-                        
-                        
+
+
                         <Separator Grid.Row="1" VerticalAlignment="Top"></Separator>
-                        
+
                         <StackPanel Grid.Row="1" HorizontalAlignment="Stretch">
-                            <TextBlock x:Name="busScheduleTitle" Grid.Row="1">Upcoming Buses</TextBlock>
+                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="busScheduleTitle" Grid.Row="1">Upcoming Buses</TextBlock>
                             <ListView x:Name="bongoList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -211,7 +211,7 @@
                         </StackPanel>
 
                     </Grid>
-                   
+
                 </Grid>
             </ContentControl>
 
@@ -242,6 +242,6 @@
             </StackPanel>
             <k:KinectUserViewer Grid.Row="1" VerticalAlignment="Bottom" Height="150" Width="150" HorizontalAlignment="Left"/>
         </Grid>
-        
+
     </k:KinectRegion>
 </Window>

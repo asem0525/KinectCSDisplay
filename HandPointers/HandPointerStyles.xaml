@@ -87,20 +87,22 @@
     </Style>
 
     <DataTemplate x:Key="Kinect250x250ItemTemplate">
-        <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="3" >
-            <Button Style="{StaticResource KinectTileButton}">
+        <Button Style="{StaticResource KinectTileButton}">
+        <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}"  Margin="3" >
+            
                 <Grid HorizontalAlignment="Left" Width="250" Height="250">
-                    <Border Background="{StaticResource ListViewItemPlaceholderBackgroundThemeBrush}">
+                    <Border Background="#FF242424">
                         <Image Source="{Binding Image}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
                     </Border>
                     <StackPanel VerticalAlignment="Bottom" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}">
-                        <TextBlock Text="{Binding Title}" Foreground="{StaticResource ListViewItemOverlayForegroundThemeBrush}" Style="{StaticResource TitleTextStyle}" Height="60" Margin="15,0,15,0"/>
-                        <TextBlock Text="{Binding Subtitle}" Foreground="{StaticResource ListViewItemOverlaySecondaryForegroundThemeBrush}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
+                        <TextBlock Text="{Binding Title}" Foreground="#FFEB3B" Style="{StaticResource TitleTextStyle}" Height="60" Margin="15,0,15,0"/>
+                        <TextBlock Text="{Binding Subtitle}" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
                     </StackPanel>
                 </Grid>
-            </Button>
+            
         </materialDesign:Card>
-        
+        </Button>
+
     </DataTemplate>
     
     <!-- Button Text Style -->
@@ -487,7 +489,7 @@
         <Setter Property="MinWidth" Value="316" />
         <Setter Property="MaxWidth" Value="948" />
         <Setter Property="Padding" Value="18,14,18,14" />
-        <Setter Property="Foreground" Value="{StaticResource WhiteBrush}" />
+        <Setter Property="Foreground" Value="#FF242424" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -634,10 +636,10 @@
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MediumGrayBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="NormalRectangle">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource MediumGrayBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="FocusHighlight">
                                             <DiscreteObjectKeyFrame KeyTime="0">

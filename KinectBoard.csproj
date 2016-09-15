@@ -84,6 +84,9 @@
     <Compile Include="CSEvents.cs" />
     <Compile Include="DataModel\DataSource.cs" />
     <Compile Include="HandPointers\HandInScreenEngagementModel.cs" />
+    <Compile Include="Pages\BongoPage.xaml.cs">
+      <DependentUpon>BongoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CheckBoxRadioButtonSample.xaml.cs">
       <DependentUpon>CheckBoxRadioButtonSample.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\BongoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CheckBoxRadioButtonSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
