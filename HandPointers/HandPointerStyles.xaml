@@ -88,8 +88,7 @@
 
     <DataTemplate x:Key="Kinect250x250ItemTemplate">
         <Button Style="{StaticResource KinectTileButton}">
-        <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}"  Margin="3" >
-            
+            <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}"  Margin="3" >            
                 <Grid HorizontalAlignment="Left" Width="250" Height="250">
                     <Border Background="#FF242424">
                         <Image Source="{Binding Image}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
@@ -98,9 +97,8 @@
                         <TextBlock Text="{Binding Title}" Foreground="#FFEB3B" Style="{StaticResource TitleTextStyle}" Height="60" Margin="15,0,15,0"/>
                         <TextBlock Text="{Binding Subtitle}" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
                     </StackPanel>
-                </Grid>
-            
-        </materialDesign:Card>
+                </Grid>            
+            </materialDesign:Card>
         </Button>
 
     </DataTemplate>

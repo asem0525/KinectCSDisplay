@@ -23,6 +23,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Xml.Serialization;
     using System.Windows.Automation.Peers;
     using System.Linq;
+    using System.Text;
 
 
     /// <summary>
@@ -263,11 +264,29 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 using (TextReader reader = new StringReader(e.Result))
                 {
                     nodes result = (nodes)serializer.Deserialize(reader);
-                    
-                    foreach(var nd in result.node)
+
+                    foreach (var nd in result.node)
                     {
-                        DateTime startDate = DateTime.Parse(nd.startdate);                        
-                        fullCsEventsList.Add(new VisibleCSItem() { csEventLocation = nd.location, csEventTime = startDate.Date.ToString("MMMM d, yyyy"), csEventTitle = nd.title, startDate = startDate, isEvent = true });
+                        try
+                        {
+                            string date = nd.startdate;
+                            Regex reg = new Regex("\\(All\\sday\\)");
+                            if (reg.IsMatch(nd.startdate))
+                            {
+                                date = nd.startdate.Substring(0, reg.Match(nd.startdate).Index);
+                            }
+                            DateTime startDate = DateTime.Parse(date);
+
+                            fullCsEventsList.Add(new VisibleCSItem()
+                            {
+                                csEventLocation = nd.location == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.location)),
+                                csEventTime = startDate.Date.ToString("MMMM d, yyyy"),
+                                csEventTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                startDate = startDate,
+                                isEvent = true
+                            });
+                        }
+                        catch { }
                     }
                 }
             }
@@ -286,14 +305,40 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
                     foreach (var nd in result.node)
                     {
-                        DateTime startDate = DateTime.Parse(nd.startdate);
-                        fullCsNewsList.Add(new VisibleCSItem() { csEventLocation = nd.location, csEventTime = startDate.Date.ToString("MMMM d, yyyy"), csEventTitle = nd.title, startDate = startDate, isEvent = false });
+                        try
+                        {
+                            string date = nd.startdate;
+                            Regex reg = new Regex("\\(All\\sday\\)");
+                            if (reg.IsMatch(nd.startdate))
+                            {
+                                date = nd.startdate.Substring(0, reg.Match(nd.startdate).Index);
+                            }
+                            DateTime startDate = DateTime.Parse(date);
+
+                            fullCsNewsList.Add(new VisibleCSItem()
+                            {
+                                csEventLocation = nd.location == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.location)),
+                                csEventTime = startDate.Date.ToString("MMMM d, yyyy"),
+                                csEventTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                startDate = startDate,
+                                isEvent = false
+                            });
+                        }
+                        catch { }
                     }
                 }
             }
         }
         //TODO set page timer
         //TODO set Loading bars
+        //TODO create settings page
+        //TODO create Staff Directory Page
+        //TODO create CNET Page
+        //TODO make kinect viewing camera better
+        //TODO Make icons
+        //TODO Set relative icon paths
+        //TODO remove events swap, add "Upcoming"
+        //TODO make listview not crop off at the bottom
 
         /// <summary>
         /// Sets the weather data with the icons on the mainwindow

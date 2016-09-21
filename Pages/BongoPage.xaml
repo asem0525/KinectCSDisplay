@@ -56,7 +56,7 @@
                     <DataTemplate>
                         <materialDesign:Card x:Name="bongoCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" HorizontalAlignment="Stretch" Margin="1">
                             <StackPanel HorizontalAlignment="Stretch">
-                                <TextBlock x:Name="bongoStopName" Text="{Binding stopname}" FontSize="15" TextDecorations="Underline" ></TextBlock>
+                                <TextBlock x:Name="bongoStopName" Text="{Binding stopname}" FontSize="15" Foreground="{Binding color}" TextDecorations="Underline" ></TextBlock>
                                 <TextBlock x:Name="bongoRouteName" Text="{Binding routename}" FontSize="15" Foreground="{Binding color}" FontStyle="Italic"></TextBlock>
                                 <TextBlock x:Name="bongoTime" Text="{Binding minutes}" FontSize="15" Foreground="White" FontWeight="Bold"></TextBlock>
                             </StackPanel>

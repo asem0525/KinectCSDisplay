@@ -13,6 +13,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         public string csEventLocation { get; set; }
         public DateTime startDate { get; set; }
         public bool isEvent { get; set; }
+        
     }
 
     /// <remarks/>

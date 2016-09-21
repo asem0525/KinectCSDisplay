@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\App.xaml
-13-1640080095
+14692352223
 
-25-1284142235
-181051940452
-Common\StandardStyles.xaml;HandPointers\HandPointerStyles.xaml;MainWindow.xaml;Pages\BongoPage.xaml;Pages\CheckBoxRadioButtonSample.xaml;Pages\EngagementSettings.xaml;Pages\ItemsControlsSample.xaml;Pages\KinectPointerPointSample.xaml;Pages\ScrollViewerSample.xaml;Pages\SliderSample.xaml;Pages\WeatherPage.xaml;Properties\DesignTimeResources.xaml;SelectionDisplay.xaml;
+26344787813
+211042601353
+Common\StandardStyles.xaml;HandPointers\HandPointerStyles.xaml;MainWindow.xaml;Pages\BongoPage.xaml;Pages\CheckBoxRadioButtonSample.xaml;Pages\CSEvents.xaml;Pages\EngagementSettings.xaml;Pages\ItemsControlsSample.xaml;Pages\KinectPointerPointSample.xaml;Pages\ScrollViewerSample.xaml;Pages\SliderSample.xaml;Pages\WeatherPage.xaml;Properties\DesignTimeResources.xaml;SelectionDisplay.xaml;
 
 True
 
