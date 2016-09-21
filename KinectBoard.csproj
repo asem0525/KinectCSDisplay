@@ -247,6 +247,15 @@
   <ItemGroup>
     <Resource Include="Images\wundergroundLogo_4c_horz.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\WeatherIcon4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\BusLogoFront.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\WeatherIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

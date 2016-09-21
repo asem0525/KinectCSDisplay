@@ -42,8 +42,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private static Timer csEventsTimer;
         public static Rootobject fullWeatherData;
         private static List<VisibleCSItem> fullCsEventsList = new List<VisibleCSItem>();
-        private int csEventIndex = 0;
+        
         private static List<VisibleCSItem> fullCsNewsList = new List<VisibleCSItem>();
+        private bool task1;
+        private bool task2;
+        private Timer waitTimer;
 
         internal static List<VisibleBongoData> FullBongoData
         {
@@ -110,6 +113,18 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             weatherTimer.Enabled = true;
         }
 
+        private void SetWaitTimer()
+        {
+            task1 = false;
+            task2 = false;
+            // Create a timer with a two second interval.
+            waitTimer = new Timer(100);
+            // Hook up the Elapsed event for the timer. 
+            waitTimer.Elapsed += SetCSCards;
+            waitTimer.AutoReset = true;
+            waitTimer.Enabled = true;
+        }
+
         /// <summary>
         /// Timer used to call an API update for CS Events
         /// </summary>
@@ -145,9 +160,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 downloader.DownloadStringAsync(newsURI);
             }
 
-            //Sort events by start date
-            fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
-
+            SetWaitTimer();
         }
 
         /// <summary>
@@ -175,14 +188,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void GetWeatherData(object source, ElapsedEventArgs e)
         {
-            //using (StreamReader r = new StreamReader("C:/Users/rwedoff/Desktop/tempWeather.json")) {
-            //    string json = r.ReadToEnd();
-                                
-            //    Rootobject root = JsonConvert.DeserializeObject<Rootobject>(json);
-            //    weatherData = root.forecast.simpleforecast;
-            //    SetWeatherData();
-            //}
-
             //Weather Forcast from Weather Underground.com
             Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast10day/q/IA/Iowa_City.json");
             using (WebClient downloader = new WebClient())
@@ -206,6 +211,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedWeather);
                 downloader.DownloadStringAsync(feedUri);
             }
+
+            task1 = false;
+            task2 = false;
+            SetWaitTimer();
 
             Uri newsURI = new Uri("https://www.cs.uiowa.edu/news/rss.xml");
             using (WebClient downloader = new WebClient())
@@ -288,6 +297,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                         }
                         catch { }
                     }
+                    task1 = true;
                 }
             }
         }
@@ -326,6 +336,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                         }
                         catch { }
                     }
+                    task2 = true;
                 }
             }
         }
@@ -336,9 +347,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         //TODO create CNET Page
         //TODO make kinect viewing camera better
         //TODO Make icons
-        //TODO Set relative icon paths
-        //TODO remove events swap, add "Upcoming"
-        //TODO make listview not crop off at the bottom
+        
 
         /// <summary>
         /// Sets the weather data with the icons on the mainwindow
@@ -440,7 +449,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             bongoSwapTimer = new Timer(5000);
             // Hook up the Elapsed event for the timer. 
             bongoSwapTimer.Elapsed += SetBongoSwapEvent;
-            bongoSwapTimer.Elapsed += SetCSEventsSwapEvent;
             bongoSwapTimer.AutoReset = true;
             bongoSwapTimer.Enabled = true;
         }
@@ -504,40 +512,36 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <summary>
         /// Swaps out cards with cs event data on MainWindow
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SetCSEventsSwapEvent(object sender, ElapsedEventArgs e)
+        private void SetCSCards(object o, ElapsedEventArgs e)
         {
-            
-            fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
-            List<VisibleCSItem> comboList = fullCsEventsList.Concat(fullCsNewsList).ToList();
-            List <VisibleCSItem> groupedCSEventData = new List<VisibleCSItem>();
-            if (csEventIndex <  comboList.Count)
+            if(task1 && task2)
             {
-                int i = 0;
-                while(i + csEventIndex < comboList.Count && i < 4)
+                fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
+                List<VisibleCSItem> comboList = fullCsEventsList.Concat(fullCsNewsList).ToList();
+                List<VisibleCSItem> groupedCSEventData = new List<VisibleCSItem>();
+
+                for (int i = 0; i < 5 && i < comboList.Count; i++)
                 {
-                    groupedCSEventData.Add(comboList[i + csEventIndex]);
-                    i++;
+                    groupedCSEventData.Add(comboList[i]);
                 }
-                csEventIndex += 4;
-            }
-            else
-            {
-                csEventIndex = 0;
-            }
-            try
-            {
-                //Udpdate UI thread with new event group of 4
-                Dispatcher.Invoke(() =>
+
+                try
                 {
-                    if (groupedCSEventData.Count >= 1)
+                    //Udpdate UI thread with new event group of 4
+                    Dispatcher.Invoke(() =>
                     {
-                        csEventsList.ItemsSource = groupedCSEventData;
-                    }
-                });
-            }
-            catch { }
+                        if (groupedCSEventData.Count >= 1)
+                        {
+                            csEventsList.ItemsSource = groupedCSEventData;
+                        }
+                    });
+                }
+                catch { }
+                waitTimer.AutoReset = false;
+                waitTimer.Enabled = false;
+                waitTimer.Dispose();
+            } 
+            
         }
 
 

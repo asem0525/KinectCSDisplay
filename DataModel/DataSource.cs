@@ -55,7 +55,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                         "Group-1-Item-Weather",
                         "Weather",
                         "More Details",
-                        new Uri("C:/Users/rwedoff/Desktop/WeatherIcon4.png"), //TODO Change to regular path!
+                        new Uri("../Assets/WeatherIcon.png", UriKind.Relative),
                         "Expanded weather information",
                         itemContent,
                         mainWindowPages,
@@ -65,7 +65,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                         "Group-1-Bongo-Info",
                         "Bus Schedule",
                         "Complete Schedule",
-                        new Uri("C:/Users/rwedoff/Desktop/BusLogoFront.png"),
+                        new Uri("../Assets/BusLogoFront.png", UriKind.Relative),
                         "Expanded Bongo data",
                         itemContent,
                         mainWindowPages,

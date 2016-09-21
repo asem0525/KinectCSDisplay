@@ -90,10 +90,14 @@
         <Button Style="{StaticResource KinectTileButton}">
             <materialDesign:Card Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}"  Margin="3" >            
                 <Grid HorizontalAlignment="Left" Width="250" Height="250">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.6*"/>
+                        <RowDefinition Height="0.4*"/>
+                    </Grid.RowDefinitions>
                     <Border Background="#FF242424">
-                        <Image Source="{Binding Image}" Stretch="UniformToFill" AutomationProperties.Name="{Binding Title}"/>
+                        <Image Grid.Row="0" Source="{Binding Image}" Stretch="Uniform" AutomationProperties.Name="{Binding Title}"/>
                     </Border>
-                    <StackPanel VerticalAlignment="Bottom" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}">
+                    <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Background="{StaticResource ListViewItemOverlayBackgroundThemeBrush}">
                         <TextBlock Text="{Binding Title}" Foreground="#FFEB3B" Style="{StaticResource TitleTextStyle}" Height="60" Margin="15,0,15,0"/>
                         <TextBlock Text="{Binding Subtitle}" Foreground="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
                     </StackPanel>

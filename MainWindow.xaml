@@ -146,7 +146,7 @@
 
 
                         <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
-                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="NewsAndAnnouncment" TextWrapping="Wrap" Text="News &amp; Announcements" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
+                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="NewsAndAnnouncment" TextWrapping="Wrap" Text="Upcoming News &amp; Events" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
 
                             <ListView x:Name="csEventsList" 
                                       Background="{x:Null}" 
@@ -154,6 +154,7 @@
                                       HorizontalAlignment="Stretch" 
                                       SelectionMode="Single"
                                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                       >
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -188,7 +189,7 @@
 
                         <StackPanel Grid.Row="1" HorizontalAlignment="Stretch">
                             <TextBlock Style="{StaticResource HeaderStyle}" x:Name="busScheduleTitle" Grid.Row="1">Upcoming Buses</TextBlock>
-                            <ListView x:Name="bongoList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch">
+                            <ListView x:Name="bongoList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
                                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
