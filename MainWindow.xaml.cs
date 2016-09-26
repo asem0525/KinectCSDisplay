@@ -6,11 +6,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Windows.Controls;
     using Microsoft.Kinect;
     using Microsoft.Kinect.Wpf.Controls;
-    using Microsoft.Samples.Kinect.ControlsBasics.DataModel;
+    using DataModel;
     using System.Timers;
 
     using System.Diagnostics;
-    using System.Threading.Tasks;
+
     using System.Windows.Media.Animation;
 
     using System.Net;
@@ -24,6 +24,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Windows.Automation.Peers;
     using System.Linq;
     using System.Text;
+    using System.Windows.Navigation;
 
 
     /// <summary>
@@ -31,6 +32,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     /// </summary>
     public partial class MainWindow
     {
+        
         private static Timer clockTimer;
         private static Timer bongoSwapTimer;
         private static Timer bongoGetTimer;
@@ -47,6 +49,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private bool task1;
         private bool task2;
         private Timer waitTimer;
+        private NavigationService navService;
 
         internal static List<VisibleBongoData> FullBongoData
         {
@@ -68,6 +71,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         public MainWindow()
         {
             this.InitializeComponent();
+
+            navService = NavigationService.GetNavigationService(this);
 
             KinectRegion.SetKinectRegion(this, kinectRegion);
 
@@ -342,12 +347,16 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         }
         //TODO set page timer
         //TODO set Loading bars
-        //TODO create settings page
-        //TODO create Staff Directory Page
-        //TODO create CNET Page
         //TODO make kinect viewing camera better
         //TODO Make icons
-        
+        //TODO add comments
+        //TODO Make people page async
+        //TODO add fade and swap to homepage
+        //TODO South Side stop and north side stop
+        //TODO Remove button on CLAS Logo
+        //TODO talk to Mark about image feeds
+        //TODO Fix styling of elements
+        //TODO make bus list scrollable!
 
         /// <summary>
         /// Sets the weather data with the icons on the mainwindow
@@ -357,7 +366,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             if (weatherData != null)
             {
                 int i = 0;
-                string hostIconURL = "http://icons.wxug.com/i/c/i/";
+                string hostIconURL = "http://icons.wxug.com/i/c/k/";
                 if(DateTime.Now.Hour >= 18)
                 {
                     hostIconURL = hostIconURL + "nt_";
@@ -433,7 +442,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             {
                 Dispatcher.Invoke(() =>
                 {
-                    dateText.Text = DateTime.Now.Date.ToString("MMMM d, yyyy");
+                    dateText.Text = DateTime.Now.Date.ToString("ddd, MMM dd");
                     clockText.Text = DateTime.Now.ToString("h:mm:ss tt");
                 });
             }
@@ -490,11 +499,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     }
                     else if(bd.agency.Equals("iowa-city"))
                     {
-                        colorString = "red";
+                        colorString = "indianred";
                     }
                     else if (bd.agency.Equals("coralville"))
                     {
-                        colorString = "blue";
+                        colorString = "royalblue";
                     }
 
                     if(bd.minutes <= 15 || bongoData.predictions.Count <= 8)
@@ -595,7 +604,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
             if (sampleDataItem != null && sampleDataItem.NavigationPage != null)
             {
-                backButton.Visibility = System.Windows.Visibility.Visible;
+                backButton.Visibility = Visibility.Visible;
                 navigationRegion.Content = Activator.CreateInstance(sampleDataItem.NavigationPage);
             }
             else
@@ -624,7 +633,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <param name="e">Event arguments</param>
         private void GoBack(object sender, RoutedEventArgs e)
         {
-            backButton.Visibility = System.Windows.Visibility.Hidden;
+            backButton.Visibility = Visibility.Hidden;
             navigationRegion.Content = this.kinectRegionGrid;
         }
 
@@ -635,6 +644,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             Storyboard s = (Storyboard) bottomBar.TryFindResource("sb");
             s.Begin();	// Start animation
+        }
+
+        private void DateTimeClock_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            backButton.Visibility = Visibility.Visible;
+            navigationRegion.Content = Activator.CreateInstance(typeof(KinectPointerPointSample));
         }
     }
 }

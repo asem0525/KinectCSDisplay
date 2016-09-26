@@ -97,3 +97,7 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\De
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Fizzler.Systems.HtmlAgilityPack.dll
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Fizzler.xml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\Fizzler.Systems.HtmlAgilityPack.xml
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\PeoplePage.g.cs
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\PeoplePage.baml
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\SampleData\CSEventSampleData\CSEventSampleData.baml

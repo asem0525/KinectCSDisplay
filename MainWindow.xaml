@@ -25,20 +25,20 @@
         FontFamily="{DynamicResource MaterialDesignFont}" Background="Gainsboro">
 
     <k:KinectRegion x:Name="kinectRegion">
-        <Grid Background="Gainsboro">
+        <Grid>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF292929"/>
+                    <GradientStop Color="#FF020202" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="100*" />
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid x:Name="topBar" Grid.Row="0" Margin="0,0,0,10">
-                <Grid.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF3F3F3F" Offset="0"/>
-                        <GradientStop Color="#FF242424" Offset="1"/>
-                    </LinearGradientBrush>
-                </Grid.Background>
+            <Grid x:Name="topBar" Grid.Row="0" Margin="0,0,0,7" Background="Black">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -48,34 +48,39 @@
                 <Grid Grid.Row="0" Grid.Column="1">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="0.2*"/>
+                        <RowDefinition Height="0.3*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="10*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0.75*"/>
+                        <ColumnDefinition Width="0.25*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  x:Name="Welcome"  HorizontalAlignment="Left" Style="{DynamicResource TitleTextStyle}" Text="{DynamicResource Welcome}" Cursor="None" AutomationProperties.IsRowHeader="True" VerticalAlignment="Bottom" FontSize="36" RenderTransformOrigin="0.5,0.5" Foreground="#FFFFFCFC" Margin="0,38,605.5,0.5" Width="451">
-                        <TextBlock.Resources>
-                            <System:String x:Key="Welcome">Welcome to MacLean Hall</System:String>
-                        </TextBlock.Resources>
-                    </TextBlock>
-                    <TextBlock Grid.Column="0" x:Name="Comp"  VerticalAlignment="Bottom"  Text="Computer" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Right" Foreground="#FFEB3B" Margin="0,0,2,22.5" Grid.RowSpan="2"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="Sci" VerticalAlignment="Top"  Text="Science" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Left" Foreground="#DDFFFFFF" Margin="2.5 0 0 0"></TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="2" x:Name="dateText" VerticalAlignment="Bottom" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">January 31, 2016</TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="2" x:Name="clockText" VerticalAlignment="Top" FontSize="22" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF">00:00 pm</TextBlock>
+
+                    <Image x:Name="image" MouseDown="DateTimeClock_MouseDown" Grid.Row="0" Grid.Column="0" Source="clas.png" HorizontalAlignment="Left" Height="20" Grid.ColumnSpan="2" VerticalAlignment="Bottom"/>
+                    <TextBlock Grid.Row="1"  Grid.Column="0" x:Name="Sci" VerticalAlignment="Top" FontSize="36" FontFamily="Segoe UI Black" HorizontalAlignment="Left" Foreground="#DDFFFFFF" Margin="0" Text="Computer Science"/>
+
+                    <Image x:Name="image1" Height="20" Grid.Row="0" Grid.Column="1" Source="uiowa.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+                    <StackPanel x:Name="DateTimeClock" Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Border Background="#333333" CornerRadius="5" Margin="5" Padding="5">
+                            <TextBlock x:Name="clockText"  FontSize="20" FontFamily="Segoe UI Black" Foreground="#DDFFFFFF" VerticalAlignment="Top" ><Run Text="00:00 pm"/></TextBlock>
+                        </Border>
+                        <Border Background="#333333" CornerRadius="5" Margin="5" Padding="5" VerticalAlignment="Top">
+                            <TextBlock x:Name="dateText" FontSize="20" FontFamily="Segoe UI Black" HorizontalAlignment="Center" Foreground="#DDFFFFFF" Margin="0,0,5,0"><Run Text="Mon, Jan 1" Background="#FF333333"/></TextBlock>
+                        </Border>
+
+                    </StackPanel>
+
                 </Grid>
             </Grid>
 
 
             <ContentControl Grid.Row="1" Grid.RowSpan="2" x:Name="navigationRegion">
 
-                <Grid x:Name="kinectRegionGrid" Margin="10,10,10,20" Background="Gainsboro">
+                <Grid x:Name="kinectRegionGrid" Margin="10,10,10,20">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="15*"/>
@@ -85,8 +90,7 @@
                     <StackPanel Grid.Row="0"
                                 Grid.Column="0"
                                 x:Name="weatherPanel"
-                                Orientation="Horizontal">
-                        <TextBlock x:Name="foreCastTitle" Margin="5,0,5,0" VerticalAlignment="Top" Style="{StaticResource HeaderStyle}">Forecast</TextBlock>
+                                Orientation="Horizontal" Margin="0,10,0,0">
                         <materialDesign:Card x:Name="weatherCard1" Width="125"  Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" Margin="5,0,5,0">
                             <StackPanel x:Name="weather1"  Margin="5,0,5,0">
                                 <TextBlock x:Name="day1" TextDecorations="Underline" TextAlignment="Center" FontSize="20"></TextBlock>
@@ -133,7 +137,7 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                     </ScrollViewer>
-                    
+
                     <Grid x:Name="RightGridPanel"
                           Grid.Column="1"
                           Grid.Row="0"
@@ -146,7 +150,7 @@
 
 
                         <StackPanel Grid.Row="0" HorizontalAlignment="Stretch">
-                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="NewsAndAnnouncment" TextWrapping="Wrap" Text="Upcoming News &amp; Events" VerticalAlignment="Top"  HorizontalAlignment="Stretch"/>
+                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="NewsAndAnnouncment" TextWrapping="Wrap" Text="Upcoming News &amp; Events" VerticalAlignment="Top"  HorizontalAlignment="Stretch" Foreground="#FFFFC000"/>
 
                             <ListView x:Name="csEventsList" 
                                       Background="{x:Null}" 
@@ -188,7 +192,7 @@
                         <Separator Grid.Row="1" VerticalAlignment="Top"></Separator>
 
                         <StackPanel Grid.Row="1" HorizontalAlignment="Stretch">
-                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="busScheduleTitle" Grid.Row="1">Upcoming Buses</TextBlock>
+                            <TextBlock Style="{StaticResource HeaderStyle}" x:Name="busScheduleTitle" Grid.Row="1" Foreground="#FFFFC000">Upcoming Buses</TextBlock>
                             <ListView x:Name="bongoList" Background="{x:Null}" BorderBrush="{x:Null}" HorizontalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Auto">
                                 <ListView.ItemContainerStyle>
                                     <Style TargetType="ListViewItem">
@@ -223,7 +227,7 @@
                 </Grid>
             </ContentControl>
 
-            <StackPanel Orientation="Horizontal" Height="26" VerticalAlignment="Bottom"  Background="#FF242424"  HorizontalAlignment="Stretch" Grid.RowSpan="2" Grid.Row="1" x:Name="bottomBar">
+            <StackPanel Orientation="Horizontal" Height="26" VerticalAlignment="Bottom"  Background="#FF020202"  HorizontalAlignment="Stretch" Grid.RowSpan="2" Grid.Row="1" x:Name="bottomBar">
                 <StackPanel.Resources>
 
                     <Storyboard x:Key="sb" x:Name="sb" RepeatBehavior="Forever">
@@ -249,6 +253,7 @@
 
             </StackPanel>
             <k:KinectUserViewer Grid.Row="1" VerticalAlignment="Bottom" Height="150" Width="150" HorizontalAlignment="Left"/>
+            <Path Data="M0,130 C40,132.5 1194.5,129.49967 1194.5,129.49967" Height="2.495" Margin="0,0,-0.5,8.488" Stretch="Fill" Stroke="#FFFFC000" VerticalAlignment="Bottom" StrokeThickness="5"/>
         </Grid>
 
     </k:KinectRegion>

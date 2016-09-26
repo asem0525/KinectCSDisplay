@@ -91,11 +91,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BongoData.cs" />
+    <Compile Include="Helper Classes\BBCNews.cs" />
+    <Compile Include="Helper Classes\BongoData.cs" />
     <Compile Include="Common\BindableBase.cs" />
-    <Compile Include="CSEvents.cs" />
+    <Compile Include="Helper Classes\CSEvents.cs" />
     <Compile Include="DataModel\DataSource.cs" />
     <Compile Include="HandPointers\HandInScreenEngagementModel.cs" />
+    <Compile Include="Helper Classes\CSPeople.cs" />
+    <Compile Include="Helper Classes\GoogleNews.cs" />
     <Compile Include="Pages\BongoPage.xaml.cs">
       <DependentUpon>BongoPage.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,9 @@
     <Compile Include="Pages\KinectPointerPointSample.xaml.cs">
       <DependentUpon>KinectPointerPointSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PeoplePage.xaml.cs">
+      <DependentUpon>PeoplePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ScrollViewerSample.xaml.cs">
       <DependentUpon>ScrollViewerSample.xaml</DependentUpon>
     </Compile>
@@ -124,10 +130,11 @@
     <Compile Include="Pages\WeatherPage.xaml.cs">
       <DependentUpon>WeatherPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SampleData\CSEventSampleData\CSEventSampleData.xaml.cs" />
     <Compile Include="SelectionDisplay.xaml.cs">
       <DependentUpon>SelectionDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WeatherData.cs" />
+    <Compile Include="Helper Classes\WeatherData.cs" />
     <Page Include="Common\StandardStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -172,6 +179,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\PeoplePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ScrollViewerSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -188,6 +199,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="SampleData\CSEventSampleData\CSEventSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectionDisplay.xaml">
       <SubType>Designer</SubType>
@@ -219,6 +234,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="SampleData\CSEventSampleData\CSEventSampleData.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Kinect.ico" />
@@ -248,13 +264,16 @@
     <Resource Include="Images\wundergroundLogo_4c_horz.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\WeatherIcon4.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\BusLogoFront.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\WeatherIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="clas.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="uiowa.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

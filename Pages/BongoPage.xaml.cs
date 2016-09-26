@@ -1,21 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
 {
@@ -76,6 +65,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             }
         }
 
+        /// <summary>
+        /// Gets the bus data from the Bongo API passing in the stop code
+        /// </summary>
         private void GetBusData()
         {
 
@@ -98,12 +90,15 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-                Debug.WriteLine(e.Result);
+               
                 bongoData = JsonConvert.DeserializeObject<BongoData>(responseStream);
             }
-            SetBongoCards();
+            SetBongoData();
         }
 
+        /// <summary>
+        /// Initializes Dictionary for Stop to code conversion.
+        /// </summary>
         private void InitializeBongoHash()
         {
             bongoStops = new Dictionary<string, string>()
@@ -121,7 +116,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             
         }
 
-        private void SetBongoCards()
+        /// <summary>
+        /// Parses and sets the datagrid for Bongo Data
+        /// </summary>
+        private void SetBongoData()
         {
             List<VisibleBongoData> currentBongoData = new List<VisibleBongoData>();
             
@@ -144,11 +142,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                         }
                         else if (bd.agency.Equals("iowa-city"))
                         {
-                            colorString = "red";
+                            colorString = "indianred";
                         }
                         else if (bd.agency.Equals("coralville"))
                         {
-                            colorString = "blue";
+                            colorString = "royalblue";
                         }
                         currentBongoData.Add(new VisibleBongoData() { stopname = bd.stopname, minutes = minString, routename = bd.title, color = colorString });
                     }         
@@ -163,26 +161,22 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                 Dispatcher.Invoke(() =>
                 {
                     BusTimesText.Text = "Bus Times: " + stopName;
-                    if (currentBongoData.Count > 27)
-                    {
-                        bongoPageList.ItemsSource = currentBongoData.GetRange(0, 27);
-                    }
-                    else
-                    {
-                        bongoPageList.ItemsSource = currentBongoData;
-                    }
+                    BusGrid.DataContext = currentBongoData;
                 });
             }
             catch { };
         }
 
+        /// <summary>
+        /// Radio button event handlers that sets stopName and stopCode
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             stopName = busStopNames[(string)rb.Content];
             stopCode = bongoStops[(string)rb.Content];
-            Debug.WriteLine(stopCode);
-            Debug.WriteLine(stopName);
             GetBusData();
         }
     }

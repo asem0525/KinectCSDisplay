@@ -80,7 +80,17 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                         itemContent,
                         mainWindowPages,
                         typeof(CSEvents)));
-            
+            mainWindowPages.Items.Add(
+                   new DataItem(
+                       "Group-1-People",
+                       "People",
+                       "List of Faculty",
+                       DataSource.lightGrayImage,
+                       "List of faculty members",
+                       itemContent,
+                       mainWindowPages,
+                       typeof(PeoplePage)));
+
             this.AllGroups.Add(mainWindowPages);
         }
 

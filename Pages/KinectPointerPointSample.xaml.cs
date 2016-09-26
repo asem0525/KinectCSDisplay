@@ -13,6 +13,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     using System.Windows.Shapes;
     using Microsoft.Kinect;
     using Microsoft.Kinect.Input;
+    using System.Diagnostics;
 
     /// <summary>
     /// A sample showing a visualization of PointerPoints from Kinect
@@ -175,6 +176,21 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void details_Checked(object sender, RoutedEventArgs e)
         {
             showDetails = details.IsChecked.Value;
+        }
+
+        private void quitProgram_Click(object sender, RoutedEventArgs e)
+        {
+            // Configure message box
+            string message = "Display is going to quit";
+            string caption = "Are you sure you want to quit?";
+            MessageBoxButton buttons = MessageBoxButton.YesNo;
+            // Show message box
+            MessageBoxResult result = MessageBox.Show(message, caption, buttons);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+            
         }
     }
 }
