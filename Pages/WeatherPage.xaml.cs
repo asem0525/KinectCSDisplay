@@ -49,7 +49,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void PopulateForecast()
         {
             Simpleforecast weatherData = fullWeatherData.forecast.simpleforecast;
-            string hostIconURL = "http://icons.wxug.com/i/c/i/";
+            string hostIconURL = "http://icons.wxug.com/i/c/k/";
             if (DateTime.Now.Hour >= 18)
             {
                 hostIconURL = hostIconURL + "nt_";

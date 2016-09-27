@@ -375,7 +375,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 {
                     if (i == 0)
                     {
-                        day1.Text = weatherData.forecastday[0].date.weekday;
                         Temp1.Text = weatherData.forecastday[0].high.fahrenheit + "°/" + weatherData.forecastday[0].low.fahrenheit + "°";
                         weatherIcon1.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[0].icon + ".gif"));
                     }
@@ -566,7 +565,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             if(bongoIndex < FullBongoData.Count)
             {
                 int i = 0;
-                while (i + bongoIndex < FullBongoData.Count && i < 3)
+                while (i + bongoIndex < FullBongoData.Count && i < 4)
                 {
                     groupedBongoData.Add(FullBongoData[i + bongoIndex]);
                     i++;
@@ -579,13 +578,19 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
             try
             {
-                //Udpdate UI thread with new bus group of 3
+                //Udpdate UI thread with new bus group of 4
                 Dispatcher.Invoke(() =>
                 {
                     if (groupedBongoData.Count >= 1)
                     {
-                        bongoList.ItemsSource = groupedBongoData;
+                        BusGrid.DataContext = groupedBongoData;
                     }
+                    //else if(groupedBongoData.Count == 0)
+                    //{
+                    //    List<VisibleBongoData> l = new List<VisibleBongoData>();
+                    //    l.Add(new VisibleBongoData() { stopname = "No buses running at this time" });
+                    //    BusGrid.DataContext = l;
+                    //}
                 });
             }
             catch { };

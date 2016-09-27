@@ -275,6 +275,12 @@
   <ItemGroup>
     <Resource Include="uiowa.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="wundergroundLogo_4c_rev_horz.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pages\wundergroundLogo_4c_rev_horz.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
