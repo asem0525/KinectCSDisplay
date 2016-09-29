@@ -94,16 +94,14 @@
     <Compile Include="Helper Classes\BBCNews.cs" />
     <Compile Include="Helper Classes\BongoData.cs" />
     <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Helper Classes\CNETNews.cs" />
     <Compile Include="Helper Classes\CSEvents.cs" />
     <Compile Include="DataModel\DataSource.cs" />
     <Compile Include="HandPointers\HandInScreenEngagementModel.cs" />
     <Compile Include="Helper Classes\CSPeople.cs" />
-    <Compile Include="Helper Classes\GoogleNews.cs" />
+    <Compile Include="Helper Classes\APNews.cs" />
     <Compile Include="Pages\BongoPage.xaml.cs">
       <DependentUpon>BongoPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CheckBoxRadioButtonSample.xaml.cs">
-      <DependentUpon>CheckBoxRadioButtonSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CSEvents.xaml.cs">
       <DependentUpon>CSEvents.xaml</DependentUpon>
@@ -112,9 +110,6 @@
       <DependentUpon>EngagementSettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="HandPointers\HandOverHeadEngagementModel.cs" />
-    <Compile Include="Pages\ItemsControlsSample.xaml.cs">
-      <DependentUpon>ItemsControlsSample.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\KinectPointerPointSample.xaml.cs">
       <DependentUpon>KinectPointerPointSample.xaml</DependentUpon>
     </Compile>
@@ -123,9 +118,6 @@
     </Compile>
     <Compile Include="Pages\ScrollViewerSample.xaml.cs">
       <DependentUpon>ScrollViewerSample.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SliderSample.xaml.cs">
-      <DependentUpon>SliderSample.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\WeatherPage.xaml.cs">
       <DependentUpon>WeatherPage.xaml</DependentUpon>
@@ -159,19 +151,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\CheckBoxRadioButtonSample.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\CSEvents.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\EngagementSettings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ItemsControlsSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -184,10 +168,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ScrollViewerSample.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\SliderSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -273,13 +253,60 @@
     <Resource Include="clas.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="uiowa.png" />
+    <Resource Include="Images\uiowa.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="wundergroundLogo_4c_rev_horz.jpg" />
+    <Resource Include="Images\wundergroundLogo_4c_rev_horz.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Pages\wundergroundLogo_4c_rev_horz.jpg" />
+    <Resource Include="Images\WeatherIcons\chanceflurries.png" />
+    <Resource Include="Images\WeatherIcons\chancerain.png" />
+    <Resource Include="Images\WeatherIcons\chancesleet.png" />
+    <Resource Include="Images\WeatherIcons\chancesnow.png" />
+    <Resource Include="Images\WeatherIcons\chancetstorms.png" />
+    <Resource Include="Images\WeatherIcons\clear.png" />
+    <Resource Include="Images\WeatherIcons\cloudy.png" />
+    <Resource Include="Images\WeatherIcons\eclipse.png" />
+    <Resource Include="Images\WeatherIcons\flurries.png" />
+    <Resource Include="Images\WeatherIcons\fog.png" />
+    <Resource Include="Images\WeatherIcons\hazy.png" />
+    <Resource Include="Images\WeatherIcons\mostlycloudy.png" />
+    <Resource Include="Images\WeatherIcons\mostlysunny.png" />
+    <Resource Include="Images\WeatherIcons\na.png" />
+    <Resource Include="Images\WeatherIcons\nt_chanceflurries.png" />
+    <Resource Include="Images\WeatherIcons\nt_chancerain.png" />
+    <Resource Include="Images\WeatherIcons\nt_chancesleet.png" />
+    <Resource Include="Images\WeatherIcons\nt_chancesnow.png" />
+    <Resource Include="Images\WeatherIcons\nt_chancestorms %281%29.png" />
+    <Resource Include="Images\WeatherIcons\nt_chancestorms.png" />
+    <Resource Include="Images\WeatherIcons\nt_chancetstorms %281%29.png" />
+    <Resource Include="Images\WeatherIcons\nt_chancetstorms.png" />
+    <Resource Include="Images\WeatherIcons\nt_clear.png" />
+    <Resource Include="Images\WeatherIcons\nt_cloudy.png" />
+    <Resource Include="Images\WeatherIcons\nt_flurries.png" />
+    <Resource Include="Images\WeatherIcons\nt_fog.png" />
+    <Resource Include="Images\WeatherIcons\nt_hazy.png" />
+    <Resource Include="Images\WeatherIcons\nt_mostlycloudy.png" />
+    <Resource Include="Images\WeatherIcons\nt_mostlysunny.png" />
+    <Resource Include="Images\WeatherIcons\nt_overcast.png" />
+    <Resource Include="Images\WeatherIcons\nt_partlycloudy.png" />
+    <Resource Include="Images\WeatherIcons\nt_partlysunny.png" />
+    <Resource Include="Images\WeatherIcons\nt_rain.png" />
+    <Resource Include="Images\WeatherIcons\nt_sleet.png" />
+    <Resource Include="Images\WeatherIcons\nt_snow.png" />
+    <Resource Include="Images\WeatherIcons\nt_sunny.png" />
+    <Resource Include="Images\WeatherIcons\nt_tstorms.png" />
+    <Resource Include="Images\WeatherIcons\overcast.png" />
+    <Resource Include="Images\WeatherIcons\partlycloudy.png" />
+    <Resource Include="Images\WeatherIcons\partlysunny.png" />
+    <Resource Include="Images\WeatherIcons\rain.png" />
+    <Resource Include="Images\WeatherIcons\sleet.png" />
+    <Resource Include="Images\WeatherIcons\snow.png" />
+    <Resource Include="Images\WeatherIcons\sunny.png" />
+    <Resource Include="Images\WeatherIcons\tstorms.png" />
+    <Resource Include="Images\WeatherIcons\unknown.png" />
+    <Resource Include="Images\WeatherIcons\windy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

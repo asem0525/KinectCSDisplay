@@ -150,6 +150,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <param name="e"></param>
         private void GetCSEvents(object obj, ElapsedEventArgs e)
         {
+            GetCSEvents();
+        }
+
+        private void GetCSEvents()
+        {
             //CS Events found on Iowa CS Website
             Uri feedUri = new Uri("https://www.cs.uiowa.edu/events/rss.xml");
             using (WebClient downloader = new WebClient())
@@ -176,6 +181,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <param name="e"></param>
         private void GetBusData(object source, ElapsedEventArgs e)
         {
+            GetBusData();
+        }
+
+        private void GetBusData()
+        {
             //Prediction URI from Bongo API for stop 0001 Downtown Interchange
             Uri feedUri = new Uri("http://api.ebongo.org/prediction?format=json&stopid=0001&api_key=XXXX");
             using (WebClient downloader = new WebClient())
@@ -193,6 +203,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void GetWeatherData(object source, ElapsedEventArgs e)
         {
+            GetWeatherData();
+        }
+
+        private void GetWeatherData()
+        {
             //Weather Forcast from Weather Underground.com
             Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast10day/q/IA/Iowa_City.json");
             using (WebClient downloader = new WebClient())
@@ -209,40 +224,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void GetInitalApiData()
         {
-            //Weather Forcast from Weather Underground.com
-            Uri feedUri = new Uri("http://api.wunderground.com/api/75c131024c99cf58/forecast10day/q/IA/Iowa_City.json");
-            using (WebClient downloader = new WebClient())
-            {
-                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedWeather);
-                downloader.DownloadStringAsync(feedUri);
-            }
-
             task1 = false;
             task2 = false;
             SetWaitTimer();
-
-            Uri newsURI = new Uri("https://www.cs.uiowa.edu/news/rss.xml");
-            using (WebClient downloader = new WebClient())
-            {
-                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSNews);
-                downloader.DownloadStringAsync(newsURI);
-            }
-
-            //CS Events found on Iowa CS Website
-            Uri eventsURI = new Uri("https://www.cs.uiowa.edu/events/rss.xml");
-            using (WebClient downloader = new WebClient())
-            {
-                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSEvents);
-                downloader.DownloadStringAsync(eventsURI);
-            }         
-
-            //Prediction URI from Bongo API for stop 0001 Downtown Interchange
-            Uri bongoUri = new Uri("http://api.ebongo.org/prediction?format=json&stopid=0001&api_key=XXXX");
-            using (WebClient downloader = new WebClient())
-            {
-                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedBongo);
-                downloader.DownloadStringAsync(bongoUri);
-            }
+            GetCSEvents();
+            GetBusData();
+            GetWeatherData();           
         }
      
         /// <summary>
@@ -351,12 +338,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         //TODO Make icons
         //TODO add comments
         //TODO Make people page async
-        //TODO add fade and swap to homepage
         //TODO South Side stop and north side stop
         //TODO Remove button on CLAS Logo
-        //TODO talk to Mark about image feeds
-        //TODO Fix styling of elements
-        //TODO make bus list scrollable!
+        //TODO smoothen animations
+        //TODO switch news error
+        
 
         /// <summary>
         /// Sets the weather data with the icons on the mainwindow
@@ -366,8 +352,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             if (weatherData != null)
             {
                 int i = 0;
-                string hostIconURL = "http://icons.wxug.com/i/c/k/";
-                if(DateTime.Now.Hour >= 18)
+                string hostIconURL = "Images/WeatherIcons/";
+                if(DateTime.Now.Hour >= 18 || DateTime.Now.Hour <= 4)
                 {
                     hostIconURL = hostIconURL + "nt_";
                 }
@@ -376,25 +362,25 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     if (i == 0)
                     {
                         Temp1.Text = weatherData.forecastday[0].high.fahrenheit + "°/" + weatherData.forecastday[0].low.fahrenheit + "°";
-                        weatherIcon1.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[0].icon + ".gif"));
+                        weatherIcon1.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[0].icon + ".png", UriKind.Relative));
                     }
                     else if(i == 1)
                     {
                         day2.Text = weatherData.forecastday[1].date.weekday;
                         Temp2.Text = weatherData.forecastday[1].high.fahrenheit + "°/" + weatherData.forecastday[1].low.fahrenheit + "°";
-                        weatherIcon2.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[1].icon + ".gif"));
+                        weatherIcon2.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[1].icon + ".png", UriKind.Relative));
                     }
                     else if (i == 2)
                     {
                         day3.Text = weatherData.forecastday[2].date.weekday;
                         Temp3.Text = weatherData.forecastday[2].high.fahrenheit + "°/" + weatherData.forecastday[2].low.fahrenheit + "°";
-                        weatherIcon3.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[2].icon + ".gif"));
+                        weatherIcon3.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[2].icon + ".png", UriKind.Relative));
                     }
                     else if (i == 3)
                     {
                         day4.Text = weatherData.forecastday[3].date.weekday;
                         Temp4.Text = weatherData.forecastday[3].high.fahrenheit + "°/" + weatherData.forecastday[3].low.fahrenheit + "°";
-                        weatherIcon4.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[3].icon + ".gif"));
+                        weatherIcon4.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[3].icon + ".png", UriKind.Relative));
                     }
                     i++;
                 }
@@ -528,7 +514,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 List<VisibleCSItem> comboList = fullCsEventsList.Concat(fullCsNewsList).ToList();
                 List<VisibleCSItem> groupedCSEventData = new List<VisibleCSItem>();
 
-                for (int i = 0; i < 5 && i < comboList.Count; i++)
+                for (int i = 0; i < 4 && i < comboList.Count; i++)
                 {
                     groupedCSEventData.Add(comboList[i]);
                 }

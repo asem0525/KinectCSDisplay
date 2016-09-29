@@ -55,7 +55,7 @@
     <SolidColorBrush x:Key="ListViewItemOverlayBackgroundThemeBrush" Color="DarkGray" />
     <SolidColorBrush x:Key="ListViewItemOverlayForegroundThemeBrush" Color="Yellow" />
     <SolidColorBrush x:Key="ListViewItemOverlaySecondaryForegroundThemeBrush" Color="Aqua"/>
-    
+
     <Style x:Key="KinectTileButton" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
@@ -88,7 +88,7 @@
 
     <DataTemplate x:Key="Kinect250x250ItemTemplate">
         <Button Style="{StaticResource KinectTileButton}">
-            <materialDesign:Card  Margin="3" Background="#424242" >            
+            <materialDesign:Card  Margin="3" Background="#424242" >
                 <Grid HorizontalAlignment="Left" Width="250" Height="250">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.6*"/>
@@ -101,12 +101,12 @@
                         <TextBlock Text="{Binding Title}" Foreground="#FFFFC000" Style="{StaticResource TitleTextStyle}" Height="60" Margin="15,0,15,0"/>
                         <TextBlock Text="{Binding Subtitle}" Foreground="white" Style="{StaticResource CaptionTextStyle}" TextWrapping="NoWrap" Margin="15,0,15,10"/>
                     </StackPanel>
-                </Grid>            
+                </Grid>
             </materialDesign:Card>
         </Button>
 
     </DataTemplate>
-    
+
     <!-- Button Text Style -->
     <Style x:Key="ButtonTextStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="Segoe UI" />
@@ -458,7 +458,7 @@
                                 Height="14"
                                 VerticalAlignment="Top"
                                 RenderTransformOrigin="0.5,0">
-                                <Rectangle.RenderTransform>                                    
+                                <Rectangle.RenderTransform>
                                     <ScaleTransform ScaleY="0" />
                                 </Rectangle.RenderTransform>
                             </Rectangle>
@@ -491,7 +491,7 @@
         <Setter Property="MinWidth" Value="316" />
         <Setter Property="MaxWidth" Value="948" />
         <Setter Property="Padding" Value="18,14,18,14" />
-        <Setter Property="Foreground" Value="#FF242424" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -638,7 +638,11 @@
                                 <VisualState x:Name="Focused">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
-                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0" >
+                                                <DiscreteObjectKeyFrame.Value>
+                                                    <SolidColorBrush Color="#FFFFC000"/>
+                                                </DiscreteObjectKeyFrame.Value>
+                                            </DiscreteObjectKeyFrame>
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill)" Storyboard.TargetName="NormalRectangle">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}" />
@@ -1160,8 +1164,8 @@
         <Setter Property="MinHeight" Value="48"/>
         <Setter Property="Padding" Value="36,36,36,36" />
         <Setter Property="k:KinectRegion.KinectPressInset" Value="36,36,36,36" />
-        <Setter Property="VerticalAlignment" Value="Bottom"/>        
-        <Setter Property="FontWeight" Value="Normal"/>        
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="AutomationProperties.AutomationId" Value="BackButton"/>
         <Setter Property="AutomationProperties.Name" Value="Back"/>
         <Setter Property="AutomationProperties.ItemType" Value="Navigation Button"/>
@@ -1256,5 +1260,5 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>    
+    </Style>
 </ResourceDictionary>

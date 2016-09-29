@@ -11,8 +11,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Helper_Classes
     {
 
         /// <remarks/>
-        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-        
+        [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]        
         [System.Xml.Serialization.XmlRoot(Namespace = "", IsNullable = false)]
         public partial class rss
         {
@@ -408,7 +407,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Helper_Classes
 
             /// <remarks/>
             [System.Xml.Serialization.XmlAttributeAttribute()]
+#pragma warning disable CS3003 // Type is not CLS-compliant
             public ushort width
+#pragma warning restore CS3003 // Type is not CLS-compliant
             {
                 get
                 {
@@ -422,7 +423,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Helper_Classes
 
             /// <remarks/>
             [System.Xml.Serialization.XmlAttributeAttribute()]
+#pragma warning disable CS3003 // Type is not CLS-compliant
             public ushort height
+#pragma warning restore CS3003 // Type is not CLS-compliant
             {
                 get
                 {

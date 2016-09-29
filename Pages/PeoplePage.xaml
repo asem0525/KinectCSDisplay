@@ -21,7 +21,19 @@
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Disabled" 
                       k:KinectRegion.IsScrollInertiaEnabled="true" >
-            <DataGrid x:Name="PeoplGrid" ItemsSource="{Binding}" AutoGenerateColumns="True" AlternationCount="2" Background="Gainsboro" />
+            <DataGrid x:Name="PeoplGrid" IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="True" Background="{x:Null}">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Foreground" Value="white"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                </DataGrid.CellStyle>
+            </DataGrid>
 
         </ScrollViewer>
     </Grid>

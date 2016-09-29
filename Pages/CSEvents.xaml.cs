@@ -25,15 +25,18 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
         private static List<VisibleCSItem> fullCsNewsList = new List<VisibleCSItem>();
         private static List<VisibleNewsItem> fullNewsList = new List<VisibleNewsItem>();
         private Timer swapTimer;
+        private Timer t;
         private int swapIndex;
         private enum newsSource
         {
-            gn,
+            ap,
             bbc,
             clas,
             cnet
         }
         private newsSource source;
+        private string newsString;
+        private int genSwapIndex;
 
         public CSEvents()
         {
@@ -41,33 +44,40 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             GetCSEvents();
             SetSwapTimer();
             swapIndex = 0;
-            source = newsSource.gn;            
+            genSwapIndex = 0;
+            source = newsSource.ap;
+            newsString = "AP Top Stories";    
+            GetNews();
         }
 
         private void GetNews()
         {
             switch (source)
             {
-                case newsSource.gn:
-                    //News found on Google News
-                    Uri feedUri = new Uri("https://news.google.com/news?output=rss&num=10");
+                case newsSource.ap:
+                    //News found on AP
+                    newsString = "AP Top Stories";
+                    Uri feedUri = new Uri(@"http://hosted.ap.org/lineups/TOPHEADS.rss?SITE=AP&SECTION=HOME");
                     using (WebClient downloader = new WebClient())
                     {
-                        downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedGN);
+                        downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedAP);
                         downloader.DownloadStringAsync(feedUri);
                     }
                     break;
                 case newsSource.bbc:
                     //News found on BBC
+                    newsString = "BBC World News";
                     Uri feedUri2 = new Uri("http://feeds.bbci.co.uk/news/world/rss.xml#");
                     using (WebClient downloader = new WebClient())
                     {
                         downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedBBC);
                         downloader.DownloadStringAsync(feedUri2);
+                        SetGenCards();
                     }
                     break;
                 case newsSource.cnet:
                     //News found on CNET
+                    newsString = "CNET Tech News";
                     Uri feedUri3 = new Uri("http://www.cnet.com/rss/news/");
                     using (WebClient downloader = new WebClient())
                     {
@@ -77,6 +87,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                     break;
                 case newsSource.clas:
                     //News found on CLAS
+                    newsString = "CLAS News";
                     Uri feedUri4 = new Uri("https://clas.uiowa.edu/news/rss.xml");
                     using (WebClient downloader = new WebClient())
                     {
@@ -89,53 +100,64 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
 
         private void downloader_DownloadStringCompletedCLAS(object sender, DownloadStringCompletedEventArgs e)
         {
-            //if (e.Error == null)
-            //{
-            //    string responseStream = e.Result;
+            if (e.Error == null)
+            {
+                string responseStream = e.Result;
 
-            //    XmlSerializer serializer = new XmlSerializer(typeof(nodes));
+                XmlSerializer serializer = new XmlSerializer(typeof(nodes));
 
-            //    fullCsEventsList.Clear();
-            //    using (TextReader reader = new StringReader(e.Result))
-            //    {
-            //        nodes result = (nodes)serializer.Deserialize(reader);
-            //        foreach (var nd in result.node)
-            //        {
-            //            try
-            //            {
-            //                string date = nd.startdate;
-            //                Regex reg = new Regex("\\(All\\sday\\)");
-            //                if (reg.IsMatch(nd.startdate))
-            //                {
-            //                    date = nd.startdate.Substring(0, reg.Match(nd.startdate).Index);
-            //                }
-            //                DateTime startDate = DateTime.Parse(date);
-
-            //                fullCsEventsList.Add(new VisibleCSItem()
-            //                {
-            //                    csEventLocation = nd.location == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.location)),
-            //                    csEventTime = startDate.Date.ToString("MMMM d, yyyy"),
-            //                    csEventTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
-            //                    startDate = startDate,
-            //                    isEvent = true
-            //                });
-            //            }
-            //            catch { }
-            //        }
-            //    }
-            //}
-            //fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
-
-            ////Sets the data grid
-            //Dispatcher.Invoke(() =>
-            //{
-            //    EventsDataGrid.DataContext = fullCsEventsList;
-            //});
+                fullNewsList.Clear();
+                using (TextReader reader = new StringReader(e.Result))
+                {
+                    //reader.Namespaces = false;
+                    nodes result = (nodes)serializer.Deserialize(reader);
+                    foreach (var nd in result.node)
+                    {
+                        try
+                        {
+                            fullNewsList.Add(new VisibleNewsItem()
+                            {
+                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                            });
+                        }
+                        catch { }
+                        genSwapIndex = 0;
+                        SetGenCards();
+                    }
+                }
+            }
         }
 
         private void downloader_DownloadStringCompletedCNET(object sender, DownloadStringCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.Error == null)
+            {
+                string responseStream = e.Result;
+
+                XmlSerializer serializer = new XmlSerializer(typeof(CNETNews.rss));
+
+                fullNewsList.Clear();
+                using (TextReader reader = new StringReader(e.Result))
+                {
+                    //reader.Namespaces = false;
+                    CNETNews.rss result = (CNETNews.rss)serializer.Deserialize(reader);
+                    foreach (var nd in result.channel.item)
+                    {
+                        try
+                        {
+                            fullNewsList.Add(new VisibleNewsItem()
+                            {
+                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
+                                NewsPublicationDate = nd.pubDate
+                            });
+                        }
+                        catch { }
+                        genSwapIndex = 0;
+                        SetGenCards();
+                    }
+                }
+            }
         }
 
         private void downloader_DownloadStringCompletedBBC(object sender, DownloadStringCompletedEventArgs e)
@@ -157,78 +179,138 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                         {
                             fullNewsList.Add(new VisibleNewsItem()
                             {
-                                NewsTitle = nd.title,
-                                NewsDescription = nd.description,
+                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
                                 NewsPublicationDate = nd.pubDate
                             });
                         }
                         catch { }
+                        genSwapIndex = 0;
+                        SetGenCards();
                     }
                 }
             }
-
-            //Sets the data grid
-            Dispatcher.Invoke(() =>
-            {
-                genNewsTitle.Text = fullNewsList[0].NewsTitle;
-                genNewsDate.Text = fullNewsList[0].NewsPublicationDate;
-                genNewsDescription.Text = fullNewsList[0].NewsDescription;
-            });
         }
 
-        private void downloader_DownloadStringCompletedGN(object sender, DownloadStringCompletedEventArgs e)
+        private void downloader_DownloadStringCompletedAP(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
             {
                 string responseStream = e.Result;
 
-                XmlSerializer serializer = new XmlSerializer(typeof(nodes));
+                XmlSerializer serializer = new XmlSerializer(typeof(APNews.rss));
 
                 fullNewsList.Clear();
                 using (TextReader reader = new StringReader(e.Result))
                 {
-                    rssChannel result = (rssChannel)serializer.Deserialize(reader);
-                    foreach (var nd in result.item)
+                    APNews.rss result = (APNews.rss)serializer.Deserialize(reader);
+                    foreach (var nd in result.channel.item)
                     {
                         try
                         {
                             fullNewsList.Add(new VisibleNewsItem()
                             {
-                                NewsTitle = nd.title,
-                                NewsDescription = nd.description,
-                                NewsPublicationDate = nd.pubDate
+                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
                             });
                         }
                         catch { }
                     }
                 }
+                genSwapIndex = 0;
+                SetGenCards();
             }
-            
-            //Sets the data grid
-            Dispatcher.Invoke(() =>
-            {
-                genNewsTitle.Text = fullNewsList[0].NewsTitle;
-                genNewsDate.Text = fullNewsList[0].NewsPublicationDate;
-                genNewsDescription.Text = fullNewsList[0].NewsDescription;
-            });
         }
 
-        private void SetSwapTimer()
+        private void SetGenCards(object sender, ElapsedEventArgs e)
         {
-            // Create a timer with a two second interval.
-            swapTimer = new Timer(8000);
-            // Hook up the Elapsed event for the timer. 
-            swapTimer.Elapsed += SetCSCards;
-            swapTimer.AutoReset = true;
-            swapTimer.Enabled = true;
-    }
+            SetGenCards();  
+        }
 
-        private void SetCSCards(object sender, ElapsedEventArgs e)
+        private void SetGenCards()
         {
             //Swap and Fade Animation Code
             Dispatcher.Invoke(() =>
             {
-                MaterialDesignThemes.Wpf.Card csCard = (MaterialDesignThemes.Wpf.Card)FindName("csCard");
+                ListView genNewsPanel = (ListView)FindName("genNewsList");
+                // Create a duration of 2 seconds.
+                Duration duration = new Duration(TimeSpan.FromSeconds(2));
+                Duration duration2 = new Duration(TimeSpan.FromSeconds(2));
+
+                // Create two DoubleAnimations and set their properties.
+                DoubleAnimation myDoubleAnimation1 = new DoubleAnimation();
+                DoubleAnimation myDoubleAnimation2 = new DoubleAnimation();
+
+                myDoubleAnimation1.Duration = duration;
+                myDoubleAnimation2.Duration = duration2;
+                myDoubleAnimation2.BeginTime = TimeSpan.FromSeconds(0);
+
+                Storyboard sb = new Storyboard();
+                sb.Duration = duration;
+
+                sb.Children.Add(myDoubleAnimation1);
+                sb.Children.Add(myDoubleAnimation2);
+
+                Storyboard.SetTargetName(myDoubleAnimation1, "genNewsList");
+                Storyboard.SetTargetName(myDoubleAnimation2, "genNewsList");
+
+                // Set the attached properties of Opacity
+                // to be the target properties of the two respective DoubleAnimations.
+                Storyboard.SetTargetProperty(myDoubleAnimation1, new PropertyPath("Opacity"));
+                Storyboard.SetTargetProperty(myDoubleAnimation2, new PropertyPath("Opacity"));
+
+                myDoubleAnimation1.To = 0;
+                myDoubleAnimation2.From = 0;
+                myDoubleAnimation2.To = 1;
+
+                // Make the Storyboard a resource.
+                genNewsPanel.Resources.Add("unique_id2", sb);
+                // Begin the animation.
+                sb.Begin();
+                List<VisibleNewsItem> groupedList = new List<VisibleNewsItem>();
+                if (genSwapIndex < fullNewsList.Count)
+                {
+                    int i = 0;
+                    while (i + genSwapIndex < fullNewsList.Count && i < 4)
+                    {
+                        groupedList.Add(fullNewsList[i + genSwapIndex]);
+                        i++;
+                    }
+                    genSwapIndex += 4;
+                }
+                else
+                {
+                    genSwapIndex = 0;
+                }
+                generalNewsTitle.Text = "Today's Headlines: " + newsString;
+                genNewsList.ItemsSource = groupedList;
+
+                genNewsPanel.Resources.Remove("unique_id2");
+            });
+        }
+        
+        private void SetSwapTimer()
+        {
+            // Create a timer with a two second interval.
+            swapTimer = new Timer(24000);
+            // Hook up the Elapsed event for the timer. 
+            swapTimer.Elapsed += SetCSCards;
+            swapTimer.Elapsed += SetGenCards;
+            swapTimer.AutoReset = true;
+            swapTimer.Enabled = true;
+        }
+
+        private void SetCSCards(object sender, ElapsedEventArgs e)
+        {
+            SetCSCards();
+        }
+
+        private void SetCSCards()
+        {
+            //Swap and Fade Animation Code
+            Dispatcher.Invoke(() =>
+            {
+                StackPanel csCard = (StackPanel)FindName("csCard");
                 // Create a duration of 2 seconds.
                 Duration duration = new Duration(TimeSpan.FromSeconds(2));
                 Duration duration2 = new Duration(TimeSpan.FromSeconds(2));
@@ -254,7 +336,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                 // to be the target properties of the two respective DoubleAnimations.
                 Storyboard.SetTargetProperty(myDoubleAnimation1, new PropertyPath("Opacity"));
                 Storyboard.SetTargetProperty(myDoubleAnimation2, new PropertyPath("Opacity"));
-                
+
                 myDoubleAnimation1.To = 0;
                 myDoubleAnimation2.From = 0;
                 myDoubleAnimation2.To = 1;
@@ -272,12 +354,14 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                 {
                     swapIndex = 0;
                 }
-                
-                csEventTitle.Text = fullCsNewsList[swapIndex].csEventTitle;
-                csEventLocation.Text = fullCsNewsList[swapIndex].csEventLocation;
-                csEventTime.Text = fullCsNewsList[swapIndex].csEventTime;
+                if(fullNewsList.Count > 1)
+                {
+                    csEventTitle.Text = fullCsNewsList[swapIndex].csEventTitle;
+                    csEventLocation.Text = fullCsNewsList[swapIndex].csEventLocation;
+                    csEventTime.Text = fullCsNewsList[swapIndex].csEventTime;
+                }               
 
-                csCard.Resources.Remove("unique_id");               
+                csCard.Resources.Remove("unique_id");
             });
         }
 
@@ -407,13 +491,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             }
          
         }
-
+        
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             if (((string)rb.Content).Equals("Google News"))
             {
-                source = newsSource.gn;
+                source = newsSource.ap;
             } else if(((string)rb.Content).Equals("BBC World News"))
             {
                 source = newsSource.bbc;
@@ -424,7 +508,26 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             {
                 source = newsSource.clas;
             }
+            fullNewsList.Clear();
             GetNews();
+
+            //Timer to wait for news to be populated
+            t = new Timer(100);
+            t.Elapsed += T_Elapsed;
+            t.AutoReset = true;
+            t.Enabled = true;
+
+        }
+
+        private void T_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            //Debug.WriteLine("HERE");
+            if(fullNewsList.Count != 0)
+            {
+                SetGenCards();
+                t.Enabled = false;
+                t.Dispose();
+            }
         }
     }
 }

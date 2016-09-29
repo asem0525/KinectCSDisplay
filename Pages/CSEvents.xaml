@@ -20,18 +20,18 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Style="{StaticResource HeaderStyle}" FontWeight="UltraBold" Grid.Row="0" Grid.Column="0" Margin="0,0,0,5" Text="News &amp; Events" FontSize="36" Foreground="#FFEEEEEE"/>
-        <Grid x:Name="EventsGrid" Grid.Row="1" Background="Gainsboro">
+        <Grid x:Name="EventsGrid" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="0.7*"/>
                 <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderStyle}" x:Name="eventsTitle" Text="Department Events" Margin="10,0,0,0"/>
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderStyle}" x:Name="eventsTitle" Margin="10,0,0,0" Foreground="#FFFFC000">Department Events</TextBlock>
             <ScrollViewer Grid.Row="1"
                           x:Name="scrollViewer" 
                           HorizontalScrollBarVisibility="Disabled"
                           VerticalScrollBarVisibility="Auto" 
-                          k:KinectRegion.IsScrollInertiaEnabled="true" Background="Gainsboro" >
+                          k:KinectRegion.IsScrollInertiaEnabled="true" Margin="10,0,0,0" >
                 <DataGrid x:Name="EventsDataGrid" 
                           ItemsSource="{Binding}" 
                           AutoGenerateColumns="False"
@@ -39,23 +39,24 @@
                           SelectionUnit="Cell" 
                           Background="{x:Null}"
                           HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto">
+                          VerticalScrollBarVisibility="Auto"
+                          IsReadOnly="True">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Event" Binding="{Binding csEventTitle}" FontSize="18" Width="0.4*" FontWeight="Bold">
+                        <DataGridTextColumn Header="Event" Binding="{Binding csEventTitle}" FontSize="18" Width="0.4*" FontWeight="Bold" Foreground="White">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Time" Binding="{Binding csEventTime}" FontSize="18" Width="0.2*" FontStyle="Italic">
+                        <DataGridTextColumn Header="Time" Binding="{Binding csEventTime}" FontSize="18" Width="0.2*" FontStyle="Italic" Foreground="White">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
-                        <DataGridTextColumn Header="Location" Binding="{Binding csEventLocation}" FontSize="18" Width="0.3*">
+                        <DataGridTextColumn Header="Location" Binding="{Binding csEventLocation}" FontSize="18" Width="0.3*" Foreground="White">
                             <DataGridTextColumn.ElementStyle>
                                 <Style>
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -63,6 +64,12 @@
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
                     </DataGrid.Columns>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="white"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
                             <Setter Property="Background" Value="{Binding color}"/>
@@ -76,22 +83,20 @@
                 </DataGrid>
             </ScrollViewer>
             <StackPanel Grid.Row="2">
-                <TextBlock  Style="{StaticResource HeaderStyle}" x:Name="newsTitle" Text="Department News" Margin="10,0,0,0"/>
-                <materialDesign:Card x:Name="csCard" Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}"  Margin="5">
-                    <StackPanel>
-                        <TextBlock x:Name="csEventTitle" FontSize="20" TextWrapping="Wrap" ></TextBlock>
-                        <TextBlock x:Name="csEventTime" FontSize="18" FontStyle="Italic">No News at this time...</TextBlock>
+                <TextBlock  Style="{StaticResource HeaderStyle}" x:Name="newsTitle" Text="Department News" Margin="10,0,0,0" Foreground="#FFFFC000"/>
+                    <StackPanel x:Name="csCard" Margin="10,5">
+                        <TextBlock x:Name="csEventTitle" FontSize="20" TextWrapping="Wrap" Foreground="White" />
+                        <TextBlock x:Name="csEventTime" FontSize="18" FontStyle="Italic" Foreground="White">No News at this time...</TextBlock>
                         <TextBlock x:Name="csEventLocation" FontSize="18" Foreground="White"></TextBlock>
                     </StackPanel>
-                </materialDesign:Card>                 
             </StackPanel>
         </Grid>
-        <Grid x:Name="NewsGrid" Background="#DCDCDC" Grid.Column="1" Grid.Row="1">
+        <Grid x:Name="NewsGrid" Grid.Column="1" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource HeaderStyle}" x:Name="generalNewsTitle" Text="Today's Headlines" Margin="10,0,0,0" Background="Gainsboro"/>
+            <TextBlock Grid.Row="0" Style="{StaticResource HeaderStyle}" x:Name="generalNewsTitle" Text="Today's Headlines" Margin="10,0,0,0" Foreground="#FFFFC000"/>
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -99,35 +104,56 @@
                     <RowDefinition Height="0.4*"/>
                 </Grid.RowDefinitions>
 
-                <materialDesign:Card
-                Grid.Row="0"
-                x:Name="generalNewsCard"
-                Background="{DynamicResource ListViewItemOverlayBackgroundThemeBrush}"  Margin="5">
-                    <StackPanel>
-                        <TextBlock x:Name="genNewsTitle" FontSize="20" TextWrapping="Wrap" >Google News</TextBlock>
-                        <TextBlock x:Name="genNewsDescription" FontSize="18" TextWrapping="Wrap" Foreground="White"></TextBlock>
-                        <TextBlock x:Name="genNewsDate" FontSize="18"  TextWrapping="Wrap" FontStyle="Italic">No news at this time...</TextBlock>
-                    </StackPanel>
+                <ListView x:Name="genNewsList" 
+                        Grid.Row="0"
+                        Background="{x:Null}" 
+                        BorderBrush="{x:Null}"
+                        HorizontalAlignment="Stretch" 
+                        SelectionMode="Single"
+                        Margin="10,0,10,5"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <ContentPresenter />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
 
-                </materialDesign:Card>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel x:Name="generalNewsCard" Margin="10,0">
+                                <TextBlock x:Name="genNewsTitle" FontSize="20" TextWrapping="Wrap" Foreground="White" Text="{Binding NewsTitle}"></TextBlock>
+                                <TextBlock x:Name="genNewsDescription" FontSize="18" TextWrapping="Wrap" Foreground="#FFaaaaaa" Text="{Binding NewsDescription}"></TextBlock>
+                                <TextBlock x:Name="genNewsDate" FontSize="18"  TextWrapping="Wrap" FontStyle="Italic" Foreground="#FFaaaaaa" Text="{Binding NewsPublicationDate}"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
 
                 <StackPanel Grid.Row="1">
-                    <StackPanel Background="Gainsboro" Orientation="Horizontal">
-                        <RadioButton GroupName="NewsButtonGroup" HorizontalAlignment="Stretch" Content="Google News" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton GroupName="NewsButtonGroup" HorizontalAlignment="Stretch" Content="AP Top News" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
                         <RadioButton GroupName="NewsButtonGroup" HorizontalAlignment="Stretch" Content="CNET Tech News" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
                     </StackPanel>
-                    <StackPanel Background="Gainsboro" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                         <RadioButton GroupName="NewsButtonGroup" HorizontalAlignment="Stretch" Content="BBC World News" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
                         <RadioButton GroupName="NewsButtonGroup" HorizontalAlignment="Stretch" Content="CLAS News" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
                     </StackPanel>
                 </StackPanel>
 
             </Grid>
-            
-            
-            
-        </Grid>
 
+        </Grid>
 
     </Grid>
 

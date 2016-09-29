@@ -55,7 +55,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                         "Group-1-Item-Weather",
                         "Weather",
                         "More Details",
-                        new Uri("../Assets/WeatherIcon.png", UriKind.Relative),
+                        new Uri("../Images/WeatherIcons/mostlycloudy.png", UriKind.Relative),
                         "Expanded weather information",
                         itemContent,
                         mainWindowPages,
@@ -73,10 +73,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
             mainWindowPages.Items.Add(
                     new DataItem(
                         "Group-1-CS-Events",
-                        "CS Events & News",
+                        "News & Events",
                         string.Empty,
                         DataSource.lightGrayImage,
-                        "More information on CS Events and News",
+                        "CS Events, CS News, and Today's Headlines",
                         itemContent,
                         mainWindowPages,
                         typeof(CSEvents)));
