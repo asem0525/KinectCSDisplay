@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="Microsoft.Samples.Kinect.ControlsBasics.Pages.MapsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Microsoft.Samples.Kinect.ControlsBasics.Pages"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:k="http://schemas.microsoft.com/kinect/2014"
+             mc:Ignorable="d" 
+             Margin="10,10,10,10">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Style="{StaticResource HeaderStyle}" FontWeight="UltraBold" Grid.Row="0" Grid.Column="0" Margin="0 10 0 10" Text="Building Map" FontSize="36" Foreground="#FFEEEEEE"/>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+            <StackPanel>
+                <TextBlock Style="{StaticResource HeaderStyle}" Foreground="#FFFFC000">Floors</TextBlock>
+                <RadioButton GroupName="FloorButtonGroup" HorizontalAlignment="Stretch" Content="Floor 1" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+                <RadioButton GroupName="FloorButtonGroup" HorizontalAlignment="Stretch" Content="Floor 2" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+                <RadioButton GroupName="FloorButtonGroup" HorizontalAlignment="Stretch" Content="Floor 3" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+                <RadioButton GroupName="FloorButtonGroup" HorizontalAlignment="Stretch" Content="Ground Floor" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+                <RadioButton GroupName="FloorButtonGroup" HorizontalAlignment="Stretch" Content="Basement" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
+            <TextBlock Style="{StaticResource HeaderStyle}" Foreground="#FFFFC000">Map</TextBlock>
+
+            <ScrollViewer Grid.Row="1"
+                      x:Name="scrollViewer" 
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto" 
+                      k:KinectRegion.IsScrollInertiaEnabled="true" >
+                <Image Source="C:\Users\rwedoff\Desktop\MLH Floorplans-2012-page-004.jpg" IsManipulationEnabled="True" Stretch="Uniform"/>
+
+            </ScrollViewer>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

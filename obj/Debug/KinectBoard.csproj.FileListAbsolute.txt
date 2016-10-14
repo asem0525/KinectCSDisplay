@@ -95,3 +95,10 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pag
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\PeoplePage.baml
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\SampleData\CSEventSampleData\CSEventSampleData.baml
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\MapsPage.g.cs
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Pages\MapsPage.baml
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\KinectBoard.exe.manifest
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\KinectBoard.application
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\KinectBoard.exe.manifest
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\KinectBoard.application

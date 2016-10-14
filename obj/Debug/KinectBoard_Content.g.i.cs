@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pages/wundergroundlogo_4c_rev_horz.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/mapicon.png")]
 
 

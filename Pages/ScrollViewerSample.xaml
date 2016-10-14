@@ -21,7 +21,8 @@
         <ScrollViewer Grid.Row="1" 
                       HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                       k:KinectRegion.IsHorizontalRailEnabled="true" k:KinectRegion.IsVerticalRailEnabled="true"
-                      k:KinectRegion.ZoomMode="Enabled">
+                      k:KinectRegion.ZoomMode="Enabled"
+                      PanningMode="VerticalFirst">
             <Image Stretch="None" Grid.Column="0" Grid.Row="0" Source="/Images/beach.jpg" />
         </ScrollViewer>
     </Grid>

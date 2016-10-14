@@ -1,30 +1,38 @@
-﻿
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using Microsoft.Kinect;
+using Microsoft.Kinect.Wpf.Controls;
+
+using System.Timers;
+
+using System.Diagnostics;
+
+using System.Windows.Media.Animation;
+
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Windows.Automation.Peers;
+using System.Linq;
+using System.Text;
+using System.Windows.Navigation;
+using System.Windows.Media;
+using System.ComponentModel;
+using System.Windows.Threading;
+using System.Threading.Tasks;
+using System.Net.Http;
+using HtmlAgilityPack;
+using Microsoft.Samples.Kinect.ControlsBasics.DataModel;
+
 namespace Microsoft.Samples.Kinect.ControlsBasics
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Controls;
-    using Microsoft.Kinect;
-    using Microsoft.Kinect.Wpf.Controls;
-    using DataModel;
-    using System.Timers;
-
-    using System.Diagnostics;
-
-    using System.Windows.Media.Animation;
-
-    using System.Net;
-    using System.IO;
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-    using System.Text.RegularExpressions;
-    using System.Windows.Media.Imaging;
-    using System.Xml;
-    using System.Xml.Serialization;
-    using System.Windows.Automation.Peers;
-    using System.Linq;
-    using System.Text;
-    using System.Windows.Navigation;
+    
 
 
     /// <summary>
@@ -37,6 +45,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private static Timer bongoSwapTimer;
         private static Timer bongoGetTimer;
         private static Timer weatherTimer;
+        private static Timer slideSwapTimer;
         private BongoData bongoData;
         private int bongoIndex = 0;
         private static Simpleforecast weatherData;
@@ -46,9 +55,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private static List<VisibleCSItem> fullCsEventsList = new List<VisibleCSItem>();
         
         private static List<VisibleCSItem> fullCsNewsList = new List<VisibleCSItem>();
-        private bool task1;
-        private bool task2;
-        private Timer waitTimer;
+        private static List<BitmapImage> slideImages = new List<BitmapImage>();
+
         private NavigationService navService;
 
         internal static List<VisibleBongoData> FullBongoData
@@ -64,6 +72,18 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
         }
 
+        private KinectSensor kinectSensor = null;
+      
+        /// <summary>
+        /// Reader for color frames
+        /// </summary>
+        private ColorFrameReader colorFrameReader = null;
+
+        /// <summary>
+        /// Bitmap to display
+        /// </summary>
+        private WriteableBitmap colorBitmap = null;
+        private int swapIndex;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class. 
@@ -81,6 +101,23 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
             // Use the default sensor
             this.kinectRegion.KinectSensor = KinectSensor.GetDefault();
+
+            this.kinectSensor = KinectSensor.GetDefault();
+
+            //// open the reader for the color frames
+            this.colorFrameReader = this.kinectSensor.ColorFrameSource.OpenReader();
+
+            // wire handler for frame arrival
+            this.colorFrameReader.FrameArrived += this.Reader_ColorFrameArrived;
+
+            // create the colorFrameDescription from the ColorFrameSource using Bgra format
+            FrameDescription colorFrameDescription = this.kinectSensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Bgra);
+
+            // create the bitmap to display
+            this.colorBitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
+            
+            // open the sensor
+            this.kinectSensor.Open();
 
             //// Add in display content
             var sampleDataSource = DataSource.GetGroup("Group-1");
@@ -103,7 +140,72 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             SetCSEventsTimer();
 
             GetInitalApiData();
+
+            GetSlides();
+
+            SetSlideSwapTimer();
         }
+
+
+
+        ///// <summary>
+        ///// Execute shutdown tasks
+        ///// </summary>
+        ///// <param name="sender">object sending the event</param>
+        ///// <param name="e">event arguments</param>
+        //private void MainWindow_Closing(object sender, CancelEventArgs e)
+        //{
+        //    if (this.colorFrameReader != null)
+        //    {
+        //        // ColorFrameReder is IDisposable
+        //        this.colorFrameReader.Dispose();
+        //        this.colorFrameReader = null;
+        //    }
+
+        //    if (this.kinectSensor != null)
+        //    {
+        //        this.kinectSensor.Close();
+        //        this.kinectSensor = null;
+        //    }
+        //}
+
+        /// <summary>
+        /// Handles the color frame data arriving from the sensor
+        /// </summary>
+        /// <param name="sender">object sending the event</param>
+        /// <param name="e">event arguments</param>
+        private void Reader_ColorFrameArrived(object sender, ColorFrameArrivedEventArgs e)
+        {
+            // ColorFrame is IDisposable
+            using (ColorFrame colorFrame = e.FrameReference.AcquireFrame())
+            {
+                if (colorFrame != null)
+                {
+                    FrameDescription colorFrameDescription = colorFrame.FrameDescription;
+
+                    using (KinectBuffer colorBuffer = colorFrame.LockRawImageBuffer())
+                    {
+                        this.colorBitmap.Lock();
+
+                        // verify data and write the new color frame data to the display bitmap
+                        if ((colorFrameDescription.Width == this.colorBitmap.PixelWidth) && (colorFrameDescription.Height == this.colorBitmap.PixelHeight))
+                        {
+                            colorFrame.CopyConvertedFrameDataToIntPtr(
+                                this.colorBitmap.BackBuffer,
+                                (uint)(colorFrameDescription.Width * colorFrameDescription.Height * 4),
+                                ColorImageFormat.Bgra);
+
+                            this.colorBitmap.AddDirtyRect(new Int32Rect(0, 0, this.colorBitmap.PixelWidth, this.colorBitmap.PixelHeight));
+                            KinectStreamView.Source = this.colorBitmap;
+                        }
+
+                        this.colorBitmap.Unlock();
+                    }
+                }
+            }
+        }
+
+     
 
         /// <summary>
         /// Timer used to call an API update for Weather Data
@@ -118,18 +220,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             weatherTimer.Enabled = true;
         }
 
-        private void SetWaitTimer()
-        {
-            task1 = false;
-            task2 = false;
-            // Create a timer with a two second interval.
-            waitTimer = new Timer(100);
-            // Hook up the Elapsed event for the timer. 
-            waitTimer.Elapsed += SetCSCards;
-            waitTimer.AutoReset = true;
-            waitTimer.Enabled = true;
-        }
-
         /// <summary>
         /// Timer used to call an API update for CS Events
         /// </summary>
@@ -139,8 +229,19 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             csEventsTimer = new Timer(800000);
             // Hook up the Elapsed event for the timer. 
             csEventsTimer.Elapsed += GetCSEvents;
+            csEventsTimer.Elapsed += GetSlideURLs;
             csEventsTimer.AutoReset = true;
             csEventsTimer.Enabled = true;
+        }
+
+      
+
+        private void SetSlideSwapTimer()
+        {
+            slideSwapTimer = new Timer(10000);
+            slideSwapTimer.Elapsed += RotateSlides;
+            slideSwapTimer.AutoReset = true;
+            slideSwapTimer.Enabled = true;
         }
 
         /// <summary>
@@ -163,14 +264,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 downloader.DownloadStringAsync(feedUri);
             }
 
-            Uri newsURI = new Uri("https://www.cs.uiowa.edu/news/rss.xml");
-            using (WebClient downloader = new WebClient())
-            {
-                downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSNews);
-                downloader.DownloadStringAsync(newsURI);
-            }
+            //Uri newsURI = new Uri("https://www.cs.uiowa.edu/news/rss.xml");
+            //using (WebClient downloader = new WebClient())
+            //{
+            //    downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSNews);
+            //    downloader.DownloadStringAsync(newsURI);
+            //}
 
-            SetWaitTimer();
         }
 
         /// <summary>
@@ -224,12 +324,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void GetInitalApiData()
         {
-            task1 = false;
-            task2 = false;
-            SetWaitTimer();
             GetCSEvents();
             GetBusData();
-            GetWeatherData();           
+            GetWeatherData();
+            GetSlides();         
         }
      
         /// <summary>
@@ -264,12 +362,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 fullCsEventsList.Clear();
                 using (TextReader reader = new StringReader(e.Result))
                 {
-                    nodes result = (nodes)serializer.Deserialize(reader);
-
+                    try
+                    {
+                        nodes result = (nodes)serializer.Deserialize(reader);
+                    
                     foreach (var nd in result.node)
                     {
-                        try
-                        {
                             string date = nd.startdate;
                             Regex reg = new Regex("\\(All\\sday\\)");
                             if (reg.IsMatch(nd.startdate))
@@ -286,63 +384,29 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                                 startDate = startDate,
                                 isEvent = true
                             });
-                        }
-                        catch { }
+                     
                     }
-                    task1 = true;
+                    }
+                    catch { }
+
                 }
+                SetCSCards();
             }
         }
 
-        private void downloader_DownloadStringCompletedCSNews(object sender, DownloadStringCompletedEventArgs e)
-        {
-            if (e.Error == null)
-            {
-                string responseStream = e.Result;
-                XmlSerializer serializer = new XmlSerializer(typeof(nodes));
-                
-                using (TextReader reader = new StringReader(e.Result))
-                {
-                    nodes result = (nodes)serializer.Deserialize(reader);
-
-                    foreach (var nd in result.node)
-                    {
-                        try
-                        {
-                            string date = nd.startdate;
-                            Regex reg = new Regex("\\(All\\sday\\)");
-                            if (reg.IsMatch(nd.startdate))
-                            {
-                                date = nd.startdate.Substring(0, reg.Match(nd.startdate).Index);
-                            }
-                            DateTime startDate = DateTime.Parse(date);
-
-                            fullCsNewsList.Add(new VisibleCSItem()
-                            {
-                                csEventLocation = nd.location == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.location)),
-                                csEventTime = startDate.Date.ToString("MMMM d, yyyy"),
-                                csEventTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
-                                startDate = startDate,
-                                isEvent = false
-                            });
-                        }
-                        catch { }
-                    }
-                    task2 = true;
-                }
-            }
-        }
         //TODO set page timer
         //TODO set Loading bars
-        //TODO make kinect viewing camera better
         //TODO Make icons
         //TODO add comments
-        //TODO Make people page async
         //TODO South Side stop and north side stop
         //TODO Remove button on CLAS Logo
-        //TODO smoothen animations
         //TODO switch news error
-        
+        //TODO fix clas news error
+        //TODO bus page scroll
+        //TODO update drupal slides feed on timer
+        //Scheduler http://www.howtogeek.com/123393/how-to-automatically-run-programs-and-set-reminders-with-the-windows-task-scheduler/
+
+
 
         /// <summary>
         /// Sets the weather data with the icons on the mainwindow
@@ -408,7 +472,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void SetClockTimer()
         {
-            // Create a timer with a two second interval.
+            // Create a timer with a one second interval.
             clockTimer = new Timer(1000);
             // Hook up the Elapsed event for the timer. 
             clockTimer.Elapsed += SetClockTimeEvent;
@@ -439,8 +503,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void SetSwapTimer()
         {
-            // Create a timer with a two second interval.
-            bongoSwapTimer = new Timer(5000);
+            // Create a timer with a 7 second interval.
+            bongoSwapTimer = new Timer(7000);
             // Hook up the Elapsed event for the timer. 
             bongoSwapTimer.Elapsed += SetBongoSwapEvent;
             bongoSwapTimer.AutoReset = true;
@@ -506,17 +570,16 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <summary>
         /// Swaps out cards with cs event data on MainWindow
         /// </summary>
-        private void SetCSCards(object o, ElapsedEventArgs e)
+        private void SetCSCards()
         {
-            if(task1 && task2)
-            {
+            
                 fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
-                List<VisibleCSItem> comboList = fullCsEventsList.Concat(fullCsNewsList).ToList();
+               
                 List<VisibleCSItem> groupedCSEventData = new List<VisibleCSItem>();
 
-                for (int i = 0; i < 4 && i < comboList.Count; i++)
+                for (int i = 0; i < 4 && i < fullCsEventsList.Count; i++)
                 {
-                    groupedCSEventData.Add(comboList[i]);
+                    groupedCSEventData.Add(fullCsEventsList[i]);
                 }
 
                 try
@@ -526,16 +589,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     {
                         if (groupedCSEventData.Count >= 1)
                         {
-                            csEventsList.ItemsSource = groupedCSEventData;
+                           csEventsList.ItemsSource = groupedCSEventData;
                         }
                     });
                 }
                 catch { }
-                waitTimer.AutoReset = false;
-                waitTimer.Enabled = false;
-                waitTimer.Dispose();
-            } 
-            
+                
         }
 
 
@@ -565,19 +624,11 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             try
             {
                 //Udpdate UI thread with new bus group of 4
-                Dispatcher.Invoke(() =>
+                if(groupedBongoData.Count >= 1)
                 {
-                    if (groupedBongoData.Count >= 1)
-                    {
-                        BusGrid.DataContext = groupedBongoData;
-                    }
-                    //else if(groupedBongoData.Count == 0)
-                    //{
-                    //    List<VisibleBongoData> l = new List<VisibleBongoData>();
-                    //    l.Add(new VisibleBongoData() { stopname = "No buses running at this time" });
-                    //    BusGrid.DataContext = l;
-                    //}
-                });
+                    Dispatcher.Invoke(DispatcherPriority.DataBind, new Action(delegate { BusGrid.DataContext = groupedBongoData; }));
+                }
+                
             }
             catch { };
         }
@@ -642,5 +693,142 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             backButton.Visibility = Visibility.Visible;
             navigationRegion.Content = Activator.CreateInstance(typeof(KinectPointerPointSample));
         }
+
+
+        private async void GetSlides()
+        {
+            List<BitmapImage> imageList = await GetSlidesAsync();
+            //Dispatcher.Invoke(() => {
+                slideImages = imageList;
+            //});
+        }
+
+        private void GetSlideURLs(object sender, ElapsedEventArgs e)
+        {
+            GetSlides();
+        }
+        async Task<List<BitmapImage>> GetSlidesAsync()
+        {
+            
+            HttpClient client = new HttpClient();
+            var doc = new HtmlDocument();
+            var html = await client.GetStringAsync("https://clas.uiowa.edu/signage/computer-science");
+            doc.LoadHtml(html);
+            List<string> imageLinks = await Task.Run(() =>
+            {
+                List<string> links = new List<string>();
+                try
+                {
+                    var rows = doc.DocumentNode.SelectNodes("//*[@id='flexslider-1']/ul/li/img");
+                    foreach (var row in rows)
+                    {
+                        links.Add(row.Attributes["src"].Value);
+                    }
+                    return links;
+                }
+                catch { return links; }                
+            });
+
+            List<BitmapImage> images = await Task.Run(() =>
+            {
+                List<BitmapImage> imgs = new List<BitmapImage>();
+                foreach (var link in imageLinks)
+                {
+                    var webClient = new WebClient();
+                    try
+                    {
+                        var buffer = webClient.DownloadData(link);
+
+
+                        var bitmapImage = new BitmapImage();
+
+                        using (var stream = new MemoryStream(buffer))
+                        {
+                            bitmapImage.BeginInit();
+                            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmapImage.StreamSource = stream;
+                            bitmapImage.EndInit();
+                            bitmapImage.Freeze();
+                            imgs.Add(bitmapImage);
+                        }
+                    }
+                    catch { }
+                    
+                }
+                return imgs;
+            });
+            return images;
+        }
+
+        private void RotateSlides(object obj, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                //Swap and Fade Animation Code
+                ScrollViewer slideBox = (ScrollViewer)FindName("Slides");
+                // Create a duration of 2 seconds.
+                Duration duration = new Duration(TimeSpan.FromSeconds(2));
+                Duration duration2 = new Duration(TimeSpan.FromSeconds(2));
+
+                // Create two DoubleAnimations and set their properties.
+                DoubleAnimation myDoubleAnimation1 = new DoubleAnimation();
+                DoubleAnimation myDoubleAnimation2 = new DoubleAnimation();
+
+                myDoubleAnimation1.Duration = duration;
+                myDoubleAnimation2.Duration = duration2;
+                myDoubleAnimation2.BeginTime = TimeSpan.FromSeconds(0);
+
+                Storyboard sb = new Storyboard();
+                sb.Duration = duration;
+
+                sb.Children.Add(myDoubleAnimation1);
+                sb.Children.Add(myDoubleAnimation2);
+
+                Storyboard.SetTargetName(myDoubleAnimation1, "Slides");
+                Storyboard.SetTargetName(myDoubleAnimation2, "Slides");
+
+                // Set the attached properties of Opacity
+                // to be the target properties of the two respective DoubleAnimations.
+                Storyboard.SetTargetProperty(myDoubleAnimation1, new PropertyPath("Opacity"));
+                Storyboard.SetTargetProperty(myDoubleAnimation2, new PropertyPath("Opacity"));
+
+                myDoubleAnimation1.To = 0;
+                myDoubleAnimation2.From = 0;
+                myDoubleAnimation2.To = 1;
+
+                // Make the Storyboard a resource.
+                slideBox.Resources.Add("unique_id", sb);
+                // Begin the animation.
+                try
+                {
+                    sb.Begin();
+                }
+                catch { };
+
+                if (swapIndex < slideImages.Count - 1)
+                {
+                    Slides.Visibility = Visibility.Visible;
+                    EventsSlide.Visibility = Visibility.Collapsed;
+                    if (slideImages.Count > 1)
+                    {
+                       
+                        
+                        SlideImage.Source = slideImages[swapIndex]; 
+                    }
+                    swapIndex++;
+                }
+                else
+                {
+                    Slides.Visibility = Visibility.Collapsed;
+                    EventsSlide.Visibility = Visibility.Visible;
+                    swapIndex = 0;
+                }
+
+                slideBox.Resources.Remove("unique_id");
+            });
+
+
+        }
+
     }
 }

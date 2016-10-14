@@ -75,7 +75,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                         "Group-1-CS-Events",
                         "News & Events",
                         string.Empty,
-                        DataSource.lightGrayImage,
+                        new Uri("../Assets/newsIcon.png", UriKind.Relative),
                         "CS Events, CS News, and Today's Headlines",
                         itemContent,
                         mainWindowPages,
@@ -85,11 +85,21 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                        "Group-1-People",
                        "People",
                        "List of Faculty",
-                       DataSource.lightGrayImage,
+                       new Uri("../Assets/people Icon.png", UriKind.Relative),
                        "List of faculty members",
                        itemContent,
                        mainWindowPages,
                        typeof(PeoplePage)));
+            mainWindowPages.Items.Add(
+                   new DataItem(
+                       "Group-1-Maps",
+                       "Building Map",
+                       string.Empty,
+                       new Uri("../Assets/mapIcon.png", UriKind.Relative),
+                       "Map of building",
+                       itemContent,
+                       mainWindowPages,
+                       typeof(ScrollViewerSample)));
 
             this.AllGroups.Add(mainWindowPages);
         }

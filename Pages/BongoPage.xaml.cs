@@ -103,14 +103,14 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
         {
             bongoStops = new Dictionary<string, string>()
             {
-                { "Dwtn. Interchange", "0001" },
-                { "IC Dwtn. Interchange", "0002" },
+                { "Dwtn. Interchange (Schaeffer Hall)", "0001" },
+                { "IC Dwtn. Interchange (Mall Side)", "0002" },
                 { "MacBride Hall", "0120" },
             };
             busStopNames = new Dictionary<string, string>()
             {
-                { "Dwtn. Interchange", "Downtown Interchange" },
-                { "IC Dwtn. Interchange", "Iowa City Downtown Interchange" },
+                { "Dwtn. Interchange (Schaeffer Hall)", "Downtown Interchange" },
+                { "IC Dwtn. Interchange (Mall Side)", "Iowa City Downtown Interchange" },
                 { "MacBride Hall" , "MacBride Hall"}
             };
             

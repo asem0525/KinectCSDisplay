@@ -103,28 +103,31 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-
-                XmlSerializer serializer = new XmlSerializer(typeof(nodes));
-
-                fullNewsList.Clear();
-                using (TextReader reader = new StringReader(e.Result))
+                try
                 {
-                    //reader.Namespaces = false;
-                    nodes result = (nodes)serializer.Deserialize(reader);
-                    foreach (var nd in result.node)
+                    XmlSerializer serializer = new XmlSerializer(typeof(nodes));
+
+                    fullNewsList.Clear();
+                    using (TextReader reader = new StringReader(e.Result))
                     {
-                        try
+                        //reader.Namespaces = false;
+                        nodes result = (nodes)serializer.Deserialize(reader);
+                        foreach (var nd in result.node)
                         {
-                            fullNewsList.Add(new VisibleNewsItem()
+                            try
                             {
-                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
-                            });
+                                fullNewsList.Add(new VisibleNewsItem()
+                                {
+                                    NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                });
+                            }
+                            catch { }
+                            genSwapIndex = 0;
+                            SetGenCards();
                         }
-                        catch { }
-                        genSwapIndex = 0;
-                        SetGenCards();
                     }
                 }
+                catch { }
             }
         }
 
@@ -133,30 +136,33 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-
-                XmlSerializer serializer = new XmlSerializer(typeof(CNETNews.rss));
-
-                fullNewsList.Clear();
-                using (TextReader reader = new StringReader(e.Result))
+                try
                 {
-                    //reader.Namespaces = false;
-                    CNETNews.rss result = (CNETNews.rss)serializer.Deserialize(reader);
-                    foreach (var nd in result.channel.item)
+                    XmlSerializer serializer = new XmlSerializer(typeof(CNETNews.rss));
+
+                    fullNewsList.Clear();
+                    using (TextReader reader = new StringReader(e.Result))
                     {
-                        try
+                        //reader.Namespaces = false;
+                        CNETNews.rss result = (CNETNews.rss)serializer.Deserialize(reader);
+                        foreach (var nd in result.channel.item)
                         {
-                            fullNewsList.Add(new VisibleNewsItem()
+                            try
                             {
-                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
-                                NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
-                                NewsPublicationDate = nd.pubDate
-                            });
+                                fullNewsList.Add(new VisibleNewsItem()
+                                {
+                                    NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                    NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
+                                    NewsPublicationDate = nd.pubDate
+                                });
+                            }
+                            catch { }
+                            genSwapIndex = 0;
+                            SetGenCards();
                         }
-                        catch { }
-                        genSwapIndex = 0;
-                        SetGenCards();
                     }
                 }
+                catch { }
             }
         }
 
@@ -165,30 +171,33 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-
-                XmlSerializer serializer = new XmlSerializer(typeof(BBCNews.rss));
-
-                fullNewsList.Clear();
-                using (TextReader reader = new StringReader(e.Result))
+                try
                 {
-                    //reader.Namespaces = false;
-                    BBCNews.rss result = (BBCNews.rss)serializer.Deserialize(reader);
-                    foreach (var nd in result.channel.item)
+                    XmlSerializer serializer = new XmlSerializer(typeof(BBCNews.rss));
+
+                    fullNewsList.Clear();
+                    using (TextReader reader = new StringReader(e.Result))
                     {
-                        try
+                        //reader.Namespaces = false;
+                        BBCNews.rss result = (BBCNews.rss)serializer.Deserialize(reader);
+                        foreach (var nd in result.channel.item)
                         {
-                            fullNewsList.Add(new VisibleNewsItem()
+                            try
                             {
-                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
-                                NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
-                                NewsPublicationDate = nd.pubDate
-                            });
+                                fullNewsList.Add(new VisibleNewsItem()
+                                {
+                                    NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                    NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
+                                    NewsPublicationDate = nd.pubDate
+                                });
+                            }
+                            catch { }
+                            genSwapIndex = 0;
+                            SetGenCards();
                         }
-                        catch { }
-                        genSwapIndex = 0;
-                        SetGenCards();
                     }
                 }
+                catch { }
             }
         }
 
@@ -197,28 +206,32 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-
-                XmlSerializer serializer = new XmlSerializer(typeof(APNews.rss));
-
-                fullNewsList.Clear();
-                using (TextReader reader = new StringReader(e.Result))
+                try
                 {
-                    APNews.rss result = (APNews.rss)serializer.Deserialize(reader);
-                    foreach (var nd in result.channel.item)
+                    XmlSerializer serializer = new XmlSerializer(typeof(APNews.rss));
+
+                    fullNewsList.Clear();
+                    using (TextReader reader = new StringReader(e.Result))
                     {
-                        try
+                        APNews.rss result = (APNews.rss)serializer.Deserialize(reader);
+                        foreach (var nd in result.channel.item)
                         {
-                            fullNewsList.Add(new VisibleNewsItem()
+                            try
                             {
-                                NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
-                                NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
-                            });
+                                fullNewsList.Add(new VisibleNewsItem()
+                                {
+                                    NewsTitle = nd.title == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.title)),
+                                    NewsDescription = nd.description == null ? "" : Encoding.UTF8.GetString(Encoding.Default.GetBytes(nd.description)),
+                                });
+                            }
+                            catch { }
+                            genSwapIndex = 0;
+                            SetGenCards();
                         }
-                        catch { }
                     }
                 }
-                genSwapIndex = 0;
-                SetGenCards();
+                catch { }
+               
             }
         }
 
@@ -404,11 +417,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                 fullCsEventsList.Clear();
                 using (TextReader reader = new StringReader(e.Result))
                 {
-                    nodes result = (nodes)serializer.Deserialize(reader);
+                    try
+                    {
+                        nodes result = (nodes)serializer.Deserialize(reader);
                     foreach (var nd in result.node)
                     {
-                        try
-                        {
+                        
                             string date = nd.startdate;
                             Regex reg = new Regex("\\(All\\sday\\)");
                             if (reg.IsMatch(nd.startdate))
@@ -425,9 +439,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                                 startDate = startDate,
                                 isEvent = true
                             });
-                        }
-                        catch { }
-                    }                    
+                      
+                    }
+                    }
+                    catch { }
                 }              
             }
             fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
@@ -454,12 +469,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
 
                 using (TextReader reader = new StringReader(e.Result))
                 {
-                    nodes result = (nodes)serializer.Deserialize(reader);
+                    try
+                    {
+                        nodes result = (nodes)serializer.Deserialize(reader);
 
                     foreach (var nd in result.node)
                     {
-                        try
-                        {
+                       
                             string date = nd.startdate;
                             Regex reg = new Regex("\\(All\\sday\\)");
                             if (reg.IsMatch(nd.startdate))
@@ -476,16 +492,20 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
                                 startDate = startDate,
                                 isEvent = false
                             });
-                        }
-                        catch { }
+                    
                     }
+                    }
+                    catch { }
 
                     //Set the inital card value
                     Dispatcher.Invoke(() =>
                     {
-                        csEventTitle.Text = fullCsNewsList[0].csEventTitle;
-                        csEventLocation.Text = fullCsNewsList[0].csEventLocation;
-                        csEventTime.Text = fullCsNewsList[0].csEventTime;
+                        if(fullCsNewsList.Count > 0)
+                        {
+                            csEventTitle.Text = fullCsNewsList[0].csEventTitle;
+                            csEventLocation.Text = fullCsNewsList[0].csEventLocation;
+                            csEventTime.Text = fullCsNewsList[0].csEventTime;
+                        }                       
                     });
                 }
             }

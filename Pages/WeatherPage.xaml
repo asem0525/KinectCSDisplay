@@ -252,10 +252,10 @@
                 
                     <StackPanel Grid.Row="2"  x:Name="MoreDetailWeather"  Margin="10,5">
                         <TextBlock x:Name="moreDetailTitle" FontFamily="20" Foreground="#FFFFC000" >More Details</TextBlock>
-                        <TextBlock x:Name="moreDetailDayTitle" FontSize="16" TextDecorations="Underline" TextWrapping="Wrap" Foreground="White" />
-                        <TextBlock x:Name="moreDetailDayText" FontSize="16" TextDecorations="" FontStyle="Italic" TextWrapping="Wrap" Foreground="White"/>
-                        <TextBlock x:Name="moreDetailNightTitle" FontSize="16" TextDecorations="Underline" TextWrapping="Wrap" Foreground="White"/>
-                        <TextBlock x:Name="moreDetailNightText" FontSize="16" TextDecorations="" FontStyle="Italic" TextWrapping="Wrap" Foreground="White"/>
+                        <TextBlock x:Name="moreDetailDayTitle" FontSize="19" TextDecorations="Underline" TextWrapping="Wrap" Foreground="White" />
+                        <TextBlock x:Name="moreDetailDayText" FontSize="19" TextDecorations="" FontStyle="Italic" TextWrapping="Wrap" Foreground="White"/>
+                        <TextBlock x:Name="moreDetailNightTitle" FontSize="19" TextDecorations="Underline" TextWrapping="Wrap" Foreground="White"/>
+                        <TextBlock x:Name="moreDetailNightText" FontSize="19" TextDecorations="" FontStyle="Italic" TextWrapping="Wrap" Foreground="White"/>
                     </StackPanel>
 
             </Grid>

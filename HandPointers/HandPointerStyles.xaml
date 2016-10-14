@@ -89,7 +89,7 @@
     <DataTemplate x:Key="Kinect250x250ItemTemplate">
         <Button Style="{StaticResource KinectTileButton}">
             <materialDesign:Card  Margin="3" Background="#424242" >
-                <Grid HorizontalAlignment="Left" Width="250" Height="250">
+                <Grid HorizontalAlignment="Left" Width="205" Height="205">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.6*"/>
                         <RowDefinition Height="0.4*"/>

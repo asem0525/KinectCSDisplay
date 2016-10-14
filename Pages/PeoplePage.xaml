@@ -15,13 +15,13 @@
         </Grid.RowDefinitions>
 
         <TextBlock Style="{StaticResource HeaderStyle}" FontWeight="UltraBold" Grid.Row="0" Grid.Column="0" Margin="0 10 0 10" Text="People" FontSize="36" Foreground="#FFEEEEEE"/>
-
+        <TextBlock x:Name="Loading" Text="Loading..." Grid.Row="1" Foreground="White"></TextBlock>
         <ScrollViewer Grid.Row="1"
                       x:Name="scrollViewer" 
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Disabled" 
                       k:KinectRegion.IsScrollInertiaEnabled="true" >
-            <DataGrid x:Name="PeoplGrid" IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="True" Background="{x:Null}">
+            <DataGrid x:Name="PeopleGrid" IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="True" Background="{x:Null}" EnableRowVirtualization="False" EnableColumnVirtualization="False">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Foreground" Value="white"/>
@@ -31,8 +31,17 @@
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="FontSize" Value="18"/>
+                
                     </Style>
                 </DataGrid.CellStyle>
+                <DataGrid.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                    </Style>
+                </DataGrid.Resources>
+
+
             </DataGrid>
 
         </ScrollViewer>
