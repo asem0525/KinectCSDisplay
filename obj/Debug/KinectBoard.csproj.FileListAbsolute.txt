@@ -102,3 +102,5 @@ C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\De
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\bin\AnyCPU\Debug\KinectBoard.application
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\KinectBoard.exe.manifest
 C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\KinectBoard.application
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Helper Classes\LoadingControl.g.cs
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Debug\Helper Classes\LoadingControl.baml

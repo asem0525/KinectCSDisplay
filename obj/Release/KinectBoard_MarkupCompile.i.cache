@@ -1,0 +1,20 @@
+﻿KinectBoard
+
+
+winexe
+C#
+.cs
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\obj\Release\
+Microsoft.Samples.Kinect.ControlsBasics
+none
+false
+TRACE
+C:\Users\rwedoff\Documents\Visual Studio 2015\Projects\KinectBoard\App.xaml
+151927295745
+
+311184113774
+79-788262943
+Common\StandardStyles.xaml;HandPointers\HandPointerStyles.xaml;Helper Classes\LoadingControl.xaml;MainWindow.xaml;Pages\BongoPage.xaml;Pages\CSEvents.xaml;Pages\EngagementSettings.xaml;Pages\KinectPointerPointSample.xaml;Pages\MapsPage.xaml;Pages\PeoplePage.xaml;Pages\ScrollViewerSample.xaml;Pages\WeatherPage.xaml;Properties\DesignTimeResources.xaml;SampleData\CSEventSampleData\CSEventSampleData.xaml;SelectionDisplay.xaml;
+
+False
+

@@ -17,6 +17,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfAnimatedGif;
 
+
 namespace Microsoft.Samples.Kinect.ControlsBasics
 {
     /// <summary>
@@ -25,7 +26,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
     public partial class WeatherPage : UserControl
     {
         private Rootobject fullWeatherData;
-       
+        
         public WeatherPage()
         {
             InitializeComponent();
@@ -33,16 +34,15 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             PopulateForecast();
             GetRadar();
         }
-
+        
         private void GetRadar()
         {
-
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(@"http://api.wunderground.com/api/75c131024c99cf58/animatedradar/q/IA/Iowa_City.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=50&width=550&height=550");
             bitmap.EndInit();
-
             ImageBehavior.SetAnimatedSource(RadarImage, bitmap);
+            Loading.Visibility = Visibility.Collapsed;
         }
 
       

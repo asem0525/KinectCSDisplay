@@ -11,6 +11,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,53 +21,50 @@
 
         <TextBlock Style="{StaticResource HeaderStyle}" FontWeight="UltraBold" Grid.Row="0" Grid.Column="0" Margin="0 10 0 10" Text="Bongo Bus Schedule" FontSize="36" Foreground="#FFEEEEEE"/>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-            <StackPanel>
-                <TextBlock Style="{StaticResource HeaderStyle}" Foreground="#FFFFC000">Bus Stops</TextBlock>
-                <RadioButton GroupName="BongoButtonGroup" HorizontalAlignment="Stretch" Content="Dwtn. Interchange (Schaeffer Hall)" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
-                <RadioButton GroupName="BongoButtonGroup" HorizontalAlignment="Stretch" Content="IC Dwtn. Interchange (Mall Side)" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
-                <RadioButton GroupName="BongoButtonGroup" HorizontalAlignment="Stretch" Content="MacBride Hall" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
-            
-            </StackPanel>
-           
+        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource HeaderStyle}" Foreground="#FFFFC000">Bus Stops</TextBlock>
+        <StackPanel Grid.Row="2" Grid.Column="0" >
+            <RadioButton GroupName="BongoButtonGroup" HorizontalAlignment="Stretch" Content="Dwtn. Interchange (Schaeffer Hall)" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+            <RadioButton GroupName="BongoButtonGroup" HorizontalAlignment="Stretch" Content="IC Dwtn. Interchange (Mall Side)" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
+            <RadioButton GroupName="BongoButtonGroup" HorizontalAlignment="Stretch" Content="MacBride Hall" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch">
-            <TextBlock x:Name="BusTimesText" Style="{StaticResource HeaderStyle}" Foreground="#FFFFC000">Bus Times</TextBlock>
-
-            <ScrollViewer Grid.Row="1"
-                      x:Name="scrollViewer" 
-                      HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Auto" 
-                      k:KinectRegion.IsScrollInertiaEnabled="true" 
-                      PanningMode="VerticalFirst"                           
-                      k:KinectRegion.IsHorizontalRailEnabled="true" k:KinectRegion.IsVerticalRailEnabled="true">
-                <DataGrid x:Name="BusGrid" IsReadOnly="True"  ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell" Background="{x:Null}" >
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Stop Name" Binding="{Binding stopname}" FontSize="16" />
-                        <DataGridTextColumn Header="Route Name" Binding="{Binding routename}" FontSize="16"/>
-                        <DataGridTextColumn Header="Time" Binding="{Binding minutes}" FontSize="16"/>
-                    </DataGrid.Columns>
-                    <DataGrid.RowStyle>
-                        <Style TargetType="DataGridRow">
-                            <Setter Property="Background" Value="{Binding color}"/>
-                        </Style>
-                    </DataGrid.RowStyle>
-                    <DataGrid.Resources>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="IsHitTestVisible" Value="False" />
-                        </Style>
-                    </DataGrid.Resources>
-                    <DataGrid.ColumnHeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Background" Value="Transparent"/>
-                        </Style>
-                    </DataGrid.ColumnHeaderStyle>
-                </DataGrid>
-
-            </ScrollViewer>
-        </StackPanel>
         
+        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="BusTimesText" Style="{StaticResource HeaderStyle}" Foreground="#FFFFC000">Bus Times</TextBlock>
+
+
+        <DataGrid x:Name="BusGrid" IsReadOnly="True"  ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionMode="Single" SelectionUnit="Cell" Background="{x:Null}"
+                      ScrollViewer.PanningMode="VerticalFirst"
+                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Grid.Row="2"
+                      Grid.Column="1"
+                      k:KinectRegion.IsScrollInertiaEnabled="true" 
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      EnableRowVirtualization="False" EnableColumnVirtualization="False"
+                      >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Stop Name" Binding="{Binding stopname}" FontSize="16" />
+                <DataGridTextColumn Header="Route Name" Binding="{Binding routename}" FontSize="16"/>
+                <DataGridTextColumn Header="Time" Binding="{Binding minutes}" FontSize="16"/>
+            </DataGrid.Columns>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="{Binding color}"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+        </DataGrid>
+
     </Grid>
 </UserControl>

@@ -3,13 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Wpf.Controls;
-
 using System.Timers;
-
 using System.Diagnostics;
-
 using System.Windows.Media.Animation;
-
 using System.Net;
 using System.IO;
 using Newtonsoft.Json;
@@ -29,18 +25,16 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using HtmlAgilityPack;
 using Microsoft.Samples.Kinect.ControlsBasics.DataModel;
+using Microsoft.Kinect.Input;
 
 namespace Microsoft.Samples.Kinect.ControlsBasics
 {
-    
-
-
     /// <summary>
     /// Interaction logic for MainWindow
     /// </summary>
     public partial class MainWindow
     {
-        
+        public static Timer pageTimer;
         private static Timer clockTimer;
         private static Timer bongoSwapTimer;
         private static Timer bongoGetTimer;
@@ -53,11 +47,13 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private static Timer csEventsTimer;
         public static Rootobject fullWeatherData;
         private static List<VisibleCSItem> fullCsEventsList = new List<VisibleCSItem>();
-        
+
         private static List<VisibleCSItem> fullCsNewsList = new List<VisibleCSItem>();
         private static List<BitmapImage> slideImages = new List<BitmapImage>();
 
         private NavigationService navService;
+
+        public static NavigationService staticNavService;
 
         internal static List<VisibleBongoData> FullBongoData
         {
@@ -73,7 +69,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         }
 
         private KinectSensor kinectSensor = null;
-      
+
         /// <summary>
         /// Reader for color frames
         /// </summary>
@@ -93,7 +89,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             this.InitializeComponent();
 
             navService = NavigationService.GetNavigationService(this);
-
+            staticNavService = navService;
             KinectRegion.SetKinectRegion(this, kinectRegion);
 
             App app = ((App)Application.Current);
@@ -115,20 +111,19 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
             // create the bitmap to display
             this.colorBitmap = new WriteableBitmap(colorFrameDescription.Width, colorFrameDescription.Height, 96.0, 96.0, PixelFormats.Bgr32, null);
-            
+
             // open the sensor
             this.kinectSensor.Open();
 
             //// Add in display content
-            var sampleDataSource = DataSource.GetGroup("Group-1");
-            itemsControl.ItemsSource = sampleDataSource;
+            var mainGridDataSource = DataSource.GetGroup("Group-1");
+            itemsControl.ItemsSource = mainGridDataSource;
 
             //Starts timer for clock
             SetClockTimer();
 
             //Set bongo timers
             SetBongoGetTimer();
-            
 
             SetSwapTimer();
 
@@ -144,9 +139,24 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             GetSlides();
 
             SetSlideSwapTimer();
+
+            var window = KinectCoreWindow.GetForCurrentThread();
+            window.PointerEntered += OnKinectPointerEntered;
+            window.PointerExited += OnKinectPointerExited;
+            SetPageTimer();
+            
+        }
+     
+
+        private void OnKinectPointerExited(object sender, KinectPointerEventArgs e)
+        {
+            MessageBox.Show("kinect exited!");
         }
 
-
+        private void OnKinectPointerEntered(object sender, KinectPointerEventArgs e)
+        {
+            MessageBox.Show("kinect entered");
+        }
 
         ///// <summary>
         ///// Execute shutdown tasks
@@ -205,8 +215,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
         }
 
-     
-
         /// <summary>
         /// Timer used to call an API update for Weather Data
         /// </summary>
@@ -234,8 +242,23 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             csEventsTimer.Enabled = true;
         }
 
-      
+        private void SetPageTimer()
+        {
+            pageTimer = new Timer(60000);
+            pageTimer.Elapsed += ReturnToHomePage;
+            pageTimer.AutoReset = true;
+            pageTimer.Enabled = true;
+        }
 
+        private void ReturnToHomePage(object sender, ElapsedEventArgs e)
+        {
+            Debug.WriteLine("ASJFKLA:SFJKALS:FJASKL:FJASKL:FJASKLFJAKL:");            
+            Dispatcher.Invoke(new Action(() => {
+                navigationRegion.Content = this.kinectRegionGrid;
+                backButton.Visibility = Visibility.Hidden;
+            }));
+        }
+        
         private void SetSlideSwapTimer()
         {
             slideSwapTimer = new Timer(10000);
@@ -263,14 +286,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSEvents);
                 downloader.DownloadStringAsync(feedUri);
             }
-
-            //Uri newsURI = new Uri("https://www.cs.uiowa.edu/news/rss.xml");
-            //using (WebClient downloader = new WebClient())
-            //{
-            //    downloader.DownloadStringCompleted += new DownloadStringCompletedEventHandler(downloader_DownloadStringCompletedCSNews);
-            //    downloader.DownloadStringAsync(newsURI);
-            //}
-
         }
 
         /// <summary>
@@ -327,9 +342,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             GetCSEvents();
             GetBusData();
             GetWeatherData();
-            GetSlides();         
+            GetSlides();
         }
-     
+
         /// <summary>
         /// Gets the Weather forcast data (Json form) and creates WeatherData objects
         /// </summary>
@@ -347,17 +362,17 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     weatherData = root.forecast.simpleforecast;
                     SetWeatherData();
                 }
-                catch { }                
+                catch { }
             }
         }
 
-        
+
         private void downloader_DownloadStringCompletedCSEvents(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error == null)
             {
                 string responseStream = e.Result;
-                
+
                 XmlSerializer serializer = new XmlSerializer(typeof(nodes));
                 fullCsEventsList.Clear();
                 using (TextReader reader = new StringReader(e.Result))
@@ -365,9 +380,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     try
                     {
                         nodes result = (nodes)serializer.Deserialize(reader);
-                    
-                    foreach (var nd in result.node)
-                    {
+
+                        foreach (var nd in result.node)
+                        {
                             string date = nd.startdate;
                             Regex reg = new Regex("\\(All\\sday\\)");
                             if (reg.IsMatch(nd.startdate))
@@ -384,8 +399,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                                 startDate = startDate,
                                 isEvent = true
                             });
-                     
-                    }
+
+                        }
                     }
                     catch { }
 
@@ -396,16 +411,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
         //TODO set page timer
         //TODO set Loading bars
-        //TODO Make icons
         //TODO add comments
-        //TODO South Side stop and north side stop
         //TODO Remove button on CLAS Logo
         //TODO switch news error
-        //TODO fix clas news error
-        //TODO bus page scroll
-        //TODO update drupal slides feed on timer
-        //Scheduler http://www.howtogeek.com/123393/how-to-automatically-run-programs-and-set-reminders-with-the-windows-task-scheduler/
-
+        //TODO fix clas news error        
 
 
         /// <summary>
@@ -417,7 +426,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             {
                 int i = 0;
                 string hostIconURL = "Images/WeatherIcons/";
-                if(DateTime.Now.Hour >= 18 || DateTime.Now.Hour <= 4)
+                if (DateTime.Now.Hour >= 18 || DateTime.Now.Hour <= 4)
                 {
                     hostIconURL = hostIconURL + "nt_";
                 }
@@ -428,7 +437,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                         Temp1.Text = weatherData.forecastday[0].high.fahrenheit + "°/" + weatherData.forecastday[0].low.fahrenheit + "°";
                         weatherIcon1.Source = new BitmapImage(new Uri(hostIconURL + weatherData.forecastday[0].icon + ".png", UriKind.Relative));
                     }
-                    else if(i == 1)
+                    else if (i == 1)
                     {
                         day2.Text = weatherData.forecastday[1].date.weekday;
                         Temp2.Text = weatherData.forecastday[1].high.fahrenheit + "°/" + weatherData.forecastday[1].low.fahrenheit + "°";
@@ -465,7 +474,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
             SetBongoData();
         }
-
 
         /// <summary>
         /// Creates a time that runs the clock and date for the UI.
@@ -531,22 +539,22 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         {
             if (bongoData != null)
             {
-                FullBongoData.Clear();           
+                FullBongoData.Clear();
                 foreach (var bd in bongoData.predictions)
                 {
                     string minString = bd.minutes.ToString() + "min.";
 
-                    if(bd.minutes == 0)
+                    if (bd.minutes == 0)
                     {
                         minString = "Arriving";
                     }
-                    
+
                     string colorString = "#FFFFFF";
                     if (bd.agency.Equals("cambus"))
                     {
                         colorString = "#FFEB3B";
                     }
-                    else if(bd.agency.Equals("iowa-city"))
+                    else if (bd.agency.Equals("iowa-city"))
                     {
                         colorString = "indianred";
                     }
@@ -555,7 +563,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                         colorString = "royalblue";
                     }
 
-                    if(bd.minutes <= 15 || bongoData.predictions.Count <= 8)
+                    if (bd.minutes <= 15 || bongoData.predictions.Count <= 8)
                     {
                         FullBongoData.Add(new VisibleBongoData() { stopname = bd.stopname, minutes = minString, routename = bd.title, color = colorString });
                     }
@@ -563,7 +571,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
             else
             {
-                FullBongoData.Add(new VisibleBongoData() { stopname = "No buses running", color="#FFFFFF"});
+                FullBongoData.Add(new VisibleBongoData() { stopname = "No buses running", color = "#FFFFFF" });
             }
         }
 
@@ -572,32 +580,25 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void SetCSCards()
         {
-            
-                fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
-               
-                List<VisibleCSItem> groupedCSEventData = new List<VisibleCSItem>();
-
-                for (int i = 0; i < 4 && i < fullCsEventsList.Count; i++)
+            fullCsEventsList.Sort((x, y) => DateTime.Compare(x.startDate, y.startDate));
+            List<VisibleCSItem> groupedCSEventData = new List<VisibleCSItem>();
+            for (int i = 0; i < 4 && i < fullCsEventsList.Count; i++)
+            {
+                groupedCSEventData.Add(fullCsEventsList[i]);
+            }
+            try
+            {
+                //Udpdate UI thread with new event group of 4
+                Dispatcher.Invoke(() =>
                 {
-                    groupedCSEventData.Add(fullCsEventsList[i]);
-                }
-
-                try
-                {
-                    //Udpdate UI thread with new event group of 4
-                    Dispatcher.Invoke(() =>
+                    if (groupedCSEventData.Count >= 1)
                     {
-                        if (groupedCSEventData.Count >= 1)
-                        {
-                           csEventsList.ItemsSource = groupedCSEventData;
-                        }
-                    });
-                }
-                catch { }
-                
+                        csEventsList.ItemsSource = groupedCSEventData;
+                    }
+                });
+            }
+            catch { }
         }
-
-
 
         /// <summary>
         /// Swaps out cards with Bongo data on MainWindow
@@ -607,7 +608,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private void SetBongoSwapEvent(object sender, ElapsedEventArgs e)
         {
             List<VisibleBongoData> groupedBongoData = new List<VisibleBongoData>();
-            if(bongoIndex < FullBongoData.Count)
+            if (bongoIndex < FullBongoData.Count)
             {
                 int i = 0;
                 while (i + bongoIndex < FullBongoData.Count && i < 4)
@@ -623,16 +624,16 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
             try
             {
+                //Debug.WriteLine("HERE: " + IdleTimeDetector.GetIdleTimeInfo());
                 //Udpdate UI thread with new bus group of 4
-                if(groupedBongoData.Count >= 1)
+                if (groupedBongoData.Count >= 1)
                 {
                     Dispatcher.Invoke(DispatcherPriority.DataBind, new Action(delegate { BusGrid.DataContext = groupedBongoData; }));
                 }
-                
+
             }
             catch { };
         }
-
 
         /// <summary>
         /// Handle a button click from the wrap panel.
@@ -640,7 +641,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// <param name="sender">Event sender</param>
         /// <param name="e">Event arguments</param>
         private void OpenPage(object sender, RoutedEventArgs e)
-        {            
+        {
             var button = (Button)e.OriginalSource;
             DataItem sampleDataItem = button.DataContext as DataItem;
 
@@ -663,7 +664,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 // the current interaction of all other pointers.  This prevents other users interacting with elements
                 // that are no longer visible.
                 this.kinectRegion.InputPointerManager.CompleteGestures();
-
                 e.Handled = true;
             }
         }
@@ -684,7 +684,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         /// </summary>
         private void StartBottomBar()
         {
-            Storyboard s = (Storyboard) bottomBar.TryFindResource("sb");
+            Storyboard s = (Storyboard)bottomBar.TryFindResource("sb");
             s.Begin();	// Start animation
         }
 
@@ -698,9 +698,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         private async void GetSlides()
         {
             List<BitmapImage> imageList = await GetSlidesAsync();
-            //Dispatcher.Invoke(() => {
-                slideImages = imageList;
-            //});
+            slideImages = imageList;
         }
 
         private void GetSlideURLs(object sender, ElapsedEventArgs e)
@@ -709,7 +707,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
         }
         async Task<List<BitmapImage>> GetSlidesAsync()
         {
-            
+
             HttpClient client = new HttpClient();
             var doc = new HtmlDocument();
             var html = await client.GetStringAsync("https://clas.uiowa.edu/signage/computer-science");
@@ -726,7 +724,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     }
                     return links;
                 }
-                catch { return links; }                
+                catch { return links; }
             });
 
             List<BitmapImage> images = await Task.Run(() =>
@@ -738,10 +736,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     try
                     {
                         var buffer = webClient.DownloadData(link);
-
-
                         var bitmapImage = new BitmapImage();
-
                         using (var stream = new MemoryStream(buffer))
                         {
                             bitmapImage.BeginInit();
@@ -753,7 +748,6 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                         }
                     }
                     catch { }
-                    
                 }
                 return imgs;
             });
@@ -767,8 +761,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                 //Swap and Fade Animation Code
                 ScrollViewer slideBox = (ScrollViewer)FindName("Slides");
                 // Create a duration of 2 seconds.
-                Duration duration = new Duration(TimeSpan.FromSeconds(2));
-                Duration duration2 = new Duration(TimeSpan.FromSeconds(2));
+                Duration duration = new Duration(TimeSpan.FromSeconds(4));
+                Duration duration2 = new Duration(TimeSpan.FromSeconds(4));
 
                 // Create two DoubleAnimations and set their properties.
                 DoubleAnimation myDoubleAnimation1 = new DoubleAnimation();
@@ -811,9 +805,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
                     EventsSlide.Visibility = Visibility.Collapsed;
                     if (slideImages.Count > 1)
                     {
-                       
-                        
-                        SlideImage.Source = slideImages[swapIndex]; 
+
+
+                        SlideImage.Source = slideImages[swapIndex];
                     }
                     swapIndex++;
                 }
@@ -826,9 +820,18 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
 
                 slideBox.Resources.Remove("unique_id");
             });
+        }        
 
-
+        private void KinectBoardWindow_GotTouchCapture(object sender, System.Windows.Input.TouchEventArgs e)
+        {
+            pageTimer.Stop();
+            pageTimer.Start();
         }
 
-    }
+        private void KinectBoardWindow_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            pageTimer.Stop();
+            pageTimer.Start();
+        }
+    }       
 }

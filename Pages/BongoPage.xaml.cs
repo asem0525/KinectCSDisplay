@@ -6,6 +6,8 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 
+
+
 namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
 {
     /// <summary>
@@ -13,8 +15,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
     /// </summary>
     public partial class BongoPage : UserControl
     {
-       
-        private Dictionary<string, string> bongoStops;
+           private Dictionary<string, string> bongoStops;
         private Timer bongoGetTimer;
         private static BongoData bongoData;
         private Dictionary<string, string> busStopNames;

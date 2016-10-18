@@ -7,7 +7,9 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              xmlns:k="http://schemas.microsoft.com/kinect/2014"
-             Margin="10,10,10,10">
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             Margin="10,10,10,10"
+             xmlns:loading="clr-namespace:Microsoft.Samples.Kinect.ControlsBasics.Helper_Classes">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,13 +17,19 @@
         </Grid.RowDefinitions>
 
         <TextBlock Style="{StaticResource HeaderStyle}" FontWeight="UltraBold" Grid.Row="0" Grid.Column="0" Margin="0 10 0 10" Text="People" FontSize="36" Foreground="#FFEEEEEE"/>
-        <TextBlock x:Name="Loading" Text="Loading..." Grid.Row="1" Foreground="White"></TextBlock>
+       
+        <loading:LoadingControl HorizontalAlignment="Center" Grid.Row="1" x:Name="Loading"/>
+
         <ScrollViewer Grid.Row="1"
                       x:Name="scrollViewer" 
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Disabled" 
                       k:KinectRegion.IsScrollInertiaEnabled="true" >
-            <DataGrid x:Name="PeopleGrid" IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="True" Background="{x:Null}" EnableRowVirtualization="False" EnableColumnVirtualization="False">
+            <DataGrid x:Name="PeopleGrid"
+                      AlternatingRowBackground="#FF424242" AlternationCount="2"
+                      ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      IsReadOnly="True" ItemsSource="{Binding}" AutoGenerateColumns="False" Background="{x:Null}" EnableRowVirtualization="False" EnableColumnVirtualization="False">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Foreground" Value="white"/>
@@ -31,8 +39,7 @@
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
                         <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="FontSize" Value="18"/>
-                
+                        <Setter Property="FontSize" Value="17.5"/>                
                     </Style>
                 </DataGrid.CellStyle>
                 <DataGrid.Resources>
@@ -40,10 +47,37 @@
                         <Setter Property="TextWrapping" Value="Wrap"/>
                     </Style>
                 </DataGrid.Resources>
-
-
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" FontSize="18" Width="Auto" FontWeight="Bold" Foreground="White">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Office" Binding="{Binding Office}" FontSize="17" FontStyle="Italic" Foreground="White">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Hours" Binding="{Binding Hours}" FontSize="17" Foreground="White">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" FontSize="17"  Foreground="White">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
             </DataGrid>
-
         </ScrollViewer>
     </Grid>
 </UserControl>

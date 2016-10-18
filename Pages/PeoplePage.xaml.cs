@@ -7,6 +7,9 @@ using System.Windows.Controls;
 using System;
 using System.Windows.Threading;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Imaging;
+using WpfAnimatedGif;
+using System.Windows;
 
 namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
 {
@@ -19,9 +22,16 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
         public PeoplePage()
         {
             InitializeComponent();
-            GetPeopleList(); 
+            GetPeopleList();
+
+            //BitmapImage bitmap = new BitmapImage();
+            //bitmap.BeginInit();
+            //bitmap.UriSource = new Uri("../Assets/spin.gif", UriKind.Relative);
+            //bitmap.EndInit();
+            //ImageBehavior.SetAnimatedSource(LoadingImage, bitmap);
         }
-        
+      
+
         /// <summary>
         /// Async method that waits for API call and then updates UI
         /// </summary>
@@ -30,8 +40,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.Pages
             List<CSPeople> p = await ParseHttpPeopleAsync();
             
             Dispatcher.Invoke(DispatcherPriority.DataBind, new Action(delegate { PeopleGrid.DataContext = p; }));
-               
-            Loading.Text = "";
+
+            Loading.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>

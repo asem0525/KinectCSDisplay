@@ -92,6 +92,19 @@ namespace Microsoft.Samples.Kinect.ControlsBasics
             }
         }
 
+        public bool Stopped
+        {
+            get
+            {
+                return stopped;
+            }
+
+            set
+            {
+                stopped = value;
+            }
+        }
+
         public void StartManaging()
         {
             this.stopped = false;

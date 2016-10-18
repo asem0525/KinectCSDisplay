@@ -8,6 +8,7 @@
       mc:Ignorable="d"
       Margin="10,10,10,10"
       xmlns:k="http://schemas.microsoft.com/kinect/2014"
+      xmlns:loading="clr-namespace:Microsoft.Samples.Kinect.ControlsBasics.Helper_Classes"
      >
 
     <Grid>
@@ -262,6 +263,7 @@
 
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="RadarTitle"  Style="{StaticResource HeaderStyle}" Text="Radar" Margin="10,10,0,10" Foreground="#FFFFC000"/>
+                <loading:LoadingControl x:Name="Loading"/>
                 <Image x:Name="RadarImage" Margin="0" Height="550" Width="550" />
             </StackPanel>
         </Grid>

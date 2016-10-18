@@ -34,6 +34,7 @@
                           k:KinectRegion.IsScrollInertiaEnabled="true" Margin="10,0,0,0" >
                 <DataGrid x:Name="EventsDataGrid" 
                           ItemsSource="{Binding}" 
+                          AlternatingRowBackground="#FF424242" AlternationCount="2"
                           AutoGenerateColumns="False"
                           SelectionMode="Single"
                           SelectionUnit="Cell" 
@@ -85,9 +86,9 @@
             <StackPanel Grid.Row="2">
                 <TextBlock  Style="{StaticResource HeaderStyle}" x:Name="newsTitle" Text="Department News" Margin="10,0,0,0" Foreground="#FFFFC000"/>
                     <StackPanel x:Name="csCard" Margin="10,5">
-                        <TextBlock x:Name="csEventTitle" FontSize="20" TextWrapping="Wrap" Foreground="White" />
-                        <TextBlock x:Name="csEventTime" FontSize="18" FontStyle="Italic" Foreground="White">No News at this time...</TextBlock>
-                        <TextBlock x:Name="csEventLocation" FontSize="18" Foreground="White"></TextBlock>
+                        <TextBlock x:Name="csNewsTitle" FontSize="20" TextWrapping="Wrap" Foreground="White" />
+                        <TextBlock x:Name="csNewsTime" FontSize="18" FontStyle="Italic" Foreground="White">No News at this time...</TextBlock>
+                        <TextBlock x:Name="csNewsLocation" FontSize="18" Foreground="White"></TextBlock>
                     </StackPanel>
             </StackPanel>
         </Grid>
@@ -137,9 +138,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-
-
-
                 <StackPanel Grid.Row="1">
                     <StackPanel Orientation="Horizontal">
                         <RadioButton GroupName="NewsButtonGroup" HorizontalAlignment="Stretch" Content="AP Top News" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
@@ -150,12 +148,7 @@
                         <RadioButton GroupName="NewsButtonGroup" HorizontalAlignment="Stretch" Content="CLAS News" Style="{StaticResource RadioButtonStyle}" Checked="RadioButton_Checked"/>
                     </StackPanel>
                 </StackPanel>
-
             </Grid>
-
         </Grid>
-
     </Grid>
-
-
 </UserControl>

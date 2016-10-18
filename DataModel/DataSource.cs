@@ -99,7 +99,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                        "Map of building",
                        itemContent,
                        mainWindowPages,
-                       typeof(ScrollViewerSample)));
+                       typeof(MapsPage)));
 
             this.AllGroups.Add(mainWindowPages);
         }

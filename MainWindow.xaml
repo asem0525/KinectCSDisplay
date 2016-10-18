@@ -17,11 +17,11 @@
         MinHeight="700"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal" 
-        TextOptions.TextRenderingMode="Auto">
+        GotTouchCapture="KinectBoardWindow_GotTouchCapture"
+        TouchDown="KinectBoardWindow_GotTouchCapture"
+        MouseDown="KinectBoardWindow_MouseDown"
+       >
+    
 
     <k:KinectRegion x:Name="kinectRegion">
         <Grid>
@@ -83,7 +83,7 @@
 
             <ContentControl Grid.Row="1" Grid.RowSpan="2" x:Name="navigationRegion">
 
-                <Grid x:Name="kinectRegionGrid" Margin="10,10,10,20">
+                <Grid x:Name="kinectRegionGrid" Margin="5,5,5,20">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.4*"/>
                         <ColumnDefinition Width="0.6*"/>
@@ -128,10 +128,10 @@
                     <ScrollViewer Grid.Row="1"
                                   Grid.Column="0"
                                   x:Name="scrollViewer" 
-                                  HorizontalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Hidden"
                                   VerticalScrollBarVisibility="Disabled" 
                                   k:KinectRegion.IsScrollInertiaEnabled="true" >
-                        <ItemsControl Grid.Row="0" x:Name="itemsControl" ItemTemplate="{StaticResource Kinect250x250ItemTemplate}" ButtonBase.Click="OpenPage" >
+                        <ItemsControl Grid.Row="0" x:Name="itemsControl" ItemTemplate="{StaticResource Kinect250x250ItemTemplate}" ButtonBase.Click="OpenPage" Margin="0,10">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel VerticalAlignment="Center" Orientation="Vertical" Margin="75,0,75,0" />
